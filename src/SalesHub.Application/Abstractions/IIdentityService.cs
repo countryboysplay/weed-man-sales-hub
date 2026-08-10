@@ -12,9 +12,77 @@ public interface IIdentityService
 
     Task<AppUserInfo?> FindByIdAsync(Guid userId, CancellationToken cancellationToken = default);
 
+    Task<AppUserInfo?> FindByUsernameAsync(string username, CancellationToken cancellationToken = default);
+
     Task<AppUserInfo> CreateUserAsync(
         NewUser user, CancellationToken cancellationToken = default);
+
+    // ── Wave 1 lifecycle (docs/01 users; user-admin mockup) ──────────────────
+
+    Task<UserDetails?> GetUserDetailsAsync(Guid userId, CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<UserDetails>> ListUsersAsync(
+        UserQuery query, CancellationToken cancellationToken = default);
+
+    /// <summary>Manager-maintained fields. Role changes involving Owner are refused
+    /// upstream; this method also refuses them as defense in depth.</summary>
+    Task UpdateUserAsync(Guid userId, UserUpdate update, CancellationToken cancellationToken = default);
+
+    /// <summary>User-editable profile fields (phone, birthday, photo).</summary>
+    Task UpdateProfileAsync(Guid userId, ProfileUpdate update, CancellationToken cancellationToken = default);
+
+    /// <summary>Management-assigned replacement password. Bumps the security stamp.</summary>
+    Task SetPasswordAsync(Guid userId, string newPassword, CancellationToken cancellationToken = default);
+
+    /// <summary>Self-service change; verifies the current password first.</summary>
+    Task<bool> ChangePasswordAsync(
+        Guid userId, string currentPassword, string newPassword,
+        CancellationToken cancellationToken = default);
+
+    Task DeactivateAsync(
+        Guid userId, Guid actorUserId, string? reason, DateTimeOffset? scheduledReactivationAtUtc,
+        CancellationToken cancellationToken = default);
+
+    Task ReactivateAsync(Guid userId, CancellationToken cancellationToken = default);
+
+    Task ScheduleReactivationAsync(
+        Guid userId, DateTimeOffset? reactivateAtUtc, CancellationToken cancellationToken = default);
 }
+
+public sealed record UserQuery(
+    string? Role = null,
+    Guid? BranchId = null,
+    bool IncludeInactive = false,
+    IReadOnlyList<string>? Roles = null);
+
+public sealed record UserUpdate(
+    string? DisplayName,
+    string? Role,
+    string? Email,
+    Guid? BranchId,
+    DateOnly? HireDate);
+
+public sealed record ProfileUpdate(
+    string? Phone,
+    DateOnly? Birthday,
+    Guid? ProfilePhotoBlobId);
+
+public sealed record UserDetails(
+    Guid Id,
+    string Username,
+    string DisplayName,
+    string Role,
+    bool IsActive,
+    string? Email,
+    string? Phone,
+    Guid? BranchId,
+    DateOnly? HireDate,
+    DateOnly? Birthday,
+    Guid? ProfilePhotoBlobId,
+    DateTimeOffset CreatedAtUtc,
+    DateTimeOffset? DeactivatedAtUtc,
+    string? DeactivationReason,
+    DateTimeOffset? ScheduledReactivationAtUtc);
 
 public sealed record NewUser(
     string Username,

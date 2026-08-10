@@ -23,6 +23,11 @@ public class SalesHubDbContext(DbContextOptions<SalesHubDbContext> options)
     public DbSet<ScheduledJobRun> ScheduledJobRuns => Set<ScheduledJobRun>();
     public DbSet<FileBlob> FileBlobs => Set<FileBlob>();
     public DbSet<IdempotencyKey> IdempotencyKeys => Set<IdempotencyKey>();
+    public DbSet<Branch> Branches => Set<Branch>();
+    public DbSet<PasswordResetRequest> PasswordResetRequests => Set<PasswordResetRequest>();
+    public DbSet<Notification> Notifications => Set<Notification>();
+    public DbSet<NotificationDelivery> NotificationDeliveries => Set<NotificationDelivery>();
+    public DbSet<PushSubscription> PushSubscriptions => Set<PushSubscription>();
 
     public async Task ExecuteInTransactionAsync(
         Func<CancellationToken, Task> action,

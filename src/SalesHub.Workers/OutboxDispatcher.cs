@@ -18,6 +18,7 @@ namespace SalesHub.Workers;
 /// </summary>
 public sealed class OutboxDispatcher(
     IServiceScopeFactory scopeFactory,
+    IEnumerable<IOutboxSideEffect> sideEffects,
     ILogger<OutboxDispatcher> logger) : BackgroundService
 {
     private static readonly TimeSpan PollInterval = TimeSpan.FromSeconds(2);
@@ -77,7 +78,23 @@ public sealed class OutboxDispatcher(
             CorrelationContext.Set(message.CorrelationId);
             try
             {
-                await DeliverAsync(publisher, message, ct);
+                var envelope = await DeliverAsync(publisher, message, ct);
+                foreach (var sideEffect in sideEffects.Where(s => s.Handles(message.EventType)))
+                {
+                    try
+                    {
+                        await sideEffect.ExecuteAsync(envelope, scope.ServiceProvider, ct);
+                    }
+                    catch (Exception ex) when (ex is not OperationCanceledException)
+                    {
+                        // Side effects (push fan-out) never fail the outbox row:
+                        // canonical state is committed and SignalR is delivered.
+                        logger.LogWarning(ex,
+                            "Outbox side effect {SideEffect} failed for {EventType} {MessageId}",
+                            sideEffect.GetType().Name, message.EventType, message.Id);
+                    }
+                }
+
                 await db.Database.ExecuteSqlAsync(
                     $"UPDATE outbox_messages SET processed_at_utc = now(), last_error = NULL WHERE id = {message.Id}",
                     ct);
@@ -106,7 +123,7 @@ public sealed class OutboxDispatcher(
         return claimed.Count;
     }
 
-    private static async Task DeliverAsync(
+    private static async Task<EventEnvelope> DeliverAsync(
         IRealtimePublisher publisher, ClaimedMessage message, CancellationToken ct)
     {
         using var payload = JsonDocument.Parse(message.PayloadJson);
@@ -129,6 +146,8 @@ public sealed class OutboxDispatcher(
         {
             await publisher.PublishToGroupAsync("management", envelope, ct);
         }
+
+        return envelope;
     }
 
     public sealed record ClaimedMessage(

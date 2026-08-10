@@ -40,6 +40,18 @@ public static class AuthFlows
         return await client.SendAsync(request);
     }
 
+    public static async Task<HttpResponseMessage> PatchWithCsrfAsync<T>(
+        HttpClient client, string url, T payload)
+    {
+        var token = await GetCsrfTokenAsync(client);
+        using var request = new HttpRequestMessage(HttpMethod.Patch, url)
+        {
+            Content = JsonContent.Create(payload, options: Json),
+        };
+        request.Headers.Add("X-CSRF-TOKEN", token);
+        return await client.SendAsync(request);
+    }
+
     public static async Task<HttpResponseMessage> DeleteWithCsrfAsync(
         HttpClient client, string url)
     {

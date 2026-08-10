@@ -63,6 +63,7 @@ public class OutboxAndJobsTests : IAsyncLifetime
             .BuildServiceProvider();
         return new OutboxDispatcher(
             provider.GetRequiredService<IServiceScopeFactory>(),
+            sideEffects: [],
             Microsoft.Extensions.Logging.Abstractions.NullLogger<OutboxDispatcher>.Instance);
     }
 

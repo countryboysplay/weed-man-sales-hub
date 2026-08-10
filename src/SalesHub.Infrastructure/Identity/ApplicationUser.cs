@@ -20,6 +20,17 @@ public class ApplicationUser : IdentityUser<Guid>
     public Guid? DeactivatedByUserId { get; set; }
     public string? DeactivationReason { get; set; }
     public DateTimeOffset? ScheduledReactivationAtUtc { get; set; }
+
+    // Wave 1 profile fields (docs/01). Phone lives on IdentityUser.PhoneNumber.
+    // Core fields are manager-maintained; phone/birthday/photo are
+    // user-editable (profile mockup: "MIXED CONTROL").
+    public Guid? BranchId { get; set; }
+    public DateOnly? HireDate { get; set; }
+    public DateOnly? Birthday { get; set; }
+    public Guid? ProfilePhotoBlobId { get; set; }
+
+    /// <summary>Marker so the one-hour advance reactivation notice fires once.</summary>
+    public DateTimeOffset? ReactivationNoticeSentAtUtc { get; set; }
 }
 
 public class ApplicationRole : IdentityRole<Guid>

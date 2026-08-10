@@ -120,10 +120,10 @@ freshly-migrated PostgreSQL database (no in-memory substitute, per docs/09).
 1. ~~**iPhone/Safari vs mandatory Idle Detection**~~ — **RESOLVED
    2026-08-10**: the application is desktop-only for all roles; mobile
    support is cut. See `ADR-002-desktop-only.md`.
-2. **Password-reset request visibility** — mockup copy says Supervisors and
-   Managers receive requests; should Owners see them too? (Assumed yes.)
-3. **Monitored roles configuration** — Wave 0 defaults to `SalesAgent`
-   only. Confirm supervisors/managers are *not* presence-monitored.
+2. ~~**Password-reset request visibility**~~ — **RESOLVED 2026-08-10**:
+   all management roles including Owners see password-reset requests.
+3. ~~**Monitored roles configuration**~~ — **RESOLVED 2026-08-10**:
+   Sales Agents only, exactly the shipped default.
 
 ## 14. Git history (Wave 0)
 

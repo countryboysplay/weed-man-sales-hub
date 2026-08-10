@@ -104,6 +104,8 @@ builder.Services.AddSignalR();
 builder.Services.AddSingleton<IRealtimePublisher, SignalRRealtimePublisher>();
 builder.Services.AddSingleton<IScheduledJobHandler, IdleCapabilityStaleScanJob>();
 builder.Services.AddSingleton<IScheduledJobHandler, IdempotencyKeyCleanupJob>();
+builder.Services.AddSingleton<IScheduledJobHandler, ScheduledReactivationJob>();
+builder.Services.AddSingleton<IOutboxSideEffect, NotificationWebPushSideEffect>();
 builder.Services.AddSingleton<OutboxDispatcher>();
 builder.Services.AddSingleton<ScheduledJobRunner>();
 if (builder.Configuration.GetValue("Workers:Enabled", true))
@@ -151,6 +153,10 @@ app.UseMiddleware<AntiforgeryMiddleware>();
 var api = app.MapGroup("/api/v1");
 api.MapAuthEndpoints();
 api.MapUserEndpoints();
+api.MapUserLifecycleEndpoints();
+api.MapProfileEndpoints();
+api.MapPasswordResetEndpoints();
+api.MapNotificationEndpoints();
 api.MapGet("/auth/csrf", (IAntiforgery antiforgery, HttpContext http) =>
 {
     var tokens = antiforgery.GetAndStoreTokens(http);

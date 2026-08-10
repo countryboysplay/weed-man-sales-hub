@@ -18,6 +18,11 @@ public interface IAppDb
     DbSet<ScheduledJobRun> ScheduledJobRuns { get; }
     DbSet<FileBlob> FileBlobs { get; }
     DbSet<IdempotencyKey> IdempotencyKeys { get; }
+    DbSet<Branch> Branches { get; }
+    DbSet<PasswordResetRequest> PasswordResetRequests { get; }
+    DbSet<Notification> Notifications { get; }
+    DbSet<NotificationDelivery> NotificationDeliveries { get; }
+    DbSet<PushSubscription> PushSubscriptions { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 

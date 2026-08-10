@@ -41,6 +41,7 @@ public static class StartupSeeder
 
         await EnsureJobAsync(db, IdleCapabilityStaleScanJob.Type, "* * * * *");
         await EnsureJobAsync(db, IdempotencyKeyCleanupJob.Type, "0 * * * *");
+        await EnsureJobAsync(db, ScheduledReactivationJob.Type, "* * * * *");
         await db.SaveChangesAsync();
 
         var seedUsername = configuration["Seed:Owner:Username"];

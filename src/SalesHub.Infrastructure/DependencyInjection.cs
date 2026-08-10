@@ -58,6 +58,8 @@ public static class DependencyInjection
             .Bind(configuration.GetSection(SecurityOptions.SectionName));
         services.AddOptions<FileStorageOptions>()
             .Bind(configuration.GetSection(FileStorageOptions.SectionName));
+        services.AddOptions<WebPushOptions>()
+            .Bind(configuration.GetSection(WebPushOptions.SectionName));
 
         services.AddSingleton(TimeProvider.System);
         services.AddSingleton<BusinessTime>();
@@ -69,9 +71,14 @@ public static class DependencyInjection
         services.AddScoped<IPublicIdGenerator, PostgresPublicIdGenerator>();
         services.AddScoped<IFileBlobStore, FileSystemBlobStore>();
 
+        services.AddSingleton<IWebPushSender, VapidWebPushSender>();
+
         services.AddScoped<AuthenticationService>();
         services.AddScoped<IdleCapabilityService>();
         services.AddScoped<UserProvisioningService>();
+        services.AddScoped<UserLifecycleService>();
+        services.AddScoped<PasswordResetService>();
+        services.AddScoped<Application.Notifications.NotificationService>();
 
         return services;
     }

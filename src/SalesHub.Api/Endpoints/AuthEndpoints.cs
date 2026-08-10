@@ -190,24 +190,20 @@ public static class AuthEndpoints
 
     private static async Task<IResult> ForgotPasswordAsync(
         ForgotPasswordRequest request,
-        IAppDb db,
-        IAuditWriter audit,
+        HttpContext http,
+        SalesHub.Application.Users.PasswordResetService passwordResets,
         CancellationToken ct)
     {
-        // Management-mediated recovery (CLAUDE.md §3): record the request for
-        // the management queue; no email, no token, and — deliberately — the
-        // same 202 whether or not the username exists. Full workflow: Wave 1.
-        await db.ExecuteInTransactionAsync(async token =>
+        if (string.IsNullOrWhiteSpace(request.Username))
         {
-            await audit.WriteAsync(new AuditEntry(
-                "auth", "auth.forgotPasswordRequested", AuditRetentionClass.Operational365Days)
-            {
-                TargetType = "Username",
-                TargetId = request.Username.Trim().ToUpperInvariant(),
-            }, token);
-            await db.SaveChangesAsync(token);
-        }, ct);
+            return Problems.Validation(http, "A username is required.");
+        }
 
+        // Management-mediated recovery (CLAUDE.md §3): the request lands in
+        // the management queue and management is notified. No email, no
+        // token, and — deliberately — the same 202 whether or not the
+        // username exists.
+        await passwordResets.SubmitAsync(request.Username, ct);
         return Results.Accepted(value: new
         {
             message = "If the account exists, management has been notified.",
