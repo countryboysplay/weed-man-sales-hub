@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Weed Man Sales Hub - Tasks Mockup</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;
+  --bg:#f6f7f5;--panel:#ffffff;--card:#ffffff;--border:#dfe4dd;
+  --text:#20251f;--muted:#6f786f;--chip:#eef2ed;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow{font-size:12px;color:var(--muted)}
+.h1{font-size:20px;font-weight:700}
+.switch{display:flex;gap:8px}
+.switch button,.btn{border:1px solid var(--border);background:var(--panel);padding:9px 12px;border-radius:12px;color:var(--text)}
+.switch button.active,.btn.primary{background:var(--g);color:white;border-color:var(--g)}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--panel);min-height:680px}
+.desktop{display:grid;grid-template-columns:190px 1fr;min-height:680px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}
+.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+.brand small{display:block;color:var(--muted)}
+.nav button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px;color:var(--text)}
+.nav button.active{background:#e8f2ea;color:var(--g);font-weight:650}
+.main{padding:18px}
+.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.header h2{margin:0;font-size:22px}
+.sub{color:var(--muted);font-size:13px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filters button{border:1px solid var(--border);background:#fff;padding:7px 11px;border-radius:999px}
+.filters button.active{background:var(--g);color:white;border-color:var(--g)}
+.grid{display:grid;grid-template-columns:1.4fr .8fr;gap:16px}
+.card{border:1px solid var(--border);background:var(--card);border-radius:16px;padding:14px}
+.task{border:1px solid var(--border);border-radius:14px;padding:13px;margin-bottom:10px;background:#fff}
+.task.overdue{border-left:5px solid var(--r)}
+.task.high{border-left:5px solid var(--y)}
+.task.done{opacity:.62}
+.row{display:flex;align-items:center;gap:10px}
+.between{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.avatar{width:34px;height:34px;border-radius:10px;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:0 0 auto}
+.badge{font-size:11px;font-weight:700;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted)}
+.badge.red{background:#fdeaea;color:#9b2e2e}.badge.yellow{background:#fff3b7;color:#6a5a00}.badge.green{background:#e4f2e7;color:var(--gd)}
+.task-title{font-weight:700}
+.meta{margin-top:4px;color:var(--muted);font-size:12px}
+.task-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.task-actions button{border:1px solid var(--border);background:#fff;padding:7px 9px;border-radius:10px;font-size:12px}
+.task-actions .complete{background:var(--g);color:white;border-color:var(--g)}
+.stat{padding:13px;border:1px solid var(--border);border-radius:14px;background:#fff}
+.stat .num{font-size:26px;font-weight:800}
+.progress{height:10px;background:#e7ebe5;border-radius:999px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--g)}
+.list{margin-top:12px}
+.person{display:grid;grid-template-columns:1fr auto;gap:10px;padding:9px 0;border-top:1px solid var(--border);font-size:13px}
+.mobilewrap{display:none;max-width:390px;margin:0 auto;background:var(--panel);min-height:690px;border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.mobilehead{padding:15px;border-bottom:1px solid var(--border)}
+.mobilebody{padding:12px 12px 90px}
+.mobilebottom{position:sticky;bottom:0;border-top:1px solid var(--border);background:#fff;padding:9px 8px}
+.mobilebottom .tabs{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;text-align:center;font-size:11px}
+.addsale{width:56px;height:56px;margin:-28px auto 0;border-radius:50%;border:4px solid var(--y);background:var(--g);color:#fff;font-size:26px}
+.management{display:none;padding:18px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.table{border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.tr{display:grid;grid-template-columns:1.5fr .85fr .75fr .75fr .9fr;gap:10px;padding:10px 12px;border-top:1px solid var(--border);font-size:13px;align-items:center}
+.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modalbox{width:min(560px,100%);background:#fff;border-radius:18px;border:1px solid var(--border);padding:16px}
+.field{margin:11px 0}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
+.field input,.field textarea,.field select{width:100%;border:1px solid var(--border);border-radius:11px;padding:10px;background:#fff}
+.flex{display:flex;gap:10px}
+.flex>*{flex:1}
+@media(max-width:850px){
+ .grid{grid-template-columns:1fr}
+ .desktop{grid-template-columns:150px 1fr}
+ .sidebar{padding:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="eyebrow">GUI Phase · Screen 4</div>
+    <div class="h1">Tasks Experience</div>
+  </div>
+  <div class="switch">
+    <button class="active" id="deskBtn">Desktop</button>
+    <button id="mobBtn">Mobile</button>
+    <button id="mgmtBtn">Management View</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section class="desktop" id="desktop">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Sales Hub</small></div></div>
+    <div class="nav">
+      <button>★ Sales Dashboard</button>
+      <button>★ Chat</button>
+      <button>📣 Announcements</button>
+      <button class="active">✓ Tasks <span style="float:right;background:var(--g);color:white;padding:2px 7px;border-radius:999px;font-size:11px">3</span></button>
+      <button>▤ Forms</button>
+      <button>📁 Resources</button>
+      <button>👥 Directory</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">My Work</div><h2>Tasks</h2></div>
+      <div><button class="btn" onclick="alert('Search would open here')">⌕ Search</button></div>
+    </div>
+
+    <div class="filters">
+      <button class="active">Active</button><button>Today</button><button>Overdue</button><button>High Priority</button><button>Recurring</button>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <div class="between" style="margin-bottom:10px">
+          <div><b>Assigned to Me</b><div class="sub">Your active task copies only</div></div>
+          <span class="badge green">3 ACTIVE</span>
+        </div>
+
+        <div class="task overdue">
+          <div class="between">
+            <div>
+              <div class="row"><span class="badge red">OVERDUE</span><span class="badge">HIGH</span></div>
+              <div class="task-title" style="margin-top:7px">Complete campaign coaching review</div>
+              <div class="meta">Due today · 10:30 AM Central · Assigned by Jonathan</div>
+            </div>
+            <div class="avatar">JL</div>
+          </div>
+          <div class="task-actions">
+            <button>💬 Comments 2</button><button>📎 Attachment</button><button class="complete" onclick="completeTask(this)">Mark Complete</button>
+          </div>
+        </div>
+
+        <div class="task high">
+          <div class="between">
+            <div>
+              <div class="row"><span class="badge yellow">HIGH</span><span class="badge">RECURRING</span></div>
+              <div class="task-title" style="margin-top:7px">Review updated OS01 script</div>
+              <div class="meta">Due today · 4:00 PM Central · Weekly occurrence</div>
+            </div>
+            <div class="avatar">DW</div>
+          </div>
+          <div class="task-actions">
+            <button>💬 Comments</button><button>📎 OS01 Script.pdf</button><button class="complete" onclick="completeTask(this)">Mark Complete</button>
+          </div>
+        </div>
+
+        <div class="task">
+          <div class="between">
+            <div>
+              <div class="row"><span class="badge">NORMAL</span></div>
+              <div class="task-title" style="margin-top:7px">Read Friday role-play instructions</div>
+              <div class="meta">Due Friday · 9:30 AM Central</div>
+            </div>
+            <div class="avatar">JL</div>
+          </div>
+          <div class="task-actions">
+            <button>💬 Comments</button><button class="complete" onclick="completeTask(this)">Mark Complete</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div><b>Today</b><div class="sub">Your task summary</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+          <div class="stat"><div class="sub">Due Today</div><div class="num">2</div></div>
+          <div class="stat"><div class="sub">Overdue</div><div class="num" style="color:var(--r)">1</div></div>
+        </div>
+        <div style="margin-top:14px">
+          <div class="between" style="font-size:13px"><span>Weekly completion</span><b>82%</b></div>
+          <div class="progress" style="margin-top:7px"><span style="width:82%"></span></div>
+        </div>
+        <div style="margin-top:18px"><b>Next Up</b></div>
+        <div class="list">
+          <div class="person"><span>OS01 script review</span><span>4:00 PM</span></div>
+          <div class="person"><span>Friday role-play instructions</span><span>Fri</span></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</section>
+
+<section class="mobilewrap" id="mobile">
+  <div class="mobilehead">
+    <div class="between"><div><div class="sub">My Work</div><div style="font-size:20px;font-weight:700">Tasks</div></div><button class="btn">⌕</button></div>
+    <div class="filters" style="margin:12px 0 0;overflow:auto;flex-wrap:nowrap"><button class="active">Active</button><button>Today</button><button>Overdue</button></div>
+  </div>
+  <div class="mobilebody">
+    <div class="task overdue">
+      <div class="row"><span class="badge red">OVERDUE</span><span class="badge">HIGH</span></div>
+      <div class="task-title" style="margin-top:7px">Complete campaign coaching review</div>
+      <div class="meta">Due 10:30 AM · Assigned by Jonathan</div>
+      <div class="task-actions"><button>💬 2</button><button>📎</button><button class="complete" onclick="completeTask(this)">Complete</button></div>
+    </div>
+    <div class="task high">
+      <div class="row"><span class="badge yellow">HIGH</span><span class="badge">RECURRING</span></div>
+      <div class="task-title" style="margin-top:7px">Review updated OS01 script</div>
+      <div class="meta">Due 4:00 PM · Weekly occurrence</div>
+      <div class="task-actions"><button>💬</button><button>📎</button><button class="complete" onclick="completeTask(this)">Complete</button></div>
+    </div>
+    <div class="task">
+      <div class="task-title">Read Friday role-play instructions</div>
+      <div class="meta">Due Friday · 9:30 AM</div>
+      <div class="task-actions"><button>💬</button><button class="complete" onclick="completeTask(this)">Complete</button></div>
+    </div>
+  </div>
+  <div class="mobilebottom">
+    <div class="tabs"><div>Sales</div><div>Chat</div><div><button class="addsale">＋</button></div><div style="color:var(--g);font-weight:700">Tasks</div><div>Menu</div></div>
+  </div>
+</section>
+
+<section class="management" id="management">
+  <div class="header">
+    <div><div class="sub">Management</div><h2>Task Control Center</h2></div>
+    <button class="btn primary" onclick="openTaskModal()">＋ Create Task</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="sub">Active Tasks</div><div class="num">24</div></div>
+    <div class="stat"><div class="sub">Due Today</div><div class="num">11</div></div>
+    <div class="stat"><div class="sub">Overdue</div><div class="num" style="color:var(--r)">3</div></div>
+    <div class="stat"><div class="sub">Completion Today</div><div class="num">78%</div></div>
+  </div>
+
+  <div class="card">
+    <div class="between">
+      <div><b>Review updated OS01 script</b><div class="sub">Assigned to 12 users · each user has an independent task copy</div></div>
+      <div class="row"><span class="badge yellow">HIGH</span><span class="badge">RECURRING</span></div>
+    </div>
+    <div style="margin-top:14px" class="between"><span style="font-size:13px">8 of 12 completed</span><b>67%</b></div>
+    <div class="progress" style="margin-top:7px"><span style="width:67%"></span></div>
+    <div class="table" style="margin-top:14px">
+      <div class="tr"><span>Employee</span><span>Status</span><span>Priority</span><span>Due</span><span>Last Activity</span></div>
+      <div class="tr"><span>Ashley Boggess</span><span class="badge green">Complete</span><span>High</span><span>4:00 PM</span><span>11:04 AM</span></div>
+      <div class="tr"><span>Tiffany Nelson</span><span class="badge">Active</span><span>High</span><span>4:00 PM</span><span>10:48 AM</span></div>
+      <div class="tr"><span>Courtney Wathen</span><span class="badge red">Overdue</span><span>High</span><span>10:30 AM</span><span>10:20 AM</span></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="modal" id="taskModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Management</div><div style="font-size:19px;font-weight:700">Create Task</div></div><button class="btn" onclick="closeTaskModal()">Close</button></div>
+    <div class="field"><label>Task title</label><input value="Review updated OS01 script"></div>
+    <div class="field"><label>Assign to</label><select><option>Selected employees</option><option>All employees</option></select></div>
+    <div class="flex">
+      <div class="field"><label>Priority</label><select><option>High</option><option>Normal</option></select></div>
+      <div class="field"><label>Due</label><input value="Aug 10, 4:00 PM"></div>
+    </div>
+    <div class="field"><label>Recurrence</label><select><option>Weekly</option><option>None</option><option>Daily</option><option>Monthly</option><option>Custom</option></select></div>
+    <div class="field"><label>Instructions</label><textarea rows="4">Review the updated script before the Friday role-play block.</textarea></div>
+    <button class="btn primary" style="width:100%;padding:12px">Create & Assign</button>
+  </div>
+</div>
+
+<script>
+const deskBtn=document.getElementById('deskBtn'),mobBtn=document.getElementById('mobBtn'),mgmtBtn=document.getElementById('mgmtBtn');
+const desktop=document.getElementById('desktop'),mobile=document.getElementById('mobile'),management=document.getElementById('management');
+function view(which){
+  desktop.style.display='none';mobile.style.display='none';management.style.display='none';
+  deskBtn.classList.remove('active');mobBtn.classList.remove('active');mgmtBtn.classList.remove('active');
+  if(which==='desk'){desktop.style.display='grid';deskBtn.classList.add('active')}
+  if(which==='mob'){mobile.style.display='block';mobBtn.classList.add('active')}
+  if(which==='mgmt'){management.style.display='block';mgmtBtn.classList.add('active')}
+}
+deskBtn.onclick=()=>view('desk');mobBtn.onclick=()=>view('mob');mgmtBtn.onclick=()=>view('mgmt');
+function completeTask(btn){
+  const task=btn.closest('.task');task.classList.add('done');btn.textContent='Completed ✓';btn.disabled=true;
+  setTimeout(()=>task.style.display='none',500);
+}
+function openTaskModal(){document.getElementById('taskModal').classList.add('open')}
+function closeTaskModal(){document.getElementById('taskModal').classList.remove('open')}
+</script>
+
+</body>
+</html>

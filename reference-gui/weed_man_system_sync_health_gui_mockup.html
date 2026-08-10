@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - System & Sync Health</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+  --bg:#f6f7f5;--panel:#fff;--border:#dfe4dd;--text:#20251f;--muted:#6f786f;
+  --chip:#eef2ed;--softg:#e8f2ea;--softy:#fff6c8;--softr:#fdeaea;--softb:#eaf1fb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow,.sub{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:750}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--border);background:#fff;padding:9px 12px;border-radius:12px;color:var(--text)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:#fff;min-height:760px}
+.desktop{display:grid;grid-template-columns:205px 1fr;min-height:760px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:12px 10px 5px}
+.nav button{width:100%;display:block;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:15px}.header h2{margin:0;font-size:23px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--border);border-radius:14px;padding:12px}.num{font-size:28px;font-weight:800}
+.grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
+.card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px}.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.row{display:flex;align-items:center;gap:9px}.grow{flex:1;min-width:0}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);white-space:nowrap}.badge.green{background:var(--softg);color:var(--gd)}.badge.yellow{background:var(--softy);color:#665700}.badge.red{background:var(--softr);color:#982f2f}.badge.blue{background:var(--softb);color:#345f91}
+.healthgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.health{border:1px solid var(--border);border-radius:13px;padding:11px}.health .value{font-size:18px;font-weight:800;margin-top:5px}
+.progress{height:9px;background:#e7ebe5;border-radius:999px;overflow:hidden}.progress span{display:block;height:100%;background:var(--g)}
+.listitem{display:flex;align-items:center;gap:9px;padding:9px 0;border-top:1px solid var(--border);font-size:12px}.listitem:first-of-type{border-top:0}
+.table{border:1px solid var(--border);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1.15fr .8fr .8fr .8fr .85fr .8fr;gap:8px;padding:10px 12px;border-top:1px solid var(--border);font-size:12px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.alert{border-left:5px solid var(--r);background:#fffafa}.warn{border-left:5px solid var(--y);background:#fffdf3}
+.storage{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.storageitem{border:1px solid var(--border);border-radius:12px;padding:10px}.storageitem b{font-size:11px}.storageitem .value{font-size:17px;font-weight:800;margin-top:5px}
+.syncview{display:none;padding:18px}.syncgrid{display:grid;grid-template-columns:1.25fr .75fr;gap:14px}
+.audit{display:none;padding:18px}.audit .tr{grid-template-columns:1.15fr .95fr .95fr .9fr .8fr}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(620px,100%);background:#fff;border-radius:18px;border:1px solid var(--border);padding:16px}
+@media(max-width:1050px){.c4,.c5,.c6,.c7,.c8{grid-column:span 12}.desktop{grid-template-columns:175px 1fr}.syncgrid{grid-template-columns:1fr}.healthgrid{grid-template-columns:repeat(2,1fr)}.storage{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 12</div><div class="h1">System Health & Sync Health</div></div>
+  <div class="switch">
+    <button id="systemBtn" class="active">System Health</button>
+    <button id="syncBtn">Sync Health</button>
+    <button id="auditBtn">Remote Action Audit</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section class="desktop" id="system">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Management</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">Operations</div>
+      <button>👥 Employees</button><button>🕒 Presence & Shifts</button><button>🏖 Time Off</button><button>🛠 Support</button>
+      <div class="navlabel">System</div>
+      <button class="active">🩺 System Health</button><button>↻ Sync Health</button><button>⚙ Settings</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">Production · Realtime</div><h2>System Health</h2></div>
+      <div style="display:flex;gap:8px"><button class="btn">Refresh</button><button class="btn">Maintenance Mode</button></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="sub">Overall Status</div><div class="num" style="color:var(--g)">Healthy</div></div>
+      <div class="stat"><div class="sub">Storage Used</div><div class="num">61%</div></div>
+      <div class="stat"><div class="sub">Last Backup</div><div class="num">12:30</div><div class="sub">AM · Success</div></div>
+      <div class="stat"><div class="sub">Open Critical Errors</div><div class="num" style="color:var(--r)">0</div></div>
+    </div>
+
+    <div class="grid12">
+      <section class="card c8">
+        <div class="between"><div><b>Core Services</b><div class="sub">Server, database, push, backups, production and staging</div></div><span class="badge green">ALL HEALTHY</span></div>
+        <div class="healthgrid" style="margin-top:12px">
+          <div class="health"><b>Application Server</b><div class="value">Online</div><div class="sub">18% CPU · 42% RAM</div></div>
+          <div class="health"><b>Database</b><div class="value">Healthy</div><div class="sub">22 ms response</div></div>
+          <div class="health"><b>Push Notifications</b><div class="value">Healthy</div><div class="sub">Last test 2m ago</div></div>
+          <div class="health"><b>Backups</b><div class="value">Success</div><div class="sub">Dropbox · 12:30 AM</div></div>
+          <div class="health"><b>Production</b><div class="value">v1.8.4</div><div class="sub">Deployed Aug 9</div></div>
+          <div class="health"><b>Staging</b><div class="value">v1.8.5-rc1</div><div class="sub">Ready for validation</div></div>
+        </div>
+      </section>
+
+      <section class="card c4 warn">
+        <div class="between"><div><b>Attention Needed</b><div class="sub">Non-critical issues</div></div><span class="badge yellow">2</span></div>
+        <div class="listitem"><div class="grow"><b>2 devices behind current PWA cache</b><div class="sub">Tiffany · Sharon</div></div><button class="btn" style="padding:6px 8px">Open</button></div>
+        <div class="listitem"><div class="grow"><b>Storage trending upward</b><div class="sub">Chat attachments +14% this month</div></div><button class="btn" style="padding:6px 8px">Review</button></div>
+      </section>
+
+      <section class="card c12">
+        <div class="between"><div><b>Storage</b><div class="sub">Alert threshold: 80%</div></div><span class="badge green">61% USED</span></div>
+        <div class="progress" style="margin-top:12px"><span style="width:61%"></span></div>
+        <div class="storage" style="margin-top:12px">
+          <div class="storageitem"><b>Documents</b><div class="value">18.4 GB</div></div>
+          <div class="storageitem"><b>Chat Attachments</b><div class="value">12.7 GB</div></div>
+          <div class="storageitem"><b>Profile Photos</b><div class="value">1.3 GB</div></div>
+          <div class="storageitem"><b>Database</b><div class="value">6.1 GB</div></div>
+          <div class="storageitem"><b>App Assets</b><div class="value">2.2 GB</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+          <button class="btn">Open Storage Cleanup</button>
+          <button class="btn">Clear Safe Cache</button>
+        </div>
+      </section>
+
+      <section class="card c6">
+        <div class="between"><div><b>Backup Health</b><div class="sub">Daily 12:30 AM Central · retain 7 days</div></div><span class="badge green">SUCCESS</span></div>
+        <div class="listitem"><div class="grow"><b>Aug 10 · 12:30 AM</b><div class="sub">Encrypted · Dropbox upload successful</div></div><span class="badge green">OK</span></div>
+        <div class="listitem"><div class="grow"><b>Aug 9 · 12:30 AM</b><div class="sub">Encrypted · Dropbox upload successful</div></div><span class="badge green">OK</span></div>
+        <button class="btn" style="margin-top:8px">Open Backup Details</button>
+      </section>
+
+      <section class="card c6">
+        <div class="between"><div><b>Recent System Events</b><div class="sub">Important operational events only</div></div><button class="btn">Full Log</button></div>
+        <div class="listitem"><div class="grow"><b>PWA cache mismatch detected</b><div class="sub">11:06 AM · 2 devices</div></div><span class="badge yellow">WARNING</span></div>
+        <div class="listitem"><div class="grow"><b>Backup completed</b><div class="sub">12:34 AM · Dropbox</div></div><span class="badge green">SUCCESS</span></div>
+        <div class="listitem"><div class="grow"><b>Production health check passed</b><div class="sub">Aug 9 · v1.8.4</div></div><span class="badge green">PASS</span></div>
+      </section>
+    </div>
+  </main>
+</section>
+
+<section class="syncview" id="sync">
+  <div class="header">
+    <div><div class="sub">Management</div><h2>Sync Health</h2></div>
+    <div style="display:flex;gap:8px"><button class="btn">Refresh All</button><button class="btn">Filters</button></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="sub">Healthy Devices</div><div class="num">21</div></div>
+    <div class="stat"><div class="sub">Warnings</div><div class="num" style="color:#a47a00">2</div></div>
+    <div class="stat"><div class="sub">Failed Sync</div><div class="num" style="color:var(--r)">1</div></div>
+    <div class="stat"><div class="sub">Pending Actions</div><div class="num">5</div></div>
+  </div>
+
+  <div class="syncgrid">
+    <section class="card">
+      <div class="between"><div><b>User / Device Sync Status</b><div class="sub">Realtime across active browsers and devices</div></div><button class="btn">⌕ Search</button></div>
+      <div class="table" style="margin-top:12px">
+        <div class="tr"><span>User</span><span>Browser</span><span>Last Success</span><span>Pending</span><span>Status</span><span>Action</span></div>
+        <div class="tr"><span>Ashley Boggess</span><span>Chrome</span><span>Now</span><span>0</span><span><span class="badge green">HEALTHY</span></span><span><button class="btn" style="padding:6px 8px">Open</button></span></div>
+        <div class="tr"><span>Tiffany Nelson</span><span>Edge</span><span>7m ago</span><span>2</span><span><span class="badge yellow">WARNING</span></span><span><button class="btn" style="padding:6px 8px" onclick="openAction('Tiffany Nelson','Force PWA data refresh')">Refresh</button></span></div>
+        <div class="tr"><span>Sharon Coleman</span><span>Chrome</span><span>18m ago</span><span>2</span><span><span class="badge red">FAILED</span></span><span><button class="btn primary" style="padding:6px 8px" onclick="openAction('Sharon Coleman','Remote resync')">Resync</button></span></div>
+        <div class="tr"><span>Courtney Wathen</span><span>Chrome</span><span>1m ago</span><span>1</span><span><span class="badge green">HEALTHY</span></span><span><button class="btn" style="padding:6px 8px">Open</button></span></div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card alert">
+        <div class="between"><div><b>Repeated Failure</b><div class="sub">Sharon Coleman · Chrome</div></div><span class="badge red">SERIOUS</span></div>
+        <div class="sub" style="margin-top:8px;line-height:1.5">PWA closed, last successful sync 18 minutes ago, 2 pending actions, automatic retry exhausted.</div>
+        <div style="display:flex;gap:8px;margin-top:11px;flex-wrap:wrap">
+          <button class="btn primary" onclick="openAction('Sharon Coleman','Remote resync')">Remote Resync</button>
+          <button class="btn" onclick="openAction('Sharon Coleman','Clear safe local sync cache')">Clear Safe Cache</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <b>Management Actions</b>
+        <div class="listitem"><div class="grow">Remote resync</div><span class="badge">AUDITED</span></div>
+        <div class="listitem"><div class="grow">Clear safe local sync cache</div><span class="badge">AUDITED</span></div>
+        <div class="listitem"><div class="grow">Force PWA data refresh</div><span class="badge">AUDITED</span></div>
+        <div class="listitem"><div class="grow">Force update/refresh</div><span class="badge">ROLE CONTROLLED</span></div>
+      </div>
+
+      <div class="card warn" style="margin-top:12px">
+        <b>Offline Queue Rule</b>
+        <div class="sub" style="margin-top:6px;line-height:1.55">Safe actions may remain Pending Sync and retry automatically. Sensitive or business-critical actions are never silently queued offline.</div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="audit" id="audit">
+  <div class="header">
+    <div><div class="sub">Management Audit</div><h2>Remote Sync Actions</h2></div>
+    <button class="btn">Last 90 Days</button>
+  </div>
+  <div class="table">
+    <div class="tr"><span>User / Device</span><span>Action</span><span>Manager</span><span>Time</span><span>Result</span></div>
+    <div class="tr"><span>Tiffany Nelson · Edge</span><span>Force data refresh</span><span>Jonathan</span><span>11:26 AM</span><span><span class="badge green">SUCCESS</span></span></div>
+    <div class="tr"><span>Sharon Coleman · Chrome</span><span>Remote resync</span><span>David</span><span>11:17 AM</span><span><span class="badge red">FAILED</span></span></div>
+    <div class="tr"><span>Ashley Boggess · Chrome</span><span>Clear safe cache</span><span>Jonathan</span><span>Aug 9 · 4:21 PM</span><span><span class="badge green">SUCCESS</span></span></div>
+  </div>
+  <div class="sub" style="margin-top:10px">Audit retention: 90 days.</div>
+</section>
+
+</div>
+
+<div class="modal" id="actionModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Remote Device Action</div><div id="actionTitle" style="font-size:20px;font-weight:800">Remote resync</div></div><button class="btn" onclick="closeAction()">Close</button></div>
+    <div style="margin-top:14px;border:1px solid var(--border);border-radius:13px;padding:12px">
+      <div class="sub">Target</div><b id="actionUser">Sharon Coleman</b>
+    </div>
+    <div class="sub" style="margin-top:12px;line-height:1.55">This action will be recorded with manager, target user/device, action, Central Time, and success/failure result.</div>
+    <button class="btn primary" style="width:100%;margin-top:14px;padding:12px" onclick="runAction()">Run Action</button>
+    <div id="actionResult" class="sub" style="text-align:center;margin-top:9px"></div>
+  </div>
+</div>
+
+<script>
+const system=document.getElementById('system'),sync=document.getElementById('sync'),audit=document.getElementById('audit');
+const sb=document.getElementById('systemBtn'),yb=document.getElementById('syncBtn'),ab=document.getElementById('auditBtn');
+function show(v){
+  system.style.display='none';sync.style.display='none';audit.style.display='none';
+  [sb,yb,ab].forEach(x=>x.classList.remove('active'));
+  if(v==='s'){system.style.display='grid';sb.classList.add('active')}
+  if(v==='y'){sync.style.display='block';yb.classList.add('active')}
+  if(v==='a'){audit.style.display='block';ab.classList.add('active')}
+}
+sb.onclick=()=>show('s');yb.onclick=()=>show('y');ab.onclick=()=>show('a');
+
+function openAction(user,action){
+  document.getElementById('actionUser').textContent=user;
+  document.getElementById('actionTitle').textContent=action;
+  document.getElementById('actionResult').textContent='';
+  document.getElementById('actionModal').classList.add('open');
+}
+function closeAction(){document.getElementById('actionModal').classList.remove('open')}
+function runAction(){document.getElementById('actionResult').textContent='Action completed successfully and was added to the 90-day audit log.'}
+</script>
+</body>
+</html>

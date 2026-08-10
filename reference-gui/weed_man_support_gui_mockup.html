@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Support Mockup</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+  --bg:#f6f7f5;--panel:#fff;--border:#dfe4dd;--text:#20251f;--muted:#6f786f;
+  --chip:#eef2ed;--softg:#e8f2ea;--softy:#fff6c8;--softr:#fdeaea;--softb:#eaf1fb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow,.sub{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:750}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--border);background:#fff;padding:9px 12px;border-radius:12px;color:var(--text)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:#fff;min-height:735px}
+.desktop{display:grid;grid-template-columns:200px 1fr;min-height:735px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:12px 10px 5px}
+.nav button{width:100%;display:block;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:15px}.header h2{margin:0;font-size:23px}
+.card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px}.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.row{display:flex;align-items:center;gap:9px}.grow{flex:1;min-width:0}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);white-space:nowrap}.badge.green{background:var(--softg);color:var(--gd)}.badge.yellow{background:var(--softy);color:#665700}.badge.red{background:var(--softr);color:#982f2f}.badge.blue{background:var(--softb);color:#345f91}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--border);border-radius:14px;padding:12px}.num{font-size:28px;font-weight:800}
+.ticketlist{display:grid;grid-template-columns:360px minmax(0,1fr);gap:14px}.listpane{border:1px solid var(--border);border-radius:16px;overflow:hidden}.search{padding:12px;border-bottom:1px solid var(--border)}.search input{width:100%;border:1px solid var(--border);border-radius:11px;padding:9px}
+.ticket{padding:12px;border-top:1px solid var(--border);cursor:pointer;background:#fff}.ticket:first-of-type{border-top:0}.ticket.active{background:var(--softg)}.ticket:hover{background:#f7faf6}
+.tid{font-size:11px;font-weight:800;color:var(--g)}.ticket h3{font-size:13px;margin:4px 0}.ticket .meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
+.detail{border:1px solid var(--border);border-radius:16px;overflow:hidden}.detailhead{padding:14px;border-bottom:1px solid var(--border)}.detailbody{padding:14px}
+.timeline{margin-top:12px}.event{display:grid;grid-template-columns:28px 1fr;gap:9px;padding:9px 0}.dotline{position:relative}.dotline:before{content:"";position:absolute;left:13px;top:22px;bottom:-12px;width:2px;background:var(--border)}.event:last-child .dotline:before{display:none}.edot{width:28px;height:28px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:12px}.edot.green{background:var(--softg)}.edot.yellow{background:var(--softy)}.edot.red{background:var(--softr)}
+.eventcontent{font-size:12px}.eventcontent b{display:block;margin-bottom:2px}
+.replybox{margin-top:14px;border:1px solid var(--border);border-radius:14px;padding:10px;background:#fbfcfa}.replybox textarea{width:100%;border:0;resize:vertical;min-height:75px;background:transparent;outline:none}.replycontrols{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.employee{display:none;padding:18px}.empgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:15px}.reportcard{border:1px solid var(--border);border-radius:16px;padding:15px}.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:11px;padding:10px;background:#fff}
+.autobox{border:1px solid #dce3dc;border-radius:13px;background:#f8faf8;padding:11px;margin-top:12px}.autogrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.autoitem{font-size:11px;color:var(--muted)}.autoitem b{display:block;color:var(--text);font-size:12px;margin-top:2px}
+.mobile{display:none;max-width:390px;margin:auto;min-height:735px;background:#fff}.mobilehead{padding:15px;border-bottom:1px solid var(--border)}.mobilebody{padding:12px 12px 92px}.mobileticket{border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px}.mobilebottom{position:sticky;bottom:0;border-top:1px solid var(--border);background:#fff;padding:9px 8px}.tabs{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;text-align:center;font-size:11px}.addsale{width:56px;height:56px;margin:-28px auto 0;border-radius:50%;border:4px solid var(--y);background:var(--g);color:#fff;font-size:26px}
+.advanced{display:none;padding:18px}.advgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.logbox{background:#1f2420;color:#e7ece7;border-radius:14px;padding:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.6;min-height:180px;overflow:auto}.techgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tech{border:1px solid var(--border);border-radius:12px;padding:10px}.tech b{font-size:11px}.tech .sub{margin-top:3px}
+.similar{border-left:5px solid var(--y);background:#fffdf3}
+@media(max-width:1000px){.ticketlist,.empgrid,.advgrid{grid-template-columns:1fr}.desktop{grid-template-columns:170px 1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 11</div><div class="h1">Support / Report a Problem</div></div>
+  <div class="switch">
+    <button id="queueBtn" class="active">Support Queue</button>
+    <button id="employeeBtn">Employee Report</button>
+    <button id="mobileBtn">Mobile</button>
+    <button id="advancedBtn">Advanced Troubleshooting</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section class="desktop" id="queue">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Management</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">Operations</div>
+      <button>🕒 Presence & Shifts</button><button>🏖 Time Off</button><button>👥 Employees</button>
+      <div class="navlabel">System</div>
+      <button class="active">🛠 Support Queue <span style="float:right;background:var(--g);color:white;padding:2px 7px;border-radius:999px;font-size:11px">4</span></button>
+      <button>↻ Sync Health</button><button>⚙ Settings</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">Employee Support · Realtime</div><h2>Support Queue</h2></div>
+      <div style="display:flex;gap:8px"><button class="btn">Filters</button><button class="btn">⌕ Search</button></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="sub">Open</div><div class="num">4</div></div>
+      <div class="stat"><div class="sub">In Progress</div><div class="num">3</div></div>
+      <div class="stat"><div class="sub">Waiting on User</div><div class="num">2</div></div>
+      <div class="stat"><div class="sub">Critical / High</div><div class="num" style="color:var(--r)">2</div></div>
+    </div>
+
+    <div class="ticketlist">
+      <section class="listpane">
+        <div class="search"><input placeholder="Search ticket ID, employee, issue…"></div>
+
+        <div class="ticket active" onclick="selectTicket(this,'SUP-2026-00142','PWA freezes after opening Resources','Tiffany Nelson','HIGH','In Progress')">
+          <div class="between"><span class="tid">SUP-2026-00142</span><span class="badge red">HIGH</span></div>
+          <h3>PWA freezes after opening Resources</h3>
+          <div class="sub">Tiffany Nelson · Browser/PWA</div>
+          <div class="meta"><span class="badge blue">IN PROGRESS</span><span class="badge">Assigned: Jonathan</span></div>
+        </div>
+
+        <div class="ticket" onclick="selectTicket(this,'SUP-2026-00141','Headset not detected by browser','Ashley Boggess','NORMAL','Open')">
+          <div class="between"><span class="tid">SUP-2026-00141</span><span class="badge">NORMAL</span></div>
+          <h3>Headset not detected by browser</h3>
+          <div class="sub">Ashley Boggess · Computer</div>
+          <div class="meta"><span class="badge yellow">OPEN</span><span class="badge">Unassigned</span></div>
+        </div>
+
+        <div class="ticket" onclick="selectTicket(this,'SUP-2026-00140','Unable to submit Add Sale','Sharon Coleman','CRITICAL','Open')">
+          <div class="between"><span class="tid">SUP-2026-00140</span><span class="badge red">CRITICAL</span></div>
+          <h3>Unable to submit Add Sale</h3>
+          <div class="sub">Sharon Coleman · Browser/PWA</div>
+          <div class="meta"><span class="badge yellow">OPEN</span><span class="badge">Assigned: David</span></div>
+        </div>
+
+        <div class="ticket" onclick="selectTicket(this,'SUP-2026-00139','Internet instability during shift','Courtney Wathen','NORMAL','Waiting on User')">
+          <div class="between"><span class="tid">SUP-2026-00139</span><span class="badge">NORMAL</span></div>
+          <h3>Internet instability during shift</h3>
+          <div class="sub">Courtney Wathen · Internet</div>
+          <div class="meta"><span class="badge">WAITING ON USER</span></div>
+        </div>
+      </section>
+
+      <section class="detail">
+        <div class="detailhead">
+          <div class="between">
+            <div>
+              <div id="dId" class="tid">SUP-2026-00142</div>
+              <div id="dTitle" style="font-size:20px;font-weight:800;margin-top:3px">PWA freezes after opening Resources</div>
+              <div id="dUser" class="sub" style="margin-top:4px">Tiffany Nelson · Browser/PWA</div>
+            </div>
+            <div class="row"><span id="dPriority" class="badge red">HIGH</span><span id="dStatus" class="badge blue">IN PROGRESS</span></div>
+          </div>
+        </div>
+
+        <div class="detailbody">
+          <div class="between">
+            <div><b style="font-size:13px">Reported Details</b><div class="sub" style="margin-top:4px">The app freezes for several seconds after opening the pricing folder. It started this morning.</div></div>
+            <button class="btn">📎 Screenshot.png</button>
+          </div>
+
+          <div class="autobox">
+            <div class="between"><b style="font-size:13px">Automatic Technical Context</b><span class="badge green">CAPTURED</span></div>
+            <div class="autogrid">
+              <div class="autoitem">App Version<b>v1.8.4</b></div>
+              <div class="autoitem">Browser<b>Edge 151</b></div>
+              <div class="autoitem">Device<b>Windows 11 Desktop</b></div>
+              <div class="autoitem">Page<b>/resources/pricing/2026</b></div>
+              <div class="autoitem">Reported<b>11:07 AM Central</b></div>
+              <div class="autoitem">Last Sync<b>11:06:51 AM</b></div>
+            </div>
+          </div>
+
+          <div class="card similar" style="margin-top:12px">
+            <div class="between"><div><b style="font-size:13px">Possible Related Issue</b><div class="sub" style="margin-top:4px">2 other users reported slow or frozen Resources views today.</div></div><button class="btn">View Similar Tickets</button></div>
+          </div>
+
+          <div class="timeline">
+            <div class="event"><div class="dotline"><div class="edot green">＋</div></div><div class="eventcontent"><b>Ticket created · 11:07 AM</b>Tiffany submitted a Browser/PWA issue with screenshot.</div></div>
+            <div class="event"><div class="dotline"><div class="edot yellow">!</div></div><div class="eventcontent"><b>Priority suggested: High · 11:07 AM</b>System detected repeated Resources-related reports and a sync warning.</div></div>
+            <div class="event"><div class="dotline"><div class="edot">→</div></div><div class="eventcontent"><b>Assigned to Jonathan · 11:09 AM</b>Status changed from Open to In Progress.</div></div>
+            <div class="event"><div class="dotline"><div class="edot">💬</div></div><div class="eventcontent"><b>Employee reply · 11:18 AM</b>“It happens mostly when I open the PDF preview.”</div></div>
+            <div class="event"><div class="dotline"><div class="edot">🔒</div></div><div class="eventcontent"><b>Internal note · 11:22 AM</b>Likely browser cache or renderer issue. Check Sync Health before forcing refresh.</div></div>
+          </div>
+
+          <div class="replybox">
+            <textarea placeholder="Write a reply or internal note…"></textarea>
+            <div class="replycontrols">
+              <div class="row">
+                <select><option>Employee Reply</option><option>Internal Note</option></select>
+                <select><option>Keep In Progress</option><option>Waiting on User</option><option>Resolved</option></select>
+              </div>
+              <button class="btn primary">Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</section>
+
+<section class="employee" id="employee">
+  <div class="header">
+    <div><div class="sub">Employee Support</div><h2>Report a Problem</h2></div>
+    <button class="btn">My Support Tickets</button>
+  </div>
+
+  <div class="empgrid">
+    <section class="reportcard">
+      <div class="field"><label>Issue Type</label><select><option>Browser / PWA</option><option>Internet</option><option>Computer</option><option>Other</option></select></div>
+      <div class="field"><label>What happened?</label><textarea rows="6" placeholder="Describe the problem and what you were doing when it happened.">The app freezes for several seconds after I open the pricing folder in Resources.</textarea></div>
+      <div class="field"><label>Attachment</label><input type="file" accept=".png,.jpg,.jpeg,.pdf,.docx,.xlsx,.pptx"></div>
+
+      <div class="autobox">
+        <b style="font-size:13px">We’ll include this automatically</b>
+        <div class="autogrid">
+          <div class="autoitem">App Version<b>v1.8.4</b></div>
+          <div class="autoitem">Browser<b>Edge 151</b></div>
+          <div class="autoitem">Device<b>Windows 11 Desktop</b></div>
+          <div class="autoitem">Current Page<b>Resources / Pricing</b></div>
+          <div class="autoitem">Timestamp<b>Central Time</b></div>
+          <div class="autoitem">Presence Log<b>Relevant activity only</b></div>
+        </div>
+      </div>
+
+      <button class="btn primary" style="width:100%;padding:12px;margin-top:13px" onclick="submitReport()">Submit Report</button>
+      <div id="reportMsg" class="sub" style="text-align:center;margin-top:9px"></div>
+    </section>
+
+    <aside>
+      <div class="card softg">
+        <b>What happens next?</b>
+        <div class="sub" style="margin-top:6px;line-height:1.6">Management receives the ticket in real time. You can see replies and status changes in the app. Reporting an issue does not automatically pause presence monitoring. A manager can grant technical grace if appropriate.</div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <div class="between"><b>My Recent Tickets</b><span class="badge green">2 OPEN</span></div>
+        <div class="listitem" style="margin-top:6px;border-top:0;padding-top:0"><div class="grow"><b>SUP-2026-00142</b><div class="sub">Resources freezing</div></div><span class="badge blue">IN PROGRESS</span></div>
+        <div class="listitem"><div class="grow"><b>SUP-2026-00130</b><div class="sub">Microphone permission</div></div><span class="badge green">RESOLVED</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="mobile" id="mobile">
+  <div class="mobilehead">
+    <div class="between"><div><div class="sub">Help</div><div style="font-size:20px;font-weight:800">Support</div></div><button class="btn" onclick="showEmployee()">Report</button></div>
+  </div>
+
+  <div class="mobilebody">
+    <div class="mobileticket">
+      <div class="between"><span class="tid">SUP-2026-00142</span><span class="badge red">HIGH</span></div>
+      <div style="font-weight:800;margin-top:5px">PWA freezes after opening Resources</div>
+      <div class="sub" style="margin-top:4px">Updated 11:22 AM</div>
+      <div style="margin-top:9px"><span class="badge blue">IN PROGRESS</span></div>
+    </div>
+    <div class="mobileticket">
+      <div class="between"><span class="tid">SUP-2026-00130</span><span class="badge">NORMAL</span></div>
+      <div style="font-weight:800;margin-top:5px">Microphone permission issue</div>
+      <div class="sub" style="margin-top:4px">Resolved Aug 8</div>
+      <div style="margin-top:9px"><span class="badge green">RESOLVED</span></div>
+    </div>
+
+    <div class="card softg">
+      <b>Need help?</b>
+      <div class="sub" style="margin-top:5px;line-height:1.55">Report a problem and the app will attach the technical details management needs without exposing raw logs to employees.</div>
+      <button class="btn primary" style="width:100%;margin-top:10px" onclick="showEmployee()">Report a Problem</button>
+    </div>
+  </div>
+
+  <div class="mobilebottom"><div class="tabs"><div>Sales</div><div>Chat</div><div><button class="addsale">＋</button></div><div>Tasks</div><div style="color:var(--g);font-weight:700">Menu</div></div></div>
+</section>
+
+<section class="advanced" id="advanced">
+  <div class="header">
+    <div><div class="sub">Sales Manager / Owner</div><h2>Advanced Troubleshooting</h2></div>
+    <div style="display:flex;gap:8px"><button class="btn">Link Related Record</button><button class="btn primary">Force PWA Refresh</button></div>
+  </div>
+
+  <div class="advgrid">
+    <section class="card">
+      <div class="between"><div><span class="tid">SUP-2026-00142</span><div style="font-size:18px;font-weight:800;margin-top:3px">PWA freezes after opening Resources</div><div class="sub">Tiffany Nelson</div></div><span class="badge red">HIGH</span></div>
+
+      <div class="techgrid" style="margin-top:14px">
+        <div class="tech"><b>App Version</b><div class="sub">v1.8.4</div></div>
+        <div class="tech"><b>Browser</b><div class="sub">Edge 151</div></div>
+        <div class="tech"><b>Device</b><div class="sub">Windows 11</div></div>
+        <div class="tech"><b>Last Sync</b><div class="sub">11:06:51 AM</div></div>
+        <div class="tech"><b>Pending Sync</b><div class="sub">2 actions</div></div>
+        <div class="tech"><b>Cache Version</b><div class="sub">1 behind</div></div>
+      </div>
+
+      <div class="card similar" style="margin-top:12px">
+        <b style="font-size:13px">System Correlation</b>
+        <div class="sub" style="margin-top:5px;line-height:1.5">This ticket appears related to Sync Health issue SYNC-Resources-0810 and 2 similar employee reports.</div>
+        <div style="display:flex;gap:8px;margin-top:9px"><button class="btn">Open Sync Health</button><button class="btn">Link Tickets</button></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="between"><div><b>Technical Diagnostics</b><div class="sub">Management-only detail</div></div><span class="badge">LATEST</span></div>
+      <div class="logbox" style="margin-top:12px">11:06:48 resource-render start folder=/pricing/2026
+11:06:49 cache-check local=1.8.3 required=1.8.4 mismatch=true
+11:06:50 pdf-preview renderer init
+11:06:51 websocket reconnect attempt=1
+11:06:51 sync pending_actions=2
+11:06:52 renderer stall duration=4220ms
+11:06:56 resource-render recovered
+11:07:03 support-ticket created SUP-2026-00142</div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn">Remote Resync</button>
+        <button class="btn">Clear Safe Sync Cache</button>
+        <button class="btn primary">Force Data Refresh</button>
+      </div>
+      <div class="sub" style="margin-top:8px">Remote troubleshooting actions are audited with manager, user/device, action, time and result.</div>
+    </section>
+  </div>
+</section>
+
+</div>
+
+<script>
+const queue=document.getElementById('queue'),employee=document.getElementById('employee'),mobile=document.getElementById('mobile'),advanced=document.getElementById('advanced');
+const qb=document.getElementById('queueBtn'),eb=document.getElementById('employeeBtn'),mb=document.getElementById('mobileBtn'),ab=document.getElementById('advancedBtn');
+function show(v){
+  queue.style.display='none';employee.style.display='none';mobile.style.display='none';advanced.style.display='none';
+  [qb,eb,mb,ab].forEach(x=>x.classList.remove('active'));
+  if(v==='q'){queue.style.display='grid';qb.classList.add('active')}
+  if(v==='e'){employee.style.display='block';eb.classList.add('active')}
+  if(v==='m'){mobile.style.display='block';mb.classList.add('active')}
+  if(v==='a'){advanced.style.display='block';ab.classList.add('active')}
+}
+qb.onclick=()=>show('q');eb.onclick=()=>show('e');mb.onclick=()=>show('m');ab.onclick=()=>show('a');
+function showEmployee(){show('e')}
+function submitReport(){document.getElementById('reportMsg').textContent='Submitted as SUP-2026-00143 · Status: Open';}
+
+function selectTicket(el,id,title,user,priority,status){
+  document.querySelectorAll('.ticket').forEach(x=>x.classList.remove('active'));el.classList.add('active');
+  document.getElementById('dId').textContent=id;
+  document.getElementById('dTitle').textContent=title;
+  document.getElementById('dUser').textContent=user;
+  const p=document.getElementById('dPriority');p.textContent=priority;p.className='badge '+((priority==='HIGH'||priority==='CRITICAL')?'red':'');
+  const s=document.getElementById('dStatus');s.textContent=status.toUpperCase();s.className='badge '+(status==='In Progress'?'blue':status==='Open'?'yellow':'');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Weed Man Sales Hub - Directory & Profiles Mockup</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;
+  --bg:#f6f7f5;--panel:#ffffff;--card:#ffffff;--border:#dfe4dd;
+  --text:#20251f;--muted:#6f786f;--chip:#eef2ed;--softg:#e8f2ea;--softy:#fff6c8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:700}
+.switch{display:flex;gap:8px}.switch button,.btn{border:1px solid var(--border);background:var(--panel);padding:9px 12px;border-radius:12px;color:var(--text)}
+.switch button.active,.btn.primary{background:var(--g);color:white;border-color:var(--g)}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--panel);min-height:700px}
+.desktop{display:grid;grid-template-columns:190px 1fr;min-height:700px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.nav button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px;color:var(--text)}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:650}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.header h2{margin:0;font-size:22px}.sub{color:var(--muted);font-size:13px}
+.searchrow{display:flex;gap:8px;margin-bottom:14px}.searchrow input{flex:1;border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fff}.searchrow select{border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fff}
+.peoplegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.person{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px;transition:.15s}
+.person:hover{box-shadow:0 6px 20px rgba(0,0,0,.05);transform:translateY(-1px)}
+.phead{display:flex;gap:11px;align-items:flex-start}.avatar{width:48px;height:48px;border-radius:14px;background:var(--softg);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--g);position:relative;flex:0 0 auto}
+.presence{position:absolute;right:-2px;bottom:-2px;width:14px;height:14px;border-radius:50%;border:3px solid white;background:#27a85c}.presence.away{background:#e1b522}.presence.busy{background:#d85555}.presence.dnd{background:#b33b3b}
+.role{font-size:12px;color:var(--muted);margin-top:2px}.statusline{margin-top:10px;padding:8px 10px;border-radius:10px;background:var(--chip);font-size:12px;color:var(--muted)}
+.details{margin-top:10px;font-size:12px;line-height:1.7;color:var(--muted)}
+.actions{display:flex;gap:7px;margin-top:12px}.actions button{flex:1;border:1px solid var(--border);background:#fff;padding:8px;border-radius:10px;font-size:12px}.actions .message{background:var(--g);border-color:var(--g);color:#fff}
+.mobilewrap{display:none;max-width:390px;margin:auto;min-height:710px;background:#fff}.mobilehead{padding:15px;border-bottom:1px solid var(--border)}.mobilebody{padding:12px 12px 92px}
+.mobileperson{display:flex;gap:11px;align-items:center;border-bottom:1px solid var(--border);padding:12px 2px}.mobileperson:last-child{border-bottom:0}.mobilebottom{position:sticky;bottom:0;border-top:1px solid var(--border);background:#fff;padding:9px 8px}.tabs{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;text-align:center;font-size:11px}.addsale{width:56px;height:56px;margin:-28px auto 0;border-radius:50%;border:4px solid var(--y);background:var(--g);color:#fff;font-size:26px}
+.management{display:none;padding:18px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:15px}.stat{border:1px solid var(--border);border-radius:15px;background:#fff;padding:13px}.num{font-size:27px;font-weight:800}
+.table{border:1px solid var(--border);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1.2fr .8fr .8fr .85fr .85fr .8fr;gap:10px;padding:10px 12px;border-top:1px solid var(--border);font-size:13px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.badge{font-size:10px;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);font-weight:700}.badge.green{background:var(--softg);color:var(--gd)}.badge.red{background:#fdeaea;color:#9b2e2e}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}
+.modalbox{width:min(760px,100%);max-height:92vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:18px;padding:16px}
+.profilehead{display:flex;gap:14px;align-items:center}.bigavatar{width:84px;height:84px;border-radius:22px;background:var(--softg);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:var(--g);position:relative}
+.profilegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.box{border:1px solid var(--border);border-radius:14px;padding:13px}.box h3{font-size:13px;margin:0 0 9px}.item{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--border);font-size:12px}.item:first-of-type{border-top:0}.label{color:var(--muted)}
+@media(max-width:980px){.peoplegrid{grid-template-columns:repeat(2,minmax(0,1fr))}.desktop{grid-template-columns:160px 1fr}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 7</div><div class="h1">Employee Directory & Profiles</div></div>
+  <div class="switch">
+    <button class="active" id="deskBtn">Employee Desktop</button>
+    <button id="mobBtn">Mobile</button>
+    <button id="mgrBtn">Management View</button>
+  </div>
+</div>
+
+<div class="shell">
+<section class="desktop" id="desktop">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Sales Hub</small></div></div>
+    <div class="nav">
+      <button>★ Sales Dashboard</button><button>★ Chat</button><button>📣 Announcements</button><button>✓ Tasks</button><button>▤ Forms</button><button>📁 Resources</button><button class="active">👥 Directory</button>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">People</div><h2>Employee Directory</h2></div>
+      <button class="btn">My Profile</button>
+    </div>
+
+    <div class="searchrow">
+      <input placeholder="Search name, role, branch, email or phone…">
+      <select><option>All Roles</option><option>Sales Agent</option><option>Sales Supervisor</option><option>Sales Manager</option><option>Owner</option></select>
+      <select><option>All Branches</option><option>Owensboro</option><option>Evansville</option><option>Bowling Green</option><option>Paducah</option></select>
+    </div>
+
+    <div class="peoplegrid">
+      <div class="person" onclick="openProfile('Ashley Boggess','AB','Sales Agent','Owensboro','Available')">
+        <div class="phead"><div class="avatar">AB<span class="presence"></span></div><div><b>Ashley Boggess</b><div class="role">Sales Agent · Owensboro</div></div></div>
+        <div class="statusline">Available · “Working OP campaign”</div>
+        <div class="details">ashley@company.com<br>(270) 555-0102</div>
+        <div class="actions"><button class="message" onclick="event.stopPropagation()">Message</button><button>View Profile</button></div>
+      </div>
+
+      <div class="person" onclick="openProfile('Tiffany Nelson','TN','Sales Agent','Evansville','Away')">
+        <div class="phead"><div class="avatar">TN<span class="presence away"></span></div><div><b>Tiffany Nelson</b><div class="role">Sales Agent · Evansville</div></div></div>
+        <div class="statusline">Away · Last active 8 minutes ago</div>
+        <div class="details">tiffany@company.com<br>(812) 555-0114</div>
+        <div class="actions"><button class="message" onclick="event.stopPropagation()">Message</button><button>View Profile</button></div>
+      </div>
+
+      <div class="person" onclick="openProfile('Courtney Wathen','CW','Sales Agent','Bowling Green','Busy')">
+        <div class="phead"><div class="avatar">CW<span class="presence busy"></span></div><div><b>Courtney Wathen</b><div class="role">Sales Agent · Bowling Green</div></div></div>
+        <div class="statusline">Busy · “Customer call”</div>
+        <div class="details">courtney@company.com<br>(270) 555-0183</div>
+        <div class="actions"><button class="message" onclick="event.stopPropagation()">Message</button><button>View Profile</button></div>
+      </div>
+
+      <div class="person" onclick="openProfile('David','DW','Sales Manager','Owensboro','DND')">
+        <div class="phead"><div class="avatar">DW<span class="presence dnd"></span></div><div><b>David</b><div class="role">Sales Manager · Owensboro</div></div></div>
+        <div class="statusline">Do Not Disturb · “Management meeting”</div>
+        <div class="details">david@company.com<br>(270) 555-0199</div>
+        <div class="actions"><button class="message" onclick="event.stopPropagation()">Message</button><button>View Profile</button></div>
+      </div>
+
+      <div class="person" onclick="openProfile('Jonathan Lindsay','JL','Sales Supervisor','Owensboro','Available')">
+        <div class="phead"><div class="avatar">JL<span class="presence"></span></div><div><b>Jonathan Lindsay</b><div class="role">Sales Supervisor · Owensboro</div></div></div>
+        <div class="statusline">Available · “Sales floor”</div>
+        <div class="details">jonathan@company.com<br>(270) 555-0124</div>
+        <div class="actions"><button class="message" onclick="event.stopPropagation()">Message</button><button>View Profile</button></div>
+      </div>
+
+      <div class="person" onclick="openProfile('Sharon Coleman','SC','Sales Agent','Paducah','Available')">
+        <div class="phead"><div class="avatar">SC<span class="presence"></span></div><div><b>Sharon Coleman</b><div class="role">Sales Agent · Paducah</div></div></div>
+        <div class="statusline">Available</div>
+        <div class="details">sharon@company.com<br>(270) 555-0148</div>
+        <div class="actions"><button class="message" onclick="event.stopPropagation()">Message</button><button>View Profile</button></div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<section class="mobilewrap" id="mobile">
+  <div class="mobilehead">
+    <div><div class="sub">People</div><div style="font-size:20px;font-weight:700">Directory</div></div>
+    <input style="width:100%;border:1px solid var(--border);border-radius:12px;padding:10px;margin-top:12px" placeholder="Search employees…">
+  </div>
+  <div class="mobilebody">
+    <div class="mobileperson" onclick="openProfile('Ashley Boggess','AB','Sales Agent','Owensboro','Available')"><div class="avatar">AB<span class="presence"></span></div><div style="flex:1"><b>Ashley Boggess</b><div class="sub">Sales Agent · Owensboro</div><div class="sub" style="color:var(--g);margin-top:3px">Available</div></div><button class="btn">Message</button></div>
+    <div class="mobileperson" onclick="openProfile('Tiffany Nelson','TN','Sales Agent','Evansville','Away')"><div class="avatar">TN<span class="presence away"></span></div><div style="flex:1"><b>Tiffany Nelson</b><div class="sub">Sales Agent · Evansville</div><div class="sub" style="margin-top:3px">Away</div></div><button class="btn">Message</button></div>
+    <div class="mobileperson" onclick="openProfile('Courtney Wathen','CW','Sales Agent','Bowling Green','Busy')"><div class="avatar">CW<span class="presence busy"></span></div><div style="flex:1"><b>Courtney Wathen</b><div class="sub">Sales Agent · Bowling Green</div><div class="sub" style="margin-top:3px">Busy</div></div><button class="btn">Message</button></div>
+    <div class="mobileperson" onclick="openProfile('Jonathan Lindsay','JL','Sales Supervisor','Owensboro','Available')"><div class="avatar">JL<span class="presence"></span></div><div style="flex:1"><b>Jonathan Lindsay</b><div class="sub">Sales Supervisor · Owensboro</div><div class="sub" style="color:var(--g);margin-top:3px">Available</div></div><button class="btn">Message</button></div>
+  </div>
+  <div class="mobilebottom"><div class="tabs"><div>Sales</div><div>Chat</div><div><button class="addsale">＋</button></div><div>Tasks</div><div style="color:var(--g);font-weight:700">Menu</div></div></div>
+</section>
+
+<section class="management" id="management">
+  <div class="header">
+    <div><div class="sub">Management</div><h2>User Management</h2></div>
+    <button class="btn primary">＋ Add User</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="sub">Active Users</div><div class="num">18</div></div>
+    <div class="stat"><div class="sub">Available Now</div><div class="num">11</div></div>
+    <div class="stat"><div class="sub">Away / Busy</div><div class="num">5</div></div>
+    <div class="stat"><div class="sub">Deactivated</div><div class="num">2</div></div>
+  </div>
+
+  <div class="searchrow">
+    <input placeholder="Search active or deactivated users…">
+    <select><option>All Roles</option><option>Sales Agent</option><option>Sales Supervisor</option><option>Sales Manager</option><option>Owner</option></select>
+    <select><option>Active & Deactivated</option><option>Active Only</option><option>Deactivated Only</option></select>
+  </div>
+
+  <div class="table">
+    <div class="tr"><span>User</span><span>Role</span><span>Branch</span><span>Status</span><span>Presence</span><span>Actions</span></div>
+    <div class="tr"><span>Ashley Boggess</span><span>Sales Agent</span><span>Owensboro</span><span class="badge green">Active</span><span>Available</span><span><button class="btn" style="padding:6px 8px" onclick="openProfile('Ashley Boggess','AB','Sales Agent','Owensboro','Available')">Open</button></span></div>
+    <div class="tr"><span>Tiffany Nelson</span><span>Sales Agent</span><span>Evansville</span><span class="badge green">Active</span><span>Away</span><span><button class="btn" style="padding:6px 8px" onclick="openProfile('Tiffany Nelson','TN','Sales Agent','Evansville','Away')">Open</button></span></div>
+    <div class="tr"><span>Former User</span><span>Sales Agent</span><span>Owensboro</span><span class="badge red">Deactivated</span><span>Offline</span><span><button class="btn" style="padding:6px 8px">Manage</button></span></div>
+  </div>
+</section>
+</div>
+
+<div class="modal" id="profileModal">
+  <div class="modalbox">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+      <div class="profilehead">
+        <div class="bigavatar"><span id="pInitials">AB</span><span id="pPresence" class="presence"></span></div>
+        <div><div id="pName" style="font-size:23px;font-weight:800">Ashley Boggess</div><div id="pRole" class="sub">Sales Agent · Owensboro</div><div id="pStatus" style="margin-top:7px;font-size:13px;color:var(--g)">Available</div></div>
+      </div>
+      <button class="btn" onclick="closeProfile()">Close</button>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
+      <button class="btn primary">Message</button><button class="btn">Call</button><button class="btn">Email</button>
+    </div>
+
+    <div class="profilegrid">
+      <div class="box">
+        <h3>Contact</h3>
+        <div class="item"><span class="label">Email</span><span>employee@company.com</span></div>
+        <div class="item"><span class="label">Phone</span><span>(270) 555-0102</span></div>
+        <div class="item"><span class="label">Branch</span><span id="pBranch">Owensboro</span></div>
+      </div>
+      <div class="box">
+        <h3>Employment</h3>
+        <div class="item"><span class="label">Role</span><span id="pRole2">Sales Agent</span></div>
+        <div class="item"><span class="label">Hire Date</span><span>Jan 12, 2025</span></div>
+        <div class="item"><span class="label">Birthday</span><span>Optional</span></div>
+      </div>
+      <div class="box">
+        <h3>Current Status</h3>
+        <div class="item"><span class="label">Presence</span><span id="pPresenceText">Available</span></div>
+        <div class="item"><span class="label">Custom Status</span><span>Working OP campaign</span></div>
+        <div class="item"><span class="label">Shift</span><span>10:30 AM–7:30 PM</span></div>
+      </div>
+      <div class="box">
+        <h3>Profile</h3>
+        <div class="item"><span class="label">Photo</span><span>User-managed</span></div>
+        <div class="item"><span class="label">Optional details</span><span>User-controlled</span></div>
+        <div class="item"><span class="label">Sales metrics</span><span>Not shown here</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const desktop=document.getElementById('desktop'),mobile=document.getElementById('mobile'),management=document.getElementById('management');
+const db=document.getElementById('deskBtn'),mb=document.getElementById('mobBtn'),gb=document.getElementById('mgrBtn');
+function show(v){
+  desktop.style.display='none';mobile.style.display='none';management.style.display='none';
+  [db,mb,gb].forEach(x=>x.classList.remove('active'));
+  if(v==='d'){desktop.style.display='grid';db.classList.add('active')}
+  if(v==='m'){mobile.style.display='block';mb.classList.add('active')}
+  if(v==='g'){management.style.display='block';gb.classList.add('active')}
+}
+db.onclick=()=>show('d');mb.onclick=()=>show('m');gb.onclick=()=>show('g');
+
+function openProfile(name,initials,role,branch,status){
+  document.getElementById('pName').textContent=name;
+  document.getElementById('pInitials').textContent=initials;
+  document.getElementById('pRole').textContent=role+' · '+branch;
+  document.getElementById('pRole2').textContent=role;
+  document.getElementById('pBranch').textContent=branch;
+  document.getElementById('pStatus').textContent=status;
+  document.getElementById('pPresenceText').textContent=status;
+  const dot=document.getElementById('pPresence');
+  dot.className='presence';
+  if(status==='Away') dot.classList.add('away');
+  if(status==='Busy') dot.classList.add('busy');
+  if(status==='DND') dot.classList.add('dnd');
+  document.getElementById('profileModal').classList.add('open');
+}
+function closeProfile(){document.getElementById('profileModal').classList.remove('open')}
+</script>
+</body>
+</html>

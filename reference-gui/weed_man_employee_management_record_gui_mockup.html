@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Employee Management Record</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+  --bg:#f6f7f5;--panel:#fff;--border:#dfe4dd;--text:#20251f;--muted:#6f786f;
+  --chip:#eef2ed;--softg:#e8f2ea;--softy:#fff6c8;--softr:#fdeaea;--softb:#eaf1fb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow,.sub{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:750}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--border);background:#fff;padding:9px 12px;border-radius:12px;color:var(--text)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}
+.btn.danger{background:#fff5f5;border-color:#e7bcbc;color:#9a2f2f}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:#fff;min-height:760px}
+.desktop{display:grid;grid-template-columns:205px 1fr;min-height:760px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:12px 10px 5px}
+.nav button{width:100%;display:block;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:15px}.header h2{margin:0;font-size:23px}
+.profile{display:flex;gap:14px;align-items:center}.avatar{width:64px;height:64px;border-radius:18px;background:var(--softg);display:flex;align-items:center;justify-content:center;color:var(--g);font-size:22px;font-weight:800;position:relative}.dot{position:absolute;right:-2px;bottom:-2px;width:15px;height:15px;border-radius:50%;border:3px solid white;background:#2aa75d}
+.tabsline{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.pill{border:1px solid var(--border);background:#fff;border-radius:999px;padding:7px 11px;font-size:12px}.pill.active{background:var(--g);color:#fff;border-color:var(--g)}
+.grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
+.card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px}.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.row{display:flex;align-items:center;gap:9px}.grow{flex:1;min-width:0}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);white-space:nowrap}.badge.green{background:var(--softg);color:var(--gd)}.badge.yellow{background:var(--softy);color:#665700}.badge.red{background:var(--softr);color:#982f2f}.badge.blue{background:var(--softb);color:#345f91}
+.item{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--border);font-size:12px}.item:first-of-type{border-top:0}.label{color:var(--muted)}
+.note{border:1px solid var(--border);border-radius:15px;padding:13px;margin-bottom:10px}.note.high{border-left:5px solid var(--r);background:#fffafa}.note.pinned{box-shadow:0 0 0 2px rgba(242,205,59,.18)}
+.notehead{display:flex;justify-content:space-between;gap:10px}.note h3{font-size:13px;margin:0}.notebody{font-size:12px;line-height:1.55;margin-top:8px}.notefoot{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.tag{font-size:10px;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted)}.tag.att{background:#f1eafa;color:#6c4a91}.tag.tech{background:var(--softb);color:#345f91}.tag.coach{background:var(--softg);color:var(--gd)}
+.timeline{margin-top:8px}.event{display:grid;grid-template-columns:30px 1fr auto;gap:9px;padding:9px 0}.line{position:relative}.line:before{content:"";position:absolute;left:14px;top:24px;bottom:-12px;width:2px;background:var(--border)}.event:last-child .line:before{display:none}.edot{width:30px;height:30px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:12px}.edot.red{background:var(--softr)}.edot.yellow{background:var(--softy)}.edot.blue{background:var(--softb)}.edot.green{background:var(--softg)}
+.eventcontent{font-size:12px}.eventcontent b{display:block;margin-bottom:3px}
+.notesview,.historyview,.accountview,.reportsview{display:none}
+.table{border:1px solid var(--border);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1fr .85fr .9fr 1.2fr .8fr;gap:8px;padding:10px 12px;border-top:1px solid var(--border);font-size:12px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.filters input,.filters select{border:1px solid var(--border);border-radius:11px;padding:9px 10px;background:#fff}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(650px,100%);background:#fff;border-radius:18px;border:1px solid var(--border);padding:16px;max-height:92vh;overflow:auto}
+.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:11px;padding:10px;background:#fff}
+.reportcard{border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px}.safe{border-left:5px solid var(--g);background:#f8fcf8}.warnbox{border-left:5px solid var(--y);background:#fffdf3}
+@media(max-width:1050px){.c4,.c5,.c6,.c7,.c8{grid-column:span 12}.desktop{grid-template-columns:175px 1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 16</div><div class="h1">Employee Management Record</div></div>
+  <div class="switch">
+    <button id="overviewBtn" class="active">Overview</button>
+    <button id="notesBtn">Internal Notes</button>
+    <button id="historyBtn">Related History</button>
+    <button id="accountBtn">Account Activity</button>
+    <button id="reportsBtn">Reports</button>
+  </div>
+</div>
+
+<div class="shell">
+<section class="desktop">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Management</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">Employees</div>
+      <button class="active">👤 Employee Record</button><button>🕒 Presence</button><button>🏖 Time Off</button><button>🛠 Support</button>
+      <div class="navlabel">Management</div>
+      <button>📝 Internal Notes</button><button>📤 Reports</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div class="profile">
+        <div class="avatar">TN<span class="dot"></span></div>
+        <div>
+          <div class="sub">Employee Management Record</div>
+          <h2 style="margin:0">Tiffany Nelson</h2>
+          <div class="sub" style="margin-top:4px">Sales Agent · Evansville · Active</div>
+          <div class="row" style="margin-top:7px"><span class="badge green">AVAILABLE</span><span class="tag att">Attendance</span><span class="tag tech">Technical</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn">Message</button>
+        <button class="btn">Manage Account</button>
+        <button class="btn primary" onclick="openNote()">＋ Add Note</button>
+      </div>
+    </div>
+
+    <div class="tabsline">
+      <button class="pill active" onclick="showTab('overview',this)">Overview</button>
+      <button class="pill" onclick="showTab('notes',this)">Internal Notes</button>
+      <button class="pill" onclick="showTab('history',this)">Related History</button>
+      <button class="pill" onclick="showTab('account',this)">Account Activity</button>
+      <button class="pill" onclick="showTab('reports',this)">Reports</button>
+    </div>
+
+    <section id="overview" class="overviewview">
+      <div class="grid12">
+        <section class="card c4">
+          <div class="between"><div><b>Employment</b><div class="sub">Core record</div></div><span class="badge green">ACTIVE</span></div>
+          <div class="item"><span class="label">Role</span><span>Sales Agent</span></div>
+          <div class="item"><span class="label">Branch</span><span>Evansville</span></div>
+          <div class="item"><span class="label">Hire Date</span><span>Mar 18, 2025</span></div>
+          <div class="item"><span class="label">Shift</span><span>10:30 AM–7:30 PM</span></div>
+        </section>
+
+        <section class="card c4">
+          <div class="between"><div><b>Current Operations</b><div class="sub">Live summary</div></div><span class="badge green">NORMAL</span></div>
+          <div class="item"><span class="label">Presence</span><span>Available</span></div>
+          <div class="item"><span class="label">Active Break</span><span>None</span></div>
+          <div class="item"><span class="label">Time Off</span><span>None today</span></div>
+          <div class="item"><span class="label">Open Support</span><span>1 ticket</span></div>
+        </section>
+
+        <section class="card c4">
+          <div class="between"><div><b>Management Flags</b><div class="sub">Internal only</div></div><span class="badge yellow">2 ACTIVE</span></div>
+          <div class="item"><span class="label">High Priority Notes</span><span>1</span></div>
+          <div class="item"><span class="label">Pinned Notes</span><span>2</span></div>
+          <div class="item"><span class="label">Open Presence Flags</span><span>1</span></div>
+          <div class="item"><span class="label">Pending Acks</span><span>1 manager</span></div>
+        </section>
+
+        <section class="card c7">
+          <div class="between"><div><b>Pinned Management Notes</b><div class="sub">Shared across management</div></div><button class="btn">View All Notes</button></div>
+
+          <div class="note high pinned" style="margin-top:12px">
+            <div class="notehead"><div><h3>NOTE-2026-00118 · Monthly billing upsell entry</h3><div class="sub">Attendance / Coaching · High Priority</div></div><span class="badge red">ACK REQUIRED</span></div>
+            <div class="notebody">Reviewed the need to verify monthly autopay status before entering an upsell and to clearly note whether the upsell should be included or excluded from monthly billing.</div>
+            <div class="notefoot"><span class="tag coach">Coaching</span><span class="tag">Pinned</span><span class="tag">Open</span><span class="tag">2/3 acknowledged</span></div>
+          </div>
+
+          <div class="note pinned">
+            <div class="notehead"><div><h3>NOTE-2026-00103 · Sales meeting attendance</h3><div class="sub">Attendance · Normal</div></div><span class="badge">OPEN</span></div>
+            <div class="notebody">Present for recent 10:30 AM sales meetings. Camera remains off, so active engagement cannot be confirmed from video presence alone.</div>
+            <div class="notefoot"><span class="tag att">Attendance</span><span class="tag">Pinned</span></div>
+          </div>
+        </section>
+
+        <aside class="card c5">
+          <div class="between"><div><b>Recent Related Activity</b><div class="sub">Last 30 days</div></div><button class="btn">Full History</button></div>
+          <div class="timeline">
+            <div class="event"><div class="line"><div class="edot red">!</div></div><div class="eventcontent"><b>PRS-2026-00402 · Serious presence flag</b>PWA closed during assigned shift. Later linked to TECH-2026-00106.</div><span class="badge red">SERIOUS</span></div>
+            <div class="event"><div class="line"><div class="edot blue">T</div></div><div class="eventcontent"><b>TECH-2026-00106 · Browser/PWA issue</b>Technical issue reported. Grace approved by Jonathan.</div><span class="badge green">RESOLVED</span></div>
+            <div class="event"><div class="line"><div class="edot yellow">B</div></div><div class="eventcontent"><b>BRK-2026-00028 · Break correction</b>Correction approved and presence record recalculated.</div><span class="badge green">APPROVED</span></div>
+            <div class="event"><div class="line"><div class="edot green">TO</div></div><div class="eventcontent"><b>TO-2026-00067 · Time off</b>Approved partial-day request.</div><span class="badge green">APPROVED</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="notes" class="notesview">
+      <div class="header" style="margin-bottom:12px">
+        <div><div class="sub">Management Only</div><h2 style="font-size:20px">Internal Notes</h2></div>
+        <button class="btn primary" onclick="openNote()">＋ Add Note</button>
+      </div>
+
+      <div class="filters">
+        <select><option>All Categories</option><option>Attendance</option><option>Coaching</option><option>Technical</option><option>Other</option></select>
+        <select><option>All Priorities</option><option>High</option><option>Normal</option></select>
+        <select><option>Open & Resolved</option><option>Open</option><option>Resolved</option></select>
+        <input placeholder="Search note text…">
+      </div>
+
+      <div class="note high pinned">
+        <div class="notehead"><div><h3>NOTE-2026-00118 · Monthly billing upsell entry</h3><div class="sub">Added by Jonathan · Aug 7, 9:12 AM Central</div></div><span class="badge red">HIGH</span></div>
+        <div class="notebody">Reviewed the need to verify monthly autopay status before entering an upsell and clearly document include/exclude from monthly billing.</div>
+        <div class="notefoot"><span class="tag coach">Coaching</span><span class="tag">Pinned</span><span class="tag">Open</span><span class="tag">Ack 2/3</span><span class="tag">Linked: TECH-2026-00102</span></div>
+      </div>
+
+      <div class="note">
+        <div class="notehead"><div><h3>NOTE-2026-00103 · Sales meeting attendance</h3><div class="sub">Added by David · Aug 2, 11:02 AM Central</div></div><span class="badge">NORMAL</span></div>
+        <div class="notebody">Recent meeting attendance is consistent. Camera remains off.</div>
+        <div class="notefoot"><span class="tag att">Attendance</span><span class="tag">Pinned</span><span class="tag">Open</span></div>
+      </div>
+
+      <div class="note">
+        <div class="notehead"><div><h3>NOTE-2026-00088 · Browser troubleshooting</h3><div class="sub">Added by David · Jul 23, 2:40 PM Central</div></div><span class="badge green">RESOLVED</span></div>
+        <div class="notebody">Cleared safe local cache and refreshed PWA data. Issue resolved.</div>
+        <div class="notefoot"><span class="tag tech">Technical</span><span class="tag">Resolution: Cache refresh</span></div>
+      </div>
+    </section>
+
+    <section id="history" class="historyview">
+      <div class="header" style="margin-bottom:12px">
+        <div><div class="sub">Management History</div><h2 style="font-size:20px">Related History Timeline</h2></div>
+        <div style="display:flex;gap:8px"><button class="btn">7 Days</button><button class="btn primary">30 Days</button><button class="btn">90 Days</button><button class="btn">365 Days</button></div>
+      </div>
+
+      <div class="filters">
+        <select><option>All Event Types</option><option>Presence</option><option>Breaks</option><option>Technical</option><option>Time Off</option><option>Notes</option></select>
+        <select><option>All Severities</option><option>Serious</option><option>Warning</option><option>Normal</option></select>
+        <select><option>All Statuses</option><option>Open</option><option>Resolved</option><option>Approved</option></select>
+        <input placeholder="Search records or IDs…">
+      </div>
+
+      <div class="card">
+        <div class="timeline">
+          <div class="event"><div class="line"><div class="edot red">!</div></div><div class="eventcontent"><b>PRS-2026-00402 · Serious presence flag</b>Aug 7 · 1:18 PM · PWA closed during assigned shift.<div class="sub" style="margin-top:3px">Linked: TECH-2026-00106 · NOTE-2026-00118</div></div><span class="badge red">SERIOUS</span></div>
+          <div class="event"><div class="line"><div class="edot blue">T</div></div><div class="eventcontent"><b>TECH-2026-00106 · Browser/PWA issue</b>Aug 7 · 1:21 PM · Employee reported browser issue. Technical grace approved.<div class="sub" style="margin-top:3px">Linked: PRS-2026-00402</div></div><span class="badge green">RESOLVED</span></div>
+          <div class="event"><div class="line"><div class="edot green">N</div></div><div class="eventcontent"><b>NOTE-2026-00118 · Coaching note</b>Aug 7 · 2:04 PM · Created from linked event context.</div><span class="badge red">HIGH</span></div>
+          <div class="event"><div class="line"><div class="edot yellow">B</div></div><div class="eventcontent"><b>BRK-2026-00028 · Break correction</b>Aug 5 · Correction approved. Presence record recalculated while original audit preserved.</div><span class="badge green">APPROVED</span></div>
+          <div class="event"><div class="line"><div class="edot green">TO</div></div><div class="eventcontent"><b>TO-2026-00067 · Partial-day time off</b>Aug 1 · Approved by Jonathan.</div><span class="badge green">APPROVED</span></div>
+        </div>
+      </div>
+
+      <div class="card warnbox" style="margin-top:12px">
+        <div class="between"><div><b>Export Related History</b><div class="sub">Sales Manager / Owner only · reason required</div></div><button class="btn" onclick="openExport()">Export PDF / CSV</button></div>
+      </div>
+    </section>
+
+    <section id="account" class="accountview">
+      <div class="header" style="margin-bottom:12px">
+        <div><div class="sub">Account Security</div><h2 style="font-size:20px">Account Activity Timeline</h2></div>
+        <button class="btn">Account Controls</button>
+      </div>
+
+      <div class="card">
+        <div class="timeline">
+          <div class="event"><div class="line"><div class="edot green">＋</div></div><div class="eventcontent"><b>Account created</b>Mar 18, 2025 · Created by Jonathan · Sales Agent role.</div><span class="badge">ACCOUNT</span></div>
+          <div class="event"><div class="line"><div class="edot blue">K</div></div><div class="eventcontent"><b>Password reset</b>Jul 29, 2026 · Reset by David.</div><span class="badge">SECURITY</span></div>
+          <div class="event"><div class="line"><div class="edot yellow">↻</div></div><div class="eventcontent"><b>Forced logout</b>Jul 29, 2026 · All devices · performed by David.</div><span class="badge yellow">SESSION</span></div>
+          <div class="event"><div class="line"><div class="edot green">✓</div></div><div class="eventcontent"><b>Role verified</b>Aug 1, 2026 · Sales Agent · no change.</div><span class="badge">ROLE</span></div>
+        </div>
+      </div>
+
+      <div class="grid12" style="margin-top:12px">
+        <section class="card c6">
+          <b>Current Account State</b>
+          <div class="item"><span class="label">Status</span><span class="badge green">ACTIVE</span></div>
+          <div class="item"><span class="label">Role</span><span>Sales Agent</span></div>
+          <div class="item"><span class="label">Last login</span><span>Today · 10:24 AM</span></div>
+          <div class="item"><span class="label">Active devices</span><span>2</span></div>
+        </section>
+
+        <section class="card c6">
+          <b>Account Controls</b>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+            <button class="btn">Reset Password</button>
+            <button class="btn">Force Logout</button>
+            <button class="btn">Deactivate</button>
+            <button class="btn danger">Permanent Delete</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="reports" class="reportsview">
+      <div class="header" style="margin-bottom:12px">
+        <div><div class="sub">Management Reporting</div><h2 style="font-size:20px">Employee History Reports</h2></div>
+        <button class="btn primary">＋ Schedule Report</button>
+      </div>
+
+      <div class="reportcard safe">
+        <div class="between"><div><b>Monthly Presence & Attendance Summary</b><div class="sub">Created by Jonathan · Runs monthly</div></div><span class="badge green">ACTIVE</span></div>
+        <div class="item"><span class="label">Next run</span><span>Sep 1 · 8:00 AM</span></div>
+        <div class="item"><span class="label">Recipients</span><span>Creator + David</span></div>
+        <div class="item"><span class="label">Retention</span><span>90 days, then archive</span></div>
+        <div style="display:flex;gap:8px;margin-top:10px"><button class="btn">Edit</button><button class="btn">Pause</button><button class="btn">Open Reports</button></div>
+      </div>
+
+      <div class="reportcard">
+        <div class="between"><div><b>90-Day Employee History Export</b><div class="sub">Manual report · Aug 7</div></div><span class="badge">AVAILABLE</span></div>
+        <div class="item"><span class="label">Format</span><span>PDF</span></div>
+        <div class="item"><span class="label">Export ID</span><span>EXP-2026-00311</span></div>
+        <div class="item"><span class="label">Created by</span><span>Jonathan</span></div>
+        <button class="btn" style="margin-top:10px">Open Report</button>
+      </div>
+
+      <div class="card warnbox">
+        <b>Scheduled-report behavior</b>
+        <div class="sub" style="margin-top:6px;line-height:1.55">Reports stay inside the app, may archive to the encrypted Dropbox archive, support pause/resume, expiry rules, retry handling, and Owner-level health monitoring.</div>
+      </div>
+    </section>
+  </main>
+</section>
+</div>
+
+<div class="modal" id="noteModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Management Only</div><div style="font-size:20px;font-weight:800">Add Internal Note</div></div><button class="btn" onclick="closeNote()">Close</button></div>
+    <div class="field"><label>Category</label><select><option>Coaching</option><option>Attendance</option><option>Technical</option><option>Other</option></select></div>
+    <div class="field"><label>Priority</label><select><option>Normal</option><option>High</option></select></div>
+    <div class="field"><label>Note</label><textarea rows="6" placeholder="Enter management note"></textarea></div>
+    <div class="field"><label>Linked record (optional)</label><input value="TECH-2026-00106"></div>
+    <div class="field"><label>Acknowledgment</label><select><option>No acknowledgment required</option><option>Require selected managers</option></select></div>
+    <button class="btn primary" style="width:100%;padding:12px">Save Append-Only Note</button>
+  </div>
+</div>
+
+<div class="modal" id="exportModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Sensitive Export</div><div style="font-size:20px;font-weight:800">Export Related History</div></div><button class="btn" onclick="closeExport()">Close</button></div>
+    <div class="field"><label>Format</label><select><option>PDF</option><option>CSV</option></select></div>
+    <div class="field"><label>Date range</label><select><option>Last 30 days</option><option>Last 90 days</option><option>Last 365 days</option><option>Custom</option></select></div>
+    <div class="field"><label>Include</label><select><option>All event types</option><option>Selected event types</option></select></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Required export reason"></textarea></div>
+    <div class="sub" style="line-height:1.5">PDF includes Confidential watermark, exporting manager, exact Central Time and employee identity. CSV includes exporter metadata at the top.</div>
+    <button class="btn primary" style="width:100%;padding:12px;margin-top:12px">Create Sensitive Export</button>
+  </div>
+</div>
+
+<script>
+const sections=['overview','notes','history','account','reports'];
+function showTab(id,btn){
+  sections.forEach(s=>document.getElementById(s).style.display='none');
+  document.getElementById(id).style.display='block';
+  document.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+}
+document.getElementById('overviewBtn').onclick=()=>showTab('overview',document.querySelectorAll('.pill')[0]);
+document.getElementById('notesBtn').onclick=()=>showTab('notes',document.querySelectorAll('.pill')[1]);
+document.getElementById('historyBtn').onclick=()=>showTab('history',document.querySelectorAll('.pill')[2]);
+document.getElementById('accountBtn').onclick=()=>showTab('account',document.querySelectorAll('.pill')[3]);
+document.getElementById('reportsBtn').onclick=()=>showTab('reports',document.querySelectorAll('.pill')[4]);
+function openNote(){document.getElementById('noteModal').classList.add('open')}
+function closeNote(){document.getElementById('noteModal').classList.remove('open')}
+function openExport(){document.getElementById('exportModal').classList.add('open')}
+function closeExport(){document.getElementById('exportModal').classList.remove('open')}
+</script>
+</body>
+</html>

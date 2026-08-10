@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Sales Celebrations</title>
+<style>
+:root{
+ --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+ --bg:#f5f7f4;--p:#fff;--bd:#dde3dc;--t:#20251f;--m:#6f786f;
+ --sg:#e8f2ea;--sy:#fff6c8;--sr:#fdeaea;--sb:#eaf1fb;--chip:#eef2ed;
+}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t)}
+button,input,select{font:inherit}button{cursor:pointer}
+.top{padding:18px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.sub{font-size:12px;color:var(--m)}.title{font-size:20px;font-weight:760}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--bd);background:#fff;padding:9px 12px;border-radius:12px;color:var(--t)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}
+.shell{margin:0 20px 20px;border:1px solid var(--bd);border-radius:18px;overflow:hidden;background:#fff;min-height:770px}
+.desktop{display:grid;grid-template-columns:205px 1fr;min-height:770px}
+.side{border-right:1px solid var(--bd);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}.brand small{display:block;color:var(--m)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--m);padding:12px 10px 5px}.nav button{width:100%;border:0;background:transparent;text-align:left;padding:10px 12px;border-radius:11px;margin-bottom:3px}.nav button.active{background:var(--sg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.head h2{font-size:23px;margin:0}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.card{border:1px solid var(--bd);border-radius:16px;background:#fff;padding:14px}
+.between{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--m)}.green{background:var(--sg);color:var(--gd)}.yellow{background:var(--sy);color:#665700}.red{background:var(--sr);color:#973030}.blue{background:var(--sb);color:#345f91}
+.preview{background:linear-gradient(135deg,#173f24,#28743e);border-radius:18px;color:#fff;padding:18px;min-height:310px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.preview:before,.preview:after{content:"";position:absolute;border-radius:50%;background:rgba(242,205,59,.18)}.preview:before{width:220px;height:220px;left:-70px;top:-70px}.preview:after{width:260px;height:260px;right:-90px;bottom:-100px}
+.celebrate{text-align:center;position:relative;z-index:2}.face{font-size:70px}.celebrate h3{font-size:28px;margin:7px 0 4px}.amount{font-size:42px;font-weight:900;color:var(--y)}.celebrate .meta{font-size:13px;color:#e6f0e8}.sound{margin-top:12px;font-size:12px;background:rgba(255,255,255,.12);display:inline-block;padding:6px 9px;border-radius:999px}
+.item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-top:1px solid var(--bd);font-size:12px;align-items:center}.item:first-of-type{border-top:0}
+.toggle{width:40px;height:23px;border-radius:999px;background:var(--g);position:relative}.toggle:after{content:"";position:absolute;width:19px;height:19px;border-radius:50%;background:#fff;right:2px;top:2px}.toggle.off{background:#c8cec8}.toggle.off:after{right:19px}
+.library{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}.tile{border:1px solid var(--bd);border-radius:13px;padding:10px;text-align:center}.tile.active{background:var(--sg);border-color:#a6cbb1}.tile .emoji{font-size:28px}.tile b{display:block;font-size:11px;margin-top:5px}
+.personal,.manager{display:none;padding:18px}
+.queue{border:1px solid var(--bd);border-radius:15px;overflow:hidden}.q{display:grid;grid-template-columns:1fr .85fr .9fr .85fr .85fr;gap:8px;padding:10px 12px;border-top:1px solid var(--bd);font-size:12px;align-items:center}.q:first-child{border-top:0;background:var(--chip);font-weight:700}
+.warn{border-left:5px solid var(--y);background:#fffdf3}.safe{border-left:5px solid var(--g);background:#f8fcf8}
+@media(max-width:1050px){.desktop{grid-template-columns:175px 1fr}.grid{grid-template-columns:1fr}.library{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div><div class="sub">GUI Phase · Screen 29</div><div class="title">Sales Celebrations & Team Energy</div></div>
+  <div class="switch">
+    <button id="liveBtn" class="active">Live Experience</button>
+    <button id="personalBtn">Personal Choice</button>
+    <button id="managerBtn">Manager Controls</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section id="live" class="desktop">
+  <aside class="side">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Sales Hub</small></div></div>
+    <div class="nav">
+      <button class="active">★ Sales Dashboard</button>
+      <button>＋ Add Sale</button>
+      <div class="navlabel">Team</div>
+      <button>🏆 Recognitions</button>
+      <button>🎉 Celebrations</button>
+      <button>💬 Chat</button>
+      <div class="navlabel">Account</div>
+      <button>👤 Profile & Settings</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="head">
+      <div><div class="sub">Realtime Team Event</div><h2>Sales Celebrations</h2></div>
+      <div class="row"><span class="badge green">ENABLED</span><button class="btn">Preview My Celebration</button></div>
+    </div>
+
+    <div class="grid">
+      <section>
+        <div class="preview">
+          <div class="celebrate">
+            <div class="face">🕺</div>
+            <div class="sub" style="color:#dfece2">NEW SALE</div>
+            <h3>Ashley Boggess</h3>
+            <div class="amount">$421.00</div>
+            <div class="meta">Program · AS01</div>
+            <div class="sound">🔊 “Victory Pop” · 2.4 seconds</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="between"><div><b>What everyone sees</b><div class="sub">Global app celebration</div></div><span class="badge blue">MAX 3 SEC</span></div>
+          <div class="item"><span>Seller name</span><span class="badge green">SHOWN</span></div>
+          <div class="item"><span>Amount</span><span class="badge green">SHOWN</span></div>
+          <div class="item"><span>Sale type</span><span class="badge green">SHOWN</span></div>
+          <div class="item"><span>Campaign</span><span class="badge green">SHOWN</span></div>
+          <div class="item"><span>CID</span><span class="badge red">NOT SHOWN</span></div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card safe">
+          <div class="between"><div><b>Cooldown Handling</b><div class="sub">Prevents rapid-fire interruption</div></div><span class="badge green">SMART</span></div>
+          <div class="item"><span>Celebration duration</span><b>2.5 sec</b></div>
+          <div class="item"><span>Cooldown</span><b>8 sec</b></div>
+          <div class="item"><span>Sales during cooldown</span><b>Combined</b></div>
+          <div class="item"><span>Summary after cooldown</span><b>Yes</b></div>
+        </div>
+
+        <div class="card warn" style="margin-top:12px">
+          <b>Combined Celebration Example</b>
+          <div class="sub" style="margin-top:7px;line-height:1.55">If four sales happen during the cooldown, the app does not interrupt four times. After cooldown, it shows one short summary such as “4 new sales · $1,286 added by Ashley, Tiffany & Courtney.”</div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <b>Personal Mute</b>
+          <div class="item"><span>Visual celebration</span><span class="toggle"></span></div>
+          <div class="item"><span>Celebration sound</span><span class="toggle"></span></div>
+          <div class="sub" style="margin-top:8px;line-height:1.5">Users may mute the celebration visual and/or sound independently without changing sales totals or team rankings.</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</section>
+
+<section id="personal" class="personal">
+  <div class="head">
+    <div><div class="sub">My Celebration</div><h2>Choose Your Sales Celebration</h2></div>
+    <button class="btn primary">Save My Choice</button>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="between"><div><b>Built-In Celebration Library</b><div class="sub">Simple visual + sound combinations</div></div><span class="badge green">10 OPTIONS</span></div>
+      <div class="library">
+        <div class="tile active"><div class="emoji">🕺</div><b>Victory Dance</b></div>
+        <div class="tile"><div class="emoji">🎉</div><b>Confetti Pop</b></div>
+        <div class="tile"><div class="emoji">🔥</div><b>On Fire</b></div>
+        <div class="tile"><div class="emoji">🚀</div><b>Launch</b></div>
+        <div class="tile"><div class="emoji">💰</div><b>Money Rain</b></div>
+        <div class="tile"><div class="emoji">🏆</div><b>Trophy</b></div>
+        <div class="tile"><div class="emoji">⚡</div><b>Lightning</b></div>
+        <div class="tile"><div class="emoji">🐐</div><b>GOAT</b></div>
+        <div class="tile"><div class="emoji">🥁</div><b>Drum Hit</b></div>
+        <div class="tile"><div class="emoji">😎</div><b>Cool Win</b></div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card">
+        <div class="between"><div><b>My Playback</b><div class="sub">Personal device preference</div></div></div>
+        <div class="item"><span>Show visual</span><span class="toggle"></span></div>
+        <div class="item"><span>Play sound</span><span class="toggle"></span></div>
+        <div class="item"><span>Selected celebration</span><b>Victory Dance</b></div>
+        <button class="btn" style="width:100%;margin-top:10px">Preview</button>
+      </div>
+
+      <div class="card safe" style="margin-top:12px">
+        <b>Selection Rules</b>
+        <div class="sub" style="margin-top:7px;line-height:1.55">Agents choose from the manager-approved built-in library. The choice follows the user across devices. Managers can change the available library globally without resetting each user’s selection unless that option is removed.</div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="manager" class="manager">
+  <div class="head">
+    <div><div class="sub">Management Settings</div><h2>Celebration Controls</h2></div>
+    <button class="btn primary">Save Company Settings</button>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="between"><div><b>Global Celebration Rules</b><div class="sub">Applies company-wide unless audience is narrowed</div></div><span class="badge blue">MANAGEMENT</span></div>
+      <div class="item"><span>Celebrations enabled</span><span class="toggle"></span></div>
+      <div class="item"><span>Default duration</span><button class="btn" style="padding:6px 8px">2.5 sec</button></div>
+      <div class="item"><span>Cooldown</span><button class="btn" style="padding:6px 8px">8 sec</button></div>
+      <div class="item"><span>Combine sales during cooldown</span><span class="toggle"></span></div>
+      <div class="item"><span>Audience</span><button class="btn" style="padding:6px 8px">All Active Users</button></div>
+      <div class="item"><span>Show amount</span><span class="toggle"></span></div>
+      <div class="item"><span>Show campaign</span><span class="toggle"></span></div>
+    </section>
+
+    <aside class="card">
+      <div class="between"><div><b>Approved Celebration Library</b><div class="sub">Managers control available choices</div></div><button class="btn">Edit Library</button></div>
+      <div class="item"><span>Victory Dance</span><span class="badge green">ACTIVE</span></div>
+      <div class="item"><span>Confetti Pop</span><span class="badge green">ACTIVE</span></div>
+      <div class="item"><span>On Fire</span><span class="badge green">ACTIVE</span></div>
+      <div class="item"><span>Money Rain</span><span class="badge green">ACTIVE</span></div>
+      <div class="item"><span>Drum Hit</span><span class="badge green">ACTIVE</span></div>
+      <div class="item"><span>5 more</span><span class="badge blue">ACTIVE</span></div>
+    </aside>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="between"><div><b>Recent Celebration Events</b><div class="sub">Operational preview, not a permanent employee-performance report</div></div><span class="badge green">REALTIME</span></div>
+    <div class="queue" style="margin-top:12px">
+      <div class="q"><span>Seller</span><span>Amount</span><span>Type</span><span>Campaign</span><span>Playback</span></div>
+      <div class="q"><span>Ashley Boggess</span><span>$421.00</span><span>Program</span><span>AS01</span><span><span class="badge green">PLAYED</span></span></div>
+      <div class="q"><span>Tiffany Nelson</span><span>$188.00</span><span>Upsell</span><span>GC01</span><span><span class="badge yellow">COMBINED</span></span></div>
+      <div class="q"><span>Courtney Wathen</span><span>$315.00</span><span>Upsell</span><span>OS01</span><span><span class="badge yellow">COMBINED</span></span></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+const live=document.getElementById('live'),personal=document.getElementById('personal'),manager=document.getElementById('manager');
+const lb=document.getElementById('liveBtn'),pb=document.getElementById('personalBtn'),mb=document.getElementById('managerBtn');
+function show(k){live.style.display='none';personal.style.display='none';manager.style.display='none';[lb,pb,mb].forEach(x=>x.classList.remove('active'));if(k==='l'){live.style.display='grid';lb.classList.add('active')}if(k==='p'){personal.style.display='block';pb.classList.add('active')}if(k==='m'){manager.style.display='block';mb.classList.add('active')}}
+lb.onclick=()=>show('l');pb.onclick=()=>show('p');mb.onclick=()=>show('m');
+</script>
+</body>
+</html>

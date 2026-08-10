@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - PWA Onboarding & Shared UX States</title>
+<style>
+:root{
+ --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+ --bg:#f5f7f4;--p:#fff;--bd:#dfe4dc;--t:#20251f;--m:#6f786f;
+ --sg:#e8f2ea;--sy:#fff6c8;--sr:#fdeaea;--sb:#eaf1fb;--chip:#eef2ed;
+}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t)}
+button,input{font:inherit}button{cursor:pointer}
+.top{padding:18px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.sub{font-size:12px;color:var(--m)}.title{font-size:20px;font-weight:760}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--bd);background:#fff;padding:9px 12px;border-radius:12px;color:var(--t)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}.btn.danger{background:#fff5f5;color:#9b3030;border-color:#e4bcbc}
+.stage{margin:0 20px 20px;border:1px solid var(--bd);border-radius:18px;background:#fff;min-height:760px;overflow:hidden}
+.view{display:none;padding:20px}.view.active{display:block}
+.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}.card{border:1px solid var(--bd);border-radius:16px;background:#fff;padding:15px}
+.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--m)}.green{background:var(--sg);color:var(--gd)}.yellow{background:var(--sy);color:#665700}.red{background:var(--sr);color:#973030}.blue{background:var(--sb);color:#345f91}
+.hero{max-width:960px;margin:0 auto;padding:24px 0}.hero h2{font-size:28px;margin:0 0 7px}.hero p{color:var(--m);line-height:1.6}
+.phone{width:390px;min-height:650px;border:1px solid var(--bd);border-radius:28px;overflow:hidden;background:#fff;box-shadow:0 18px 55px rgba(0,0,0,.08);margin:auto}
+.phonehead{padding:18px;border-bottom:1px solid var(--bd);text-align:center}.logo{width:58px;height:58px;border-radius:17px;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;margin:0 auto 12px}
+.steps{display:flex;gap:5px;justify-content:center;margin-top:10px}.step{width:38px;height:5px;border-radius:999px;background:#e1e5e0}.step.on{background:var(--g)}
+.phonebody{padding:18px}.choice{border:1px solid var(--bd);border-radius:14px;padding:13px;margin:10px 0}.choice.active{border-color:#a7ccb2;background:var(--sg)}
+.icon{width:45px;height:45px;border-radius:13px;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:22px}
+.item{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--bd);font-size:12px}.item:first-of-type{border-top:0}
+.notice{border-radius:14px;padding:12px;border:1px solid var(--bd);font-size:12px;line-height:1.55}.notice.green{background:var(--sg);border-color:#c9dfcf}.notice.yellow{background:var(--sy);border-color:#e8da93}.notice.red{background:#fff8f8;border-color:#eacaca}.notice.blue{background:var(--sb);border-color:#ccdcef}
+.skeleton{height:13px;background:linear-gradient(90deg,#edf0ec 25%,#f6f8f5 50%,#edf0ec 75%);background-size:200% 100%;animation:sh 1.4s infinite;border-radius:7px;margin:9px 0}.skeleton.big{height:70px}.skeleton.short{width:45%}.skeleton.med{width:70%}
+@keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.stategrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.state{border:1px solid var(--bd);border-radius:16px;padding:17px;min-height:245px;display:flex;flex-direction:column}.state .bigico{font-size:34px;margin-bottom:10px}.state h3{margin:0 0 6px;font-size:17px}.state p{font-size:12px;line-height:1.55;color:var(--m);flex:1}
+.toaststack{position:relative;height:265px;border:1px dashed var(--bd);border-radius:16px;background:#fbfcfa;padding:14px}.toast{border:1px solid var(--bd);border-radius:13px;padding:11px 12px;background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.07);margin-bottom:9px;font-size:12px}.toast.success{border-left:5px solid var(--g)}.toast.warning{border-left:5px solid var(--y)}.toast.error{border-left:5px solid var(--r)}
+.modalpreview{border:1px solid var(--bd);border-radius:16px;overflow:hidden}.overlay{background:rgba(0,0,0,.35);padding:32px 18px}.modal{background:#fff;border-radius:17px;padding:15px;max-width:470px;margin:auto}.field{margin:10px 0}.field label{display:block;font-size:11px;color:var(--m);margin-bottom:4px}.field input{width:100%;border:1px solid var(--bd);border-radius:10px;padding:9px}
+.permission{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--bd);font-size:12px}.permission:first-of-type{border-top:0}
+@media(max-width:950px){.grid,.stategrid{grid-template-columns:1fr}.phone{width:100%;max-width:390px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div><div class="sub">GUI Phase · Screen 26</div><div class="title">PWA Install, First-Run & Shared UX States</div></div>
+  <div class="switch">
+    <button class="active" onclick="show('install',this)">Install / First Run</button>
+    <button onclick="show('permissions',this)">Permissions</button>
+    <button onclick="show('states',this)">Loading / Empty / Errors</button>
+    <button onclick="show('feedback',this)">Toasts & Confirmations</button>
+  </div>
+</div>
+
+<div class="stage">
+
+<section id="install" class="view active">
+  <div class="hero">
+    <div class="sub">First Launch</div>
+    <h2>Install the Sales Hub once, then use it like an app.</h2>
+    <p>The first-run flow is intentionally short. Employees sign in, install the PWA when supported, enable notifications, pass the required Idle Detection compatibility and permission check, review their status and shift, then land on the Sales Dashboard.</p>
+  </div>
+
+  <div class="grid">
+    <div class="phone">
+      <div class="phonehead">
+        <div class="logo">WM</div>
+        <div style="font-size:20px;font-weight:820">Welcome to Weed Man Sales Hub</div>
+        <div class="sub" style="margin-top:5px">Step 1 of 5 · Install App</div>
+        <div class="steps"><div class="step on"></div><div class="step"></div><div class="step"></div><div class="step"></div><div class="step"></div></div>
+      </div>
+      <div class="phonebody">
+        <div class="choice active">
+          <div class="row"><div class="icon">📲</div><div><b>Install Sales Hub</b><div class="sub">Recommended for faster access and reliable push notifications.</div></div></div>
+        </div>
+        <div class="notice blue">The install prompt is shown only when the browser supports it. On iPhone, the app shows simple “Add to Home Screen” instructions instead.</div>
+        <button class="btn primary" style="width:100%;padding:12px;margin-top:14px">Install App</button>
+        <button class="btn" style="width:100%;padding:12px;margin-top:8px">Continue in Browser</button>
+      </div>
+    </div>
+
+    <section class="card">
+      <div class="between"><div><b>Required First-Run Sequence</b><div class="sub">No unnecessary tutorial carousel</div></div><span class="badge green">5 STEPS</span></div>
+      <div class="item"><div class="icon">1</div><div><b>Install PWA</b><div class="sub">Install where supported, or continue in browser.</div></div><span class="badge blue">OPTIONAL</span></div>
+      <div class="item"><div class="icon">2</div><div><b>Enable Notifications</b><div class="sub">Explain why before browser permission prompt.</div></div><span class="badge yellow">RECOMMENDED</span></div>
+      <div class="item"><div class="icon">3</div><div><b>Enable Idle Detection</b><div class="sub">Required browser capability and permission for employee presence tracking.</div></div><span class="badge red">REQUIRED</span></div>
+      <div class="item"><div class="icon">4</div><div><b>Confirm Status & Shift</b><div class="sub">Show current assigned shift and default Available status.</div></div><span class="badge green">QUICK</span></div>
+      <div class="item"><div class="icon">5</div><div><b>Open Sales Dashboard</b><div class="sub">Available only after required setup checks pass.</div></div><span class="badge green">DONE</span></div>
+
+      <div class="notice green" style="margin-top:12px"><b>Design rule:</b> returning users never see onboarding again unless a required setup condition needs attention. Idle Detection support and permission are revalidated when necessary and can block access if they are no longer available.</div>
+    </section>
+  </div>
+</section>
+
+<section id="permissions" class="view">
+  <div class="hero">
+    <div class="sub">Permission Experience</div>
+    <h2>Ask only when the feature needs it.</h2>
+    <p>The app explains the benefit before triggering a browser permission prompt. Denied permissions never trap the user in a loop.</p>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="between"><div><b>Notification Permission</b><div class="sub">First-run explanation before browser prompt</div></div><span class="badge yellow">RECOMMENDED</span></div>
+      <div class="notice blue" style="margin-top:12px"><b>Stay informed without keeping the app open.</b><br>Notifications are used for direct messages, required announcements, tasks, schedule changes, support replies, recognitions, and management alerts.</div>
+      <div class="permission"><span>Direct messages</span><span class="badge green">SUPPORTED</span></div>
+      <div class="permission"><span>Required acknowledgments</span><span class="badge green">SUPPORTED</span></div>
+      <div class="permission"><span>Schedule changes</span><span class="badge green">SUPPORTED</span></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary">Enable Notifications</button><button class="btn">Not Now</button></div>
+    </section>
+
+    <section class="card">
+      <div class="between"><div><b>Feature-Specific Permissions</b><div class="sub">Prompted only at point of use</div></div><span class="badge blue">JUST-IN-TIME</span></div>
+      <div class="item"><div class="icon">📷</div><div><b>Camera / Photos</b><div class="sub">Profile photo and support screenshots/attachments.</div></div><span class="badge">WHEN USED</span></div>
+      <div class="item"><div class="icon">🔔</div><div><b>Notifications</b><div class="sub">Push and app badge.</div></div><span class="badge">FIRST RUN</span></div>
+      <div class="item"><div class="icon">⏱</div><div><b>Idle Detection</b><div class="sub">Required for presence tracking before the employee can enter the working app.</div></div><span class="badge red">REQUIRED</span></div>
+      <div class="notice red" style="margin-top:12px"><b>Idle Detection is required.</b><br>If the browser does not support Idle Detection, or the user denies permission, the working app remains blocked. The user is directed to enable the permission or switch to a supported browser/device. Fallback activity signals may supplement presence data, but they do not replace the required Idle Detection permission.</div>
+    </section>
+  </div>
+</section>
+
+<section id="states" class="view">
+  <div class="hero">
+    <div class="sub">Shared Experience</div>
+    <h2>Every screen gets intentional loading, empty, and failure states.</h2>
+  </div>
+
+  <div class="stategrid">
+    <section class="state">
+      <div class="bigico">⌛</div>
+      <h3>Skeleton Loading</h3>
+      <p>Use skeletons for dashboards, lists, chat conversations, employee records, and resource grids so the interface does not jump while data loads.</p>
+      <div class="skeleton big"></div><div class="skeleton med"></div><div class="skeleton short"></div>
+    </section>
+
+    <section class="state">
+      <div class="bigico">✓</div>
+      <h3>Useful Empty State</h3>
+      <p>Empty screens explain why they are empty and give the next useful action instead of showing a blank panel.</p>
+      <div class="notice green"><b>You’re all caught up.</b><br>No open tasks are assigned to you right now.</div>
+      <button class="btn" style="margin-top:12px">View Completed Today</button>
+    </section>
+
+    <section class="state">
+      <div class="bigico">⚠</div>
+      <h3>Human-Readable Error</h3>
+      <p>Employees see a plain explanation and a safe retry. Raw diagnostics are never exposed to ordinary users.</p>
+      <div class="notice red"><b>We couldn’t save that task comment.</b><br>Your text is still here. Check your connection and try again.</div>
+      <button class="btn primary" style="margin-top:12px">Try Again</button>
+    </section>
+
+    <section class="state">
+      <div class="bigico">🧰</div>
+      <h3>Management Diagnostics</h3>
+      <p>Managers and Owners may expand technical details on support/system screens without changing the employee-facing error.</p>
+      <div class="notice blue"><b>Technical detail</b><br>HTTP 503 · API timeout · request ID WM-8F31A7 · 2 retries exhausted.</div>
+      <button class="btn" style="margin-top:12px">Copy Diagnostic ID</button>
+    </section>
+  </div>
+</section>
+
+<section id="feedback" class="view">
+  <div class="hero">
+    <div class="sub">Feedback & Confirmation</div>
+    <h2>Fast actions stay fast; destructive actions get deliberate confirmation.</h2>
+  </div>
+
+  <div class="grid">
+    <section>
+      <div class="toaststack">
+        <div class="toast success"><b>Task completed</b><div class="sub">Removed from your active task list.</div></div>
+        <div class="toast warning"><b>2 actions are waiting to sync</b><div class="sub">They will retry automatically when your connection returns.</div></div>
+        <div class="toast error"><b>Upload failed</b><div class="sub">The attachment was not saved. Retry or remove it.</div></div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <b>Toast rules</b>
+        <div class="permission"><span>Routine success</span><span>Short-lived</span></div>
+        <div class="permission"><span>Warning</span><span>Longer + actionable</span></div>
+        <div class="permission"><span>Critical / required</span><span>Never toast-only</span></div>
+      </div>
+    </section>
+
+    <section class="modalpreview">
+      <div class="overlay">
+        <div class="modal">
+          <div class="sub">Destructive Action</div>
+          <div style="font-size:20px;font-weight:820;margin-top:3px">Delete this sale?</div>
+          <div class="notice red" style="margin-top:12px"><b>CID 482193 · AS01 · $421.00</b><br>This sale will be removed from today’s totals immediately. There is no undo.</div>
+          <div class="row" style="margin-top:14px"><button class="btn" style="flex:1">Cancel</button><button class="btn danger" style="flex:1">Delete Sale</button></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="between"><div><b>Confirmation Severity System</b><div class="sub">Consistent throughout the app</div></div><span class="badge green">STANDARDIZED</span></div>
+    <div class="permission"><span>Low-risk reversible action</span><span class="badge green">NO CONFIRMATION</span></div>
+    <div class="permission"><span>Meaningful irreversible action</span><span class="badge yellow">CONFIRM</span></div>
+    <div class="permission"><span>Permanent deletion / protected Owner action</span><span class="badge red">STRONG CONFIRMATION</span></div>
+    <div class="permission"><span>Security-sensitive Owner action</span><span class="badge red">FRESH AUTH / EXTRA CREDENTIALS</span></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.switch button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

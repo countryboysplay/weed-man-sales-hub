@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Sales History & Corrections</title>
+<style>
+:root{--g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;--bg:#f6f7f5;--p:#fff;--bd:#dde3dc;--t:#20251f;--m:#6f786f;--sg:#e8f2ea;--sy:#fff6c8;--sr:#fdeaea;--sb:#eaf1fb;--chip:#eef2ed}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.top{padding:18px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.sub{font-size:12px;color:var(--m)}.title{font-size:20px;font-weight:760}.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--bd);background:#fff;padding:9px 12px;border-radius:12px;color:var(--t)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}.btn.danger{background:#fff5f5;color:#9b3030;border-color:#e5bcbc}
+.shell{margin:0 20px 20px;border:1px solid var(--bd);border-radius:18px;overflow:hidden;background:#fff;min-height:760px}.desktop{display:grid;grid-template-columns:205px 1fr;min-height:760px}
+.side{border-right:1px solid var(--bd);background:#fbfcfa;padding:14px}.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
+.brand small{display:block;color:var(--m)}.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--m);padding:12px 10px 5px}.nav button{width:100%;border:0;background:transparent;text-align:left;padding:10px 12px;border-radius:11px;margin-bottom:3px}.nav button.active{background:var(--sg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.head h2{font-size:23px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--bd);border-radius:14px;padding:12px}.num{font-size:28px;font-weight:800}
+.card{border:1px solid var(--bd);border-radius:16px;background:#fff;padding:14px}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.between{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.grow{flex:1}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--m)}.green{background:var(--sg);color:var(--gd)}.yellow{background:var(--sy);color:#665700}.red{background:var(--sr);color:#973030}.blue{background:var(--sb);color:#345f91}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.filters input,.filters select{border:1px solid var(--bd);border-radius:11px;padding:9px 10px;background:#fff}.filters input{flex:1;min-width:210px}
+.table{border:1px solid var(--bd);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:.85fr .8fr .85fr .8fr .8fr .85fr .75fr;gap:8px;padding:10px 12px;border-top:1px solid var(--bd);font-size:12px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}.tr.deleted{background:#fff8f8;color:#6f5e5e}.money{font-weight:800}
+.item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:9px 0;border-top:1px solid var(--bd);font-size:12px;align-items:center}.item:first-of-type{border-top:0}
+.alert{border-left:5px solid var(--y);background:#fffdf4}.dangerbox{border-left:5px solid var(--r);background:#fffafa}.safe{border-left:5px solid var(--g);background:#f8fcf8}
+.manager,.audit{display:none;padding:18px}.mgrgrid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.audit .tr{grid-template-columns:.9fr .9fr 1fr 1.1fr .9fr .85fr}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(680px,100%);max-height:92vh;overflow:auto;background:#fff;border:1px solid var(--bd);border-radius:18px;padding:16px}.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--m);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--bd);border-radius:11px;padding:10px;background:#fff}
+@media(max-width:1050px){.desktop{grid-template-columns:175px 1fr}.stats{grid-template-columns:repeat(2,1fr)}.grid,.mgrgrid{grid-template-columns:1fr}.tr{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div><div class="sub">GUI Phase · Screen 21</div><div class="title">Sales History & Management Corrections</div></div>
+  <div class="switch">
+    <button id="myBtn" class="active">My Sales History</button>
+    <button id="mgrBtn">Management Sales View</button>
+    <button id="auditBtn">Correction Audit</button>
+  </div>
+</div>
+
+<div class="shell">
+<section id="my" class="desktop">
+  <aside class="side">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Sales Hub</small></div></div>
+    <div class="nav">
+      <button>★ Sales Dashboard</button><button>＋ Add Sale</button>
+      <div class="navlabel">Sales</div><button class="active">📈 My Sales History</button><button>🏆 Recognitions</button>
+      <div class="navlabel">Work</div><button>💬 Chat</button><button>✓ Tasks</button><button>📁 Resources</button>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="head">
+      <div><div class="sub">My Sales · 2026</div><h2>Sales History</h2></div>
+      <button class="btn primary">Export My 2026 CSV</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="sub">Today</div><div class="num">$1,245</div><div class="sub">4 sales</div></div>
+      <div class="stat"><div class="sub">August</div><div class="num">$12,630</div><div class="sub">38 sales</div></div>
+      <div class="stat"><div class="sub">YTD</div><div class="num">$86,410</div><div class="sub">271 sales</div></div>
+      <div class="stat"><div class="sub">Top Category YTD</div><div class="num">AS01</div><div class="sub">$42,180</div></div>
+    </div>
+
+    <div class="filters">
+      <input placeholder="Search CID…">
+      <select><option>August 2026</option><option>July 2026</option><option>June 2026</option></select>
+      <select><option>All Types</option><option>Program</option><option>Upsell</option></select>
+      <select><option>All Campaigns</option><option>AS01</option><option>GC01</option><option>AE01</option><option>OS01</option></select>
+    </div>
+
+    <div class="grid">
+      <section>
+        <div class="table">
+          <div class="tr"><span>Date</span><span>CID</span><span>Type</span><span>Campaign</span><span>Amount</span><span>Status</span><span>Action</span></div>
+          <div class="tr"><span>Aug 10 · 11:18</span><span>482193</span><span>Program</span><span>AS01</span><span class="money">$421.00</span><span><span class="badge green">ACTIVE</span></span><span><button class="btn" style="padding:6px 8px" onclick="openEdit()">Edit</button></span></div>
+          <div class="tr"><span>Aug 10 · 10:52</span><span>482144</span><span>Upsell</span><span>GC01</span><span class="money">$188.00</span><span><span class="badge green">ACTIVE</span></span><span><button class="btn" style="padding:6px 8px" onclick="openEdit()">Edit</button></span></div>
+          <div class="tr deleted"><span>Aug 10 · 9:48</span><span>481997</span><span>Upsell</span><span>AE01</span><span class="money">$245.00</span><span><span class="badge red">DELETED</span></span><span>Until midnight</span></div>
+          <div class="tr"><span>Aug 9</span><span>481810</span><span>Program</span><span>AS01</span><span class="money">$391.00</span><span><span class="badge green">FINAL</span></span><span>View</span></div>
+          <div class="tr"><span>Aug 8</span><span>481621</span><span>Upsell</span><span>OS01</span><span class="money">$315.00</span><span><span class="badge green">FINAL</span></span><span>View</span></div>
+        </div>
+        <div class="sub" style="margin-top:8px">Employees may edit/delete only their own same-day active sales. Final historical rows are read-only to employees.</div>
+      </section>
+
+      <aside>
+        <div class="card">
+          <div class="between"><div><b>August Breakdown</b><div class="sub">Count and net sales</div></div><span class="badge blue">CURRENT MONTH</span></div>
+          <div class="item"><span>Program</span><b>21 · $8,630</b></div>
+          <div class="item"><span>AS01</span><b>18 · $7,410</b></div>
+          <div class="item"><span>GC01</span><b>8 · $1,780</b></div>
+          <div class="item"><span>AE01</span><b>5 · $1,420</b></div>
+          <div class="item"><span>OS01</span><b>7 · $2,020</b></div>
+        </div>
+
+        <div class="card alert" style="margin-top:12px">
+          <b>Duplicate Protection</b>
+          <div class="sub" style="margin-top:6px;line-height:1.55">Program CID is unique for the retained current year. Upsells use CID + campaign. Same-day deleted rows are ignored for duplicate checking.</div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <b>Annual Reset</b>
+          <div class="sub" style="margin-top:6px;line-height:1.55">Current-year duplicate protection resets January 1. Historical sales remain available to management.</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</section>
+
+<section id="manager" class="manager">
+  <div class="head">
+    <div><div class="sub">Management Sales Review</div><h2>Agent Sales History</h2></div>
+    <div class="row"><button class="btn">Export Filtered CSV</button><button class="btn primary">Historical Correction</button></div>
+  </div>
+
+  <div class="filters">
+    <input placeholder="Search CID, agent, campaign…">
+    <select><option>Tiffany Nelson</option><option>Ashley Boggess</option><option>Courtney Wathen</option><option>All Agents</option></select>
+    <select><option>August 2026</option><option>2026 YTD</option><option>Custom Range</option></select>
+    <select><option>All Statuses</option><option>Active/Final</option><option>Deleted</option><option>Corrected</option></select>
+  </div>
+
+  <div class="mgrgrid">
+    <section class="card">
+      <div class="between"><div><b>Tiffany Nelson · August</b><div class="sub">Management can inspect final corrected rows and historical changes.</div></div><span class="badge green">ACTIVE USER</span></div>
+      <div class="table" style="margin-top:12px">
+        <div class="tr"><span>Date</span><span>CID</span><span>Type</span><span>Campaign</span><span>Amount</span><span>Status</span><span>Action</span></div>
+        <div class="tr"><span>Aug 10</span><span>482144</span><span>Upsell</span><span>GC01</span><span class="money">$188</span><span><span class="badge green">ACTIVE</span></span><span><button class="btn" style="padding:6px 8px" onclick="openCorrection()">Correct</button></span></div>
+        <div class="tr"><span>Aug 7</span><span>479922</span><span>Program</span><span>AS01</span><span class="money">$421</span><span><span class="badge blue">CORRECTED</span></span><span><button class="btn" style="padding:6px 8px">History</button></span></div>
+        <div class="tr deleted"><span>Aug 6</span><span>478813</span><span>Upsell</span><span>OS01</span><span class="money">$299</span><span><span class="badge red">DELETED</span></span><span>Audit</span></div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card safe">
+        <b>Agent Summary</b>
+        <div class="item"><span>August net</span><b>$9,884</b></div>
+        <div class="item"><span>August count</span><b>31</b></div>
+        <div class="item"><span>YTD net</span><b>$74,250</b></div>
+        <div class="item"><span>YTD count</span><b>239</b></div>
+      </div>
+
+      <div class="card dangerbox" style="margin-top:12px">
+        <b>Historical Changes</b>
+        <div class="sub" style="margin-top:6px;line-height:1.55">Supervisor or Sales Manager corrections require a reason and preserve old value, new value, actor and exact Central Time in the audit.</div>
+      </div>
+
+      <div class="card alert" style="margin-top:12px">
+        <b>Prior Program Warning</b>
+        <div class="sub" style="margin-top:6px;line-height:1.55">If a current-year Program CID already exists, the agent sees the previous sale date and amount and must confirm it was canceled/resold before continuing.</div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="audit" class="audit">
+  <div class="head">
+    <div><div class="sub">Management Audit</div><h2>Sales Correction History</h2></div>
+    <button class="btn">Filters</button>
+  </div>
+  <div class="table">
+    <div class="tr"><span>Sale</span><span>Employee</span><span>Actor</span><span>Change</span><span>Time</span><span>Reason</span></div>
+    <div class="tr"><span>CID 479922</span><span>Tiffany Nelson</span><span>Jonathan</span><span>$391 → $421</span><span>Aug 7 · 2:14 PM</span><span>Corrected quoted amount</span></div>
+    <div class="tr"><span>CID 476181</span><span>Ashley Boggess</span><span>David</span><span>GC01 → AE01</span><span>Aug 3 · 11:22 AM</span><span>Wrong campaign entered</span></div>
+    <div class="tr"><span>CID 472900</span><span>Courtney Wathen</span><span>Jonathan</span><span>Deleted historical sale</span><span>Jul 29 · 4:08 PM</span><span>Duplicate entry</span></div>
+  </div>
+</section>
+</div>
+
+<div class="modal" id="editModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Same-Day Employee Edit</div><div style="font-size:20px;font-weight:800">Edit Sale · CID 482193</div></div><button class="btn" onclick="closeM('editModal')">Close</button></div>
+    <div class="field"><label>Type</label><select><option>Program</option><option>Upsell</option></select></div>
+    <div class="field"><label>Campaign</label><select><option>AS01</option><option>GC01</option><option>AE01</option><option>OS01</option></select></div>
+    <div class="field"><label>Amount</label><input value="$421.00"></div>
+    <div class="row"><button class="btn primary" style="flex:1">Save Changes</button><button class="btn danger" style="flex:1" onclick="openDelete()">Delete Sale</button></div>
+  </div>
+</div>
+
+<div class="modal" id="deleteModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Same-Day Delete</div><div style="font-size:20px;font-weight:800;color:#9b3030">Delete Sale?</div></div><button class="btn" onclick="closeM('deleteModal')">Close</button></div>
+    <div class="card dangerbox" style="margin-top:12px"><b>CID 482193 · Program · AS01 · $421.00</b><div class="sub" style="margin-top:5px">The row remains visible until midnight marked Deleted and is removed from daily totals immediately. There is no restore or undo.</div></div>
+    <button class="btn danger" style="width:100%;padding:12px;margin-top:12px">Confirm Delete</button>
+  </div>
+</div>
+
+<div class="modal" id="correctionModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Management Historical Correction</div><div style="font-size:20px;font-weight:800">Correct Sale · CID 479922</div></div><button class="btn" onclick="closeM('correctionModal')">Close</button></div>
+    <div class="field"><label>Employee</label><input value="Tiffany Nelson" disabled></div>
+    <div class="field"><label>Current Amount</label><input value="$391.00" disabled></div>
+    <div class="field"><label>Corrected Amount</label><input value="$421.00"></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Required correction reason">Corrected quoted amount</textarea></div>
+    <div class="card alert"><b>Audit preview</b><div class="sub" style="margin-top:5px">Old value, new value, actor, exact Central Time and reason will be permanently associated with this correction.</div></div>
+    <button class="btn primary" style="width:100%;padding:12px;margin-top:12px">Apply Historical Correction</button>
+  </div>
+</div>
+
+<script>
+const my=document.getElementById('my'),mgr=document.getElementById('manager'),audit=document.getElementById('audit');
+const mb=document.getElementById('myBtn'),gb=document.getElementById('mgrBtn'),ab=document.getElementById('auditBtn');
+function show(v){my.style.display='none';mgr.style.display='none';audit.style.display='none';[mb,gb,ab].forEach(x=>x.classList.remove('active'));if(v==='m'){my.style.display='grid';mb.classList.add('active')}if(v==='g'){mgr.style.display='block';gb.classList.add('active')}if(v==='a'){audit.style.display='block';ab.classList.add('active')}}
+mb.onclick=()=>show('m');gb.onclick=()=>show('g');ab.onclick=()=>show('a');
+function openEdit(){document.getElementById('editModal').classList.add('open')}function openCorrection(){document.getElementById('correctionModal').classList.add('open')}
+function openDelete(){document.getElementById('editModal').classList.remove('open');document.getElementById('deleteModal').classList.add('open')}
+function closeM(id){document.getElementById(id).classList.remove('open')}
+</script>
+</body>
+</html>

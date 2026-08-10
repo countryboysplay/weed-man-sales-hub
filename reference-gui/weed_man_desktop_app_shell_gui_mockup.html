@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Desktop App Shell</title>
+<style>
+:root{
+ --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+ --bg:#f5f7f4;--p:#fff;--bd:#dfe4dd;--t:#20251f;--m:#6f786f;
+ --sg:#e8f2ea;--sy:#fff6c8;--sr:#fdeaea;--sb:#eaf1fb;--chip:#eef2ed;
+}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t)}
+button,input{font:inherit}button{cursor:pointer}.top{padding:18px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.sub{font-size:12px;color:var(--m)}.title{font-size:20px;font-weight:760}.switch{display:flex;gap:8px;flex-wrap:wrap}
+.btn,.switch button{border:1px solid var(--bd);background:#fff;padding:9px 12px;border-radius:12px;color:var(--t)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}
+.stage{margin:0 20px 20px;border:1px solid var(--bd);border-radius:18px;overflow:hidden;background:#fff;min-height:780px}
+.shell{display:grid;grid-template-columns:230px 1fr;min-height:780px;transition:.2s}.shell.compact{grid-template-columns:76px 1fr}.shell.fullchat{grid-template-columns:0 1fr}
+.sidebar{border-right:1px solid var(--bd);background:#fbfcfa;overflow:hidden;transition:.2s}.sideinner{width:230px;padding:13px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 17px}.logo{width:40px;height:40px;border-radius:12px;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900}.brand small{display:block;color:var(--m)}
+.toprow{height:62px;border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 17px;gap:10px;background:#fff}.search{flex:1;border:1px solid var(--bd);border-radius:12px;padding:10px 12px;color:var(--m);background:#fbfcfb}.avatar{width:38px;height:38px;border-radius:12px;background:var(--sg);color:var(--g);display:flex;align-items:center;justify-content:center;font-weight:850;position:relative}.dot{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;background:#2aa75d;border:2px solid white}
+.navlabel{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--m);padding:11px 10px 5px}.nav button{width:100%;border:0;background:transparent;text-align:left;padding:9px 10px;border-radius:10px;margin-bottom:3px;white-space:nowrap}.nav button.active{background:var(--sg);color:var(--g);font-weight:750}.count{float:right;background:var(--r);color:#fff;border-radius:999px;font-size:9px;padding:2px 6px}.favstar{color:#d0a900}
+.main{min-width:0;background:var(--bg)}.content{padding:18px}.hero{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}.hero h2{margin:0;font-size:25px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}.stat{background:#fff;border:1px solid var(--bd);border-radius:15px;padding:13px}.num{font-size:29px;font-weight:850}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px}.card{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:14px}.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--m)}.green{background:var(--sg);color:var(--gd)}.yellow{background:var(--sy);color:#665700}.red{background:var(--sr);color:#973030}.blue{background:var(--sb);color:#345f91}
+.item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-top:1px solid var(--bd);font-size:12px}.item:first-of-type{border-top:0}
+.chatview{display:none;height:718px;background:#fff}.chatgrid{display:grid;grid-template-columns:300px 1fr;height:100%}.convos{border-right:1px solid var(--bd);padding:12px}.chatpane{display:flex;flex-direction:column}.chathead{padding:13px 15px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between}.messages{flex:1;padding:18px;background:#f8faf8}.bubble{max-width:520px;background:#fff;border:1px solid var(--bd);border-radius:15px;padding:10px 12px;margin:8px 0;font-size:13px}.bubble.me{margin-left:auto;background:var(--sg);border-color:#cfe0d2}.composer{padding:12px;border-top:1px solid var(--bd);display:flex;gap:8px}.composer input{flex:1;border:1px solid var(--bd);border-radius:12px;padding:10px}
+.settingspanel{position:fixed;right:20px;top:86px;width:310px;background:#fff;border:1px solid var(--bd);border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.13);padding:14px;display:none;z-index:20}.settingspanel.open{display:block}.choice{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-top:1px solid var(--bd);font-size:12px}.choice:first-of-type{border-top:0}.density button{padding:6px 8px;border:1px solid var(--bd);background:#fff;border-radius:9px;font-size:11px}.density button.active{background:var(--g);color:#fff;border-color:var(--g)}
+.command{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-start;justify-content:center;padding-top:110px;z-index:30}.command.open{display:flex}.commandbox{width:min(720px,92vw);background:#fff;border-radius:17px;border:1px solid var(--bd);box-shadow:0 24px 60px rgba(0,0,0,.18);overflow:hidden}.commandbox input{width:100%;border:0;border-bottom:1px solid var(--bd);padding:16px;font-size:16px;outline:none}.result{padding:12px 15px;border-top:1px solid var(--bd);font-size:13px}.result:first-of-type{border-top:0}.shortcut{font-size:10px;border:1px solid var(--bd);border-radius:6px;padding:3px 5px;background:var(--chip);color:var(--m)}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.shell{grid-template-columns:190px 1fr}}
+</style>
+</head>
+<body>
+
+<div class="top">
+ <div><div class="sub">GUI Phase · Screen 25</div><div class="title">Desktop App Shell & Navigation System</div></div>
+ <div class="switch">
+   <button class="active" onclick="showDash(this)">Dashboard Shell</button>
+   <button onclick="showChat(this)">Chat Full-Width Mode</button>
+   <button onclick="toggleCompact(this)">Compact Sidebar</button>
+   <button onclick="openCommand()">Global Search</button>
+ </div>
+</div>
+
+<div class="stage">
+  <div class="shell" id="shell">
+    <aside class="sidebar">
+      <div class="sideinner">
+        <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Sales Hub</small></div></div>
+        <div class="nav">
+          <div class="navlabel">Favorites</div>
+          <button class="active"><span class="favstar">★</span> Sales Dashboard</button>
+          <button><span class="favstar">★</span> Chat <span class="count">3</span></button>
+          <button><span class="favstar">★</span> 2026 Pricing</button>
+
+          <div class="navlabel">Work</div>
+          <button>📈 Sales</button>
+          <button>💬 Chat</button>
+          <button>📣 Announcements <span class="count">2</span></button>
+          <button>✓ Tasks <span class="count">2</span></button>
+          <button>▤ Forms</button>
+          <button>📁 Resources</button>
+          <button>👥 Directory</button>
+          <button>🏆 Recognitions</button>
+
+          <div class="navlabel">Management</div>
+          <button>📊 Management Dashboard <span class="count">3</span></button>
+          <button>👤 Employee Records</button>
+          <button>🕒 Presence & Shifts</button>
+          <button>🛠 Support</button>
+
+          <div class="navlabel">Account</div>
+          <button>🔔 Notifications <span class="count">7</span></button>
+          <button>👤 Profile & Settings</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="toprow">
+        <button class="btn" onclick="toggleCompact()">☰</button>
+        <div class="search" onclick="openCommand()">⌕ Search anything <span style="float:right"><span class="shortcut">Ctrl K</span></span></div>
+        <button class="btn">🔔 <span class="badge red">7</span></button>
+        <button class="btn" onclick="toggleSettings()">⚙</button>
+        <div class="avatar">JL<span class="dot"></span></div>
+      </div>
+
+      <section class="content" id="dashboard">
+        <div class="hero">
+          <div><div class="sub">Monday, August 10 · Central Time</div><h2>Good afternoon, Jonathan</h2></div>
+          <div class="row"><span class="badge green">AVAILABLE</span><button class="btn primary">＋ Add Sale</button></div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><div class="sub">Team Sales Today</div><div class="num">$8,920</div><div class="sub">27 sales</div></div>
+          <div class="stat"><div class="sub">My Sales Today</div><div class="num">$1,245</div><div class="sub">4 sales</div></div>
+          <div class="stat"><div class="sub">Tasks</div><div class="num">2</div><div class="sub">due today</div></div>
+          <div class="stat"><div class="sub">Notifications</div><div class="num">7</div><div class="sub">2 required</div></div>
+        </div>
+
+        <div class="grid">
+          <section class="card">
+            <div class="between"><div><b>Team Sales Today</b><div class="sub">Live ranking</div></div><span class="badge green">REALTIME</span></div>
+            <div class="item"><span>🥇 Ashley Boggess</span><b>5 · $1,785</b></div>
+            <div class="item"><span>🥈 Tiffany Nelson</span><b>4 · $1,422</b></div>
+            <div class="item"><span>🥉 Courtney Wathen</span><b>4 · $1,310</b></div>
+            <div class="item"><span>Jonathan Lindsay</span><b>4 · $1,245</b></div>
+          </section>
+
+          <aside>
+            <div class="card">
+              <div class="between"><div><b>High Priority</b><div class="sub">Announcement</div></div><span class="badge yellow">ACK REQUIRED</span></div>
+              <div style="font-size:13px;line-height:1.55;margin-top:9px">August Sales Policy Update</div>
+              <button class="btn" style="width:100%;margin-top:10px">Open & Acknowledge</button>
+            </div>
+            <div class="card" style="margin-top:12px">
+              <b>Desktop Personalization</b>
+              <div class="item"><span>Density</span><span>Comfortable</span></div>
+              <div class="item"><span>Sidebar</span><span>Expanded</span></div>
+              <div class="item"><span>Favorites</span><span>3</span></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="chatview" id="chat">
+        <div class="chatgrid">
+          <div class="convos">
+            <div class="between"><b>Chat</b><button class="btn" onclick="fullChat()">↔ Full Width</button></div>
+            <div class="search" style="margin:10px 0">Search conversations…</div>
+            <div class="item"><span><b>Ashley Boggess</b><br><span class="sub">Can you look at this CID?</span></span><span class="badge red">2</span></div>
+            <div class="item"><span><b>Sales Management</b><br><span class="sub">David: Updated schedule</span></span><span class="badge red">1</span></div>
+            <div class="item"><span><b>Tiffany Nelson</b><br><span class="sub">Thanks</span></span><span></span></div>
+          </div>
+          <div class="chatpane">
+            <div class="chathead"><div><b>Ashley Boggess</b><div class="sub">Available</div></div><div class="row"><button class="btn">Files</button><button class="btn" onclick="fullChat()">Hide App Sidebar</button></div></div>
+            <div class="messages">
+              <div class="bubble">Can you look at this CID when you get a chance?</div>
+              <div class="bubble me">Yes, send me the number and I’ll take a look.</div>
+              <div class="bubble">482193</div>
+            </div>
+            <div class="composer"><button class="btn">＋</button><input placeholder="Message Ashley…"><button class="btn primary">Send</button></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="settingspanel" id="settings">
+  <div class="between"><div><b>Quick Display Controls</b><div class="sub">Saved per user</div></div><button class="btn" onclick="toggleSettings()">×</button></div>
+  <div class="choice"><span>Theme</span><span>Weed Man Light ▾</span></div>
+  <div class="choice"><span>Density</span><span class="density"><button>Compact</button><button class="active">Comfortable</button><button>Spacious</button></span></div>
+  <div class="choice"><span>Sidebar state</span><span>Remember</span></div>
+  <div class="choice"><span>Chat full-width</span><span>Remember</span></div>
+  <div class="choice"><span>Favorites</span><button class="btn" style="padding:6px 8px">Edit</button></div>
+</div>
+
+<div class="command" id="command">
+  <div class="commandbox">
+    <input autofocus placeholder="Search people, sales, resources, forms, tasks, announcements, IDs…">
+    <div class="result"><b>2026 Regular Application Pricing</b><div class="sub">Resource · matched title</div></div>
+    <div class="result"><b>Tiffany Nelson</b><div class="sub">Directory · Sales Agent · Evansville</div></div>
+    <div class="result"><b>SUP-2026-00142</b><div class="sub">Support ticket · Waiting on User</div></div>
+    <div class="result"><b>Review updated OS01 script</b><div class="sub">Task · due today</div></div>
+    <div style="padding:10px 15px;text-align:right"><button class="btn" onclick="closeCommand()">Close</button></div>
+  </div>
+</div>
+
+<script>
+const shell=document.getElementById('shell'),dash=document.getElementById('dashboard'),chat=document.getElementById('chat');
+function clearSwitch(){document.querySelectorAll('.switch button').forEach(x=>x.classList.remove('active'))}
+function showDash(btn){clearSwitch();btn.classList.add('active');chat.style.display='none';dash.style.display='block';shell.classList.remove('fullchat')}
+function showChat(btn){clearSwitch();btn.classList.add('active');dash.style.display='none';chat.style.display='block';shell.classList.remove('fullchat')}
+function toggleCompact(btn){shell.classList.toggle('compact');shell.classList.remove('fullchat')}
+function fullChat(){dash.style.display='none';chat.style.display='block';shell.classList.remove('compact');shell.classList.toggle('fullchat')}
+function toggleSettings(){document.getElementById('settings').classList.toggle('open')}
+function openCommand(){document.getElementById('command').classList.add('open')}
+function closeCommand(){document.getElementById('command').classList.remove('open')}
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openCommand()}if(e.key==='Escape'){closeCommand();document.getElementById('settings').classList.remove('open')}})
+</script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Notifications & Global Search</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+  --bg:#f6f7f5;--panel:#fff;--border:#dfe4dd;--text:#20251f;--muted:#6f786f;
+  --chip:#eef2ed;--softg:#e8f2ea;--softy:#fff6c8;--softr:#fdeaea;--softb:#eaf1fb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow,.sub{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:750}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--border);background:#fff;padding:9px 12px;border-radius:12px;color:var(--text)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:#fff;min-height:740px}
+.desktop{display:grid;grid-template-columns:205px 1fr;min-height:740px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:12px 10px 5px}
+.nav button{width:100%;display:block;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:15px}.header h2{margin:0;font-size:23px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:14px}
+.card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px}.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.row{display:flex;align-items:center;gap:9px}.grow{flex:1;min-width:0}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);white-space:nowrap}.badge.green{background:var(--softg);color:var(--gd)}.badge.yellow{background:var(--softy);color:#665700}.badge.red{background:var(--softr);color:#982f2f}.badge.blue{background:var(--softb);color:#345f91}
+.notifications{border:1px solid var(--border);border-radius:16px;overflow:hidden}.nhead{padding:13px;border-bottom:1px solid var(--border)}.tabsline{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.pill{border:1px solid var(--border);background:#fff;border-radius:999px;padding:6px 10px;font-size:11px}.pill.active{background:var(--g);color:#fff;border-color:var(--g)}
+.note{display:grid;grid-template-columns:42px 1fr auto;gap:10px;padding:12px 13px;border-top:1px solid var(--border);align-items:start;background:#fff}.note:first-of-type{border-top:0}.note.unread{background:#fbfefb}.note.protected{border-left:4px solid var(--y);background:#fffdf4}
+.nicon{width:40px;height:40px;border-radius:12px;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:18px}.note h3{font-size:13px;margin:0}.note p{font-size:12px;color:var(--muted);line-height:1.45;margin:4px 0}.ntime{font-size:10px;color:var(--muted);white-space:nowrap}
+.unreaddot{width:8px;height:8px;border-radius:50%;background:var(--g);margin-left:auto;margin-top:4px}
+.controls{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.controls button{border:1px solid var(--border);background:#fff;border-radius:9px;padding:6px 8px;font-size:11px}
+.prefrow{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;padding:10px 0;border-top:1px solid var(--border);align-items:center;font-size:12px}.prefrow:first-of-type{border-top:0}.toggle{width:38px;height:22px;border-radius:999px;background:var(--g);position:relative}.toggle:after{content:"";position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;right:2px;top:2px}.toggle.off{background:#c7cdc7}.toggle.off:after{right:18px}
+.searchview{display:none;padding:18px}
+.command{max-width:900px;margin:auto;border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.08)}.commandhead{padding:14px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center}.commandhead input{flex:1;border:0;outline:none;font-size:17px}.shortcut{font-size:11px;color:var(--muted);border:1px solid var(--border);border-radius:7px;padding:4px 6px;background:var(--chip)}
+.sfilters{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;gap:7px;flex-wrap:wrap}.result{display:grid;grid-template-columns:38px 1fr auto;gap:10px;padding:12px 14px;border-top:1px solid var(--border);align-items:start}.result:first-child{border-top:0}.result:hover{background:#fafcf9}.rtitle{font-size:13px;font-weight:700}.snippet{font-size:12px;color:var(--muted);line-height:1.45;margin-top:3px}.why{font-size:10px;color:var(--g);margin-top:5px}.rtype{font-size:10px;color:var(--muted);white-space:nowrap}
+.managementsearch{display:none;padding:18px}.nlbox{border:1px solid var(--border);border-radius:16px;padding:14px;background:#fff}.nlbox input{width:100%;border:1px solid var(--border);border-radius:12px;padding:11px 12px;font-size:15px}.interpreted{margin-top:10px;padding:11px;border-radius:12px;background:var(--softg);font-size:12px}.queryhist{margin-top:14px}.histitem{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--border);font-size:12px}.histitem:first-of-type{border-top:0}
+.mobile{display:none;max-width:390px;margin:auto;min-height:740px;background:#fff}.mobilehead{padding:15px;border-bottom:1px solid var(--border)}.mobilebody{padding:12px 12px 92px}.mobilebottom{position:sticky;bottom:0;border-top:1px solid var(--border);background:#fff;padding:9px 8px}.tabs{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;text-align:center;font-size:11px}.addsale{width:56px;height:56px;margin:-28px auto 0;border-radius:50%;border:4px solid var(--y);background:var(--g);color:#fff;font-size:26px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(520px,100%);background:#fff;border-radius:18px;border:1px solid var(--border);padding:16px}.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input,.field select{width:100%;border:1px solid var(--border);border-radius:11px;padding:10px;background:#fff}
+@media(max-width:1050px){.layout{grid-template-columns:1fr}.desktop{grid-template-columns:175px 1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 15</div><div class="h1">Notifications & Global Search</div></div>
+  <div class="switch">
+    <button id="notifBtn" class="active">Notification Center</button>
+    <button id="searchBtn">Global Search</button>
+    <button id="managementBtn">Management Search</button>
+    <button id="mobileBtn">Mobile</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section class="desktop" id="notifications">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Sales Hub</small></div></div>
+    <div class="nav">
+      <button>★ Sales Dashboard</button><button>★ Chat</button><button>📣 Announcements</button><button>✓ Tasks</button><button>▤ Forms</button><button>📁 Resources</button><button>👥 Directory</button>
+      <div class="navlabel">Account</div>
+      <button class="active">🔔 Notifications <span style="float:right;background:var(--g);color:#fff;padding:2px 7px;border-radius:999px;font-size:11px">7</span></button>
+      <button>👤 Profile</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">Central Inbox</div><h2>Notifications</h2></div>
+      <div style="display:flex;gap:8px"><button class="btn" onclick="markAll()">Mark All Read</button><button class="btn">Preferences</button></div>
+    </div>
+
+    <div class="layout">
+      <section class="notifications">
+        <div class="nhead">
+          <div class="between"><div><b>Notification Center</b><div class="sub">Newest first · permission-aware</div></div><span class="badge green">7 UNREAD</span></div>
+          <div class="tabsline"><button class="pill active">All</button><button class="pill">Unread</button><button class="pill">Required</button><button class="pill">Sales</button><button class="pill">Tasks</button><button class="pill">System</button></div>
+        </div>
+
+        <div class="note unread protected">
+          <div class="nicon">📣</div>
+          <div><h3>High Priority announcement requires acknowledgment</h3><p>August Sales Policy Update must be reviewed and acknowledged.</p><div class="controls"><button>Open Announcement</button><button onclick="openSnooze('Announcement')">Snooze</button></div></div>
+          <div><div class="ntime">2m ago</div><div class="unreaddot"></div></div>
+        </div>
+
+        <div class="note unread">
+          <div class="nicon">✓</div>
+          <div><h3>Task due today at 4:00 PM</h3><p>Review updated OS01 script.</p><div class="controls"><button>Open Task</button><button onclick="openSnooze('Task')">Snooze</button><button onclick="deleteNote(this)">Delete</button></div></div>
+          <div><div class="ntime">8m ago</div><div class="unreaddot"></div></div>
+        </div>
+
+        <div class="note unread">
+          <div class="nicon">💬</div>
+          <div><h3>Ashley Boggess sent you a message</h3><p>“Can you look at this CID when you get a chance?”</p><div class="controls"><button>Open Chat</button><button onclick="deleteNote(this)">Delete</button></div></div>
+          <div><div class="ntime">11m ago</div><div class="unreaddot"></div></div>
+        </div>
+
+        <div class="note unread">
+          <div class="nicon">🏆</div>
+          <div><h3>New team recognition</h3><p>Ashley Boggess was recognized for Outstanding Performance.</p><div class="controls"><button>View Recognition</button><button onclick="deleteNote(this)">Delete</button></div></div>
+          <div><div class="ntime">16m ago</div><div class="unreaddot"></div></div>
+        </div>
+
+        <div class="note">
+          <div class="nicon">🕒</div>
+          <div><h3>Schedule change acknowledged</h3><p>Your temporary shift for Wednesday is 12:00 PM–7:30 PM.</p><div class="controls"><button>View Schedule</button><button onclick="deleteNote(this)">Delete</button></div></div>
+          <div class="ntime">1h ago</div>
+        </div>
+
+        <div class="note protected">
+          <div class="nicon">🛠</div>
+          <div><h3>Support ticket updated</h3><p>SUP-2026-00142 is waiting on your reply.</p><div class="controls"><button>Open Ticket</button></div></div>
+          <div class="ntime">2h ago</div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card">
+          <div class="between"><div><b>Notification Preferences</b><div class="sub">Required items cannot be disabled</div></div><span class="badge blue">PERSONAL</span></div>
+          <div class="prefrow"><span>Direct Messages</span><span>Sound</span><span>Vibrate</span><span class="toggle"></span></div>
+          <div class="prefrow"><span>Recognitions</span><span>Sound</span><span>Vibrate</span><span class="toggle"></span></div>
+          <div class="prefrow"><span>Optional Task Updates</span><span>Sound</span><span>Vibrate</span><span class="toggle off"></span></div>
+          <div class="prefrow"><span>Required Acknowledgments</span><span>Required</span><span>Badge</span><span class="badge green">ON</span></div>
+        </div>
+
+        <div class="card" style="margin-top:12px;background:var(--softg)">
+          <b>DND Behavior</b>
+          <div class="sub" style="margin-top:6px;line-height:1.55">Do Not Disturb suppresses all notifications. When DND ends and the PWA is active, the user receives a catch-up summary with category counts rather than message previews.</div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <b>App Badge</b>
+          <div class="sub" style="margin-top:6px;line-height:1.55">Required items always count until handled. Optional categories count according to the user’s preference.</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</section>
+
+<section class="searchview" id="search">
+  <div class="header">
+    <div><div class="sub">Global · Permission Aware</div><h2>Search</h2></div>
+    <div class="row"><span class="shortcut">/</span><span class="shortcut">Ctrl/⌘ K</span></div>
+  </div>
+
+  <div class="command">
+    <div class="commandhead"><span style="font-size:22px">⌕</span><input id="searchInput" value="OS01 pricing" oninput="updateSearch()" placeholder="Search people, resources, forms, tasks, announcements, IDs…"><span class="shortcut">ESC</span></div>
+    <div class="sfilters"><button class="pill active">Everything</button><button class="pill">Resources</button><button class="pill">People</button><button class="pill">Tasks</button><button class="pill">Forms</button><button class="pill">Announcements</button></div>
+
+    <div id="results">
+      <div class="result"><div class="nicon">📄</div><div><div class="rtitle">2026 Regular Application Pricing</div><div class="snippet">…current pricing reference includes <b>OS01</b> and other 2026 application pricing…</div><div class="why">Matched resource title and document content</div></div><div class="rtype">RESOURCE</div></div>
+      <div class="result"><div class="nicon">✓</div><div><div class="rtitle">Review updated OS01 script</div><div class="snippet">Assigned task due today at 4:00 PM Central.</div><div class="why">Matched task title</div></div><div class="rtype">TASK</div></div>
+      <div class="result"><div class="nicon">▤</div><div><div class="rtitle">Sales Correction Request</div><div class="snippet">Native form with campaign dropdown including OS01.</div><div class="why">Matched form field metadata</div></div><div class="rtype">FORM</div></div>
+      <div class="result"><div class="nicon">📣</div><div><div class="rtitle">Friday Training Reminder</div><div class="snippet">Includes updated OS01 script review before role-play.</div><div class="why">Matched announcement text</div></div><div class="rtype">ANNOUNCEMENT</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="max-width:900px;margin:14px auto 0">
+    <div class="between"><div><b>Reference ID Search</b><div class="sub">IDs open a quick preview first, then the full record.</div></div><span class="badge green">SUPPORTED</span></div>
+    <div style="display:flex;gap:8px;margin-top:10px"><input style="flex:1;border:1px solid var(--border);border-radius:11px;padding:10px" value="SUP-2026-00142"><button class="btn primary">Preview Record</button></div>
+  </div>
+</section>
+
+<section class="managementsearch" id="managementSearch">
+  <div class="header">
+    <div><div class="sub">Management Only</div><h2>Natural-Language Search</h2></div>
+    <button class="btn">Clear My Search History</button>
+  </div>
+
+  <div class="nlbox">
+    <input value="Show me serious presence issues from the last 30 days for Tiffany that were linked to technical issues">
+    <div class="interpreted">
+      <b>Interpreted filters</b><br>
+      Employee: Tiffany Nelson · Record Type: Presence · Severity: Serious · Date: Last 30 days · Linked Record: Technical Issue
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px"><button class="btn primary">Search</button><button class="btn">Edit Filters</button></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="between"><div><b>Results</b><div class="sub">Why each item matched is shown</div></div><span class="badge">3 RESULTS</span></div>
+    <div class="result"><div class="nicon">!</div><div><div class="rtitle">PRS-2026-00384 · PWA closed during shift</div><div class="snippet">Serious presence flag linked to TECH-2026-00092. Technical grace later approved.</div><div class="why">Matched employee, severity, date window and linked technical record</div></div><div class="rtype">PRESENCE</div></div>
+    <div class="result"><div class="nicon">!</div><div><div class="rtitle">PRS-2026-00312 · Device offline</div><div class="snippet">Serious flag linked to TECH-2026-00071.</div><div class="why">Matched employee, severity and technical linkage</div></div><div class="rtype">PRESENCE</div></div>
+    <div class="result"><div class="nicon">!</div><div><div class="rtitle">PRS-2026-00295 · Repeated sync failure</div><div class="snippet">Serious flag associated with Browser/PWA issue.</div><div class="why">Matched natural-language intent and related system record</div></div><div class="rtype">PRESENCE</div></div>
+  </div>
+
+  <div class="card queryhist">
+    <div class="between"><div><b>My Recent Searches</b><div class="sub">Personal search history</div></div><span class="badge blue">PRIVATE</span></div>
+    <div class="histitem"><span>“Show serious presence issues for Tiffany…”</span><span class="sub">Just now</span></div>
+    <div class="histitem"><span>“Open support tickets mentioning Resources freezing”</span><span class="sub">Today</span></div>
+    <div class="histitem"><span>“Tasks overdue for sales agents this week”</span><span class="sub">Yesterday</span></div>
+  </div>
+
+  <div class="card" style="margin-top:12px;background:var(--softy)">
+    <b>Owner Sensitive Search Audit</b>
+    <div class="sub" style="margin-top:6px;line-height:1.55">Specific employee searches involving sensitive management records are audited for the life of that employee account. Broad sensitive searches use the shorter configured retention.</div>
+  </div>
+</section>
+
+<section class="mobile" id="mobile">
+  <div class="mobilehead">
+    <div class="between"><div><div class="sub">Inbox</div><div style="font-size:20px;font-weight:800">Notifications</div></div><button class="btn">Mark Read</button></div>
+    <div style="margin-top:11px"><input style="width:100%;border:1px solid var(--border);border-radius:12px;padding:10px" placeholder="Search notifications…"></div>
+  </div>
+
+  <div class="mobilebody">
+    <div class="note unread protected" style="border:1px solid var(--border);border-left:4px solid var(--y);border-radius:14px;margin-bottom:9px"><div class="nicon">📣</div><div><h3>High Priority announcement</h3><p>August Sales Policy Update requires acknowledgment.</p><div class="controls"><button>Open</button></div></div><div><div class="ntime">2m</div><div class="unreaddot"></div></div></div>
+    <div class="note unread" style="border:1px solid var(--border);border-radius:14px;margin-bottom:9px"><div class="nicon">✓</div><div><h3>Task due at 4:00 PM</h3><p>Review updated OS01 script.</p><div class="controls"><button>Open</button><button>Snooze</button></div></div><div><div class="ntime">8m</div><div class="unreaddot"></div></div></div>
+    <div class="note unread" style="border:1px solid var(--border);border-radius:14px;margin-bottom:9px"><div class="nicon">💬</div><div><h3>New message from Ashley</h3><p>Can you look at this CID?</p><div class="controls"><button>Open Chat</button></div></div><div><div class="ntime">11m</div><div class="unreaddot"></div></div></div>
+  </div>
+
+  <div class="mobilebottom"><div class="tabs"><div>Sales</div><div>Chat</div><div><button class="addsale">＋</button></div><div>Tasks</div><div style="color:var(--g);font-weight:700">Menu</div></div></div>
+</section>
+
+</div>
+
+<div class="modal" id="snoozeModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Notification Snooze</div><div id="snoozeTitle" style="font-size:20px;font-weight:800">Snooze Task</div></div><button class="btn" onclick="closeSnooze()">Close</button></div>
+    <div class="field"><label>Snooze until</label><select><option>30 minutes</option><option>1 hour</option><option>Later today</option><option>Tomorrow morning</option><option>Custom date/time</option></select></div>
+    <button class="btn primary" style="width:100%;padding:12px" onclick="saveSnooze()">Snooze Notification</button>
+    <div id="snoozeMsg" class="sub" style="text-align:center;margin-top:8px"></div>
+  </div>
+</div>
+
+<script>
+const notifications=document.getElementById('notifications'),search=document.getElementById('search'),mgmt=document.getElementById('managementSearch'),mobile=document.getElementById('mobile');
+const nb=document.getElementById('notifBtn'),sb=document.getElementById('searchBtn'),mb=document.getElementById('managementBtn'),mob=document.getElementById('mobileBtn');
+function show(v){
+  notifications.style.display='none';search.style.display='none';mgmt.style.display='none';mobile.style.display='none';
+  [nb,sb,mb,mob].forEach(x=>x.classList.remove('active'));
+  if(v==='n'){notifications.style.display='grid';nb.classList.add('active')}
+  if(v==='s'){search.style.display='block';sb.classList.add('active')}
+  if(v==='m'){mgmt.style.display='block';mb.classList.add('active')}
+  if(v==='o'){mobile.style.display='block';mob.classList.add('active')}
+}
+nb.onclick=()=>show('n');sb.onclick=()=>show('s');mb.onclick=()=>show('m');mob.onclick=()=>show('o');
+
+function markAll(){document.querySelectorAll('.note.unread').forEach(n=>{n.classList.remove('unread');const d=n.querySelector('.unreaddot');if(d)d.remove();})}
+function deleteNote(btn){btn.closest('.note').remove()}
+function openSnooze(type){document.getElementById('snoozeTitle').textContent='Snooze '+type;document.getElementById('snoozeMsg').textContent='';document.getElementById('snoozeModal').classList.add('open')}
+function closeSnooze(){document.getElementById('snoozeModal').classList.remove('open')}
+function saveSnooze(){document.getElementById('snoozeMsg').textContent='Notification snoozed. It will return when the snooze expires.'}
+function updateSearch(){
+  const q=document.getElementById('searchInput').value.trim();
+  document.getElementById('results').style.opacity=q?1:.45;
+}
+</script>
+</body>
+</html>

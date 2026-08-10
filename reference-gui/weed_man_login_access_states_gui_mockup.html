@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Login & Access States</title>
+<style>
+:root{
+ --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+ --bg:#f5f7f4;--panel:#fff;--border:#dde3dc;--text:#20251f;--muted:#6e776e;
+ --softg:#e8f2ea;--softy:#fff6c8;--softr:#fdeaea;--softb:#eaf1fb;--chip:#eef2ed;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#f6f8f5,#eef3ed);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text)}
+button,input{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow,.sub{font-size:12px;color:var(--muted)} .h1{font-size:20px;font-weight:760}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.switch button,.btn{border:1px solid var(--border);background:#fff;padding:9px 12px;border-radius:12px}.switch button.active,.btn.primary{background:var(--g);color:#fff;border-color:var(--g)}.btn.danger{background:#fff5f5;color:#9b3030;border-color:#e8c2c2}
+.stage{margin:0 20px 20px;min-height:720px;border:1px solid var(--border);border-radius:20px;overflow:hidden;background:#fff}
+.view{display:none;min-height:720px}.view.active{display:grid}
+.login{grid-template-columns:1.05fr .95fr}
+.brandpanel{background:linear-gradient(145deg,var(--gd),var(--g));color:#fff;padding:54px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.brandpanel:after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:rgba(242,205,59,.14);right:-120px;bottom:-120px}
+.logo{width:58px;height:58px;border-radius:17px;background:#fff;color:var(--g);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.brandpanel h2{font-size:40px;line-height:1.05;margin:22px 0 10px;max-width:470px}.brandpanel p{color:#e8f2e9;line-height:1.65;max-width:480px}
+.brandfooter{font-size:12px;color:#dbe8dd;position:relative;z-index:2}
+.formpanel{padding:58px;display:flex;align-items:center;justify-content:center}
+.formbox{width:min(430px,100%)}.formbox h2{font-size:28px;margin:0 0 7px}
+.field{margin:15px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}.field input{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px 13px;background:#fff}
+.helper{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12px;margin-top:5px}.link{color:var(--g);font-weight:700;cursor:pointer}
+.notice{border:1px solid var(--border);border-radius:14px;padding:12px;font-size:12px;line-height:1.55}.notice.green{background:var(--softg);border-color:#c7ddcd}.notice.yellow{background:var(--softy);border-color:#ecdfa2}.notice.red{background:#fff8f8;border-color:#eccaca}.notice.blue{background:var(--softb);border-color:#ceddf0}
+.centerstate{place-items:center;background:linear-gradient(180deg,#f8faf7,#f1f5f0);padding:30px}.statecard{width:min(640px,100%);background:#fff;border:1px solid var(--border);border-radius:22px;padding:28px;box-shadow:0 20px 60px rgba(28,48,31,.08)}.stateicon{width:70px;height:70px;border-radius:20px;background:var(--softg);display:flex;align-items:center;justify-content:center;font-size:31px;margin-bottom:18px}.statecard h2{font-size:26px;margin:0 0 7px}.statecard p{color:var(--muted);line-height:1.6}
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.between{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:5px 8px;background:var(--chip);color:var(--muted)}.badge.green{background:var(--softg);color:var(--gd)}.badge.yellow{background:var(--softy);color:#685900}.badge.red{background:var(--softr);color:#983030}.badge.blue{background:var(--softb);color:#365f90}
+.progress{height:9px;background:#e6ebe5;border-radius:999px;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;background:var(--g)}
+.statusline{display:grid;grid-template-columns:28px 1fr auto;gap:9px;align-items:center;padding:10px 0;border-top:1px solid var(--border);font-size:12px}.statusline:first-of-type{border-top:0}.dot{width:27px;height:27px;border-radius:8px;background:var(--softg);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--g)}
+.offlineShell{grid-template-columns:190px 1fr;background:#fff}.sidebar{border-right:1px solid var(--border);padding:14px;background:#fbfcfa}.nav button{width:100%;border:0;background:transparent;text-align:left;padding:10px;border-radius:10px;margin-bottom:3px}.nav button.active{background:var(--softg);color:var(--g);font-weight:700}.main{padding:18px}
+.offlinebanner{background:var(--softy);border:1px solid #eadb91;border-radius:14px;padding:11px 13px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.cardgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.card{border:1px solid var(--border);border-radius:15px;padding:14px}.num{font-size:28px;font-weight:800}
+.queue{border:1px solid var(--border);border-radius:15px;margin-top:12px;overflow:hidden}.qrow{display:grid;grid-template-columns:1fr .8fr .8fr .7fr;gap:8px;padding:10px 12px;border-top:1px solid var(--border);font-size:12px}.qrow:first-child{border-top:0;background:var(--chip);font-weight:700}
+.mobile{display:none;max-width:390px;margin:auto;min-height:720px;padding:22px 16px;background:#fff}.mobilelogo{width:50px;height:50px;border-radius:15px;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900}
+@media(max-width:900px){.login{grid-template-columns:1fr}.brandpanel{display:none}.formpanel{padding:32px}.offlineShell{grid-template-columns:1fr}.sidebar{display:none}.cardgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+ <div><div class="eyebrow">GUI Phase · Screen 19</div><div class="h1">Login, Recovery & Access States</div></div>
+ <div class="switch">
+   <button class="active" onclick="show('login',this)">Login</button>
+   <button onclick="show('forgot',this)">Forgot Password</button>
+   <button onclick="show('deactivated',this)">Deactivated</button>
+   <button onclick="show('maintenance',this)">Maintenance</button>
+   <button onclick="show('update',this)">Required Update</button>
+   <button onclick="show('offline',this)">Offline / Sync</button>
+   <button onclick="show('forced',this)">Forced Logout</button>
+ </div>
+</div>
+
+<div class="stage">
+
+<section id="login" class="view login active">
+  <div class="brandpanel">
+    <div>
+      <div class="logo">WM</div>
+      <h2>One place for the sales team to work.</h2>
+      <p>Sales, chat, announcements, tasks, forms, schedules, resources, support, and management tools in one secure PWA.</p>
+    </div>
+    <div class="brandfooter">Weed Man Sales Hub · Central Time</div>
+  </div>
+  <div class="formpanel">
+    <div class="formbox">
+      <div class="sub">Welcome back</div>
+      <h2>Sign in</h2>
+      <div class="field"><label>Username</label><input value="jlindsay"></div>
+      <div class="field"><label>Password</label><input type="password" value="password"></div>
+      <div class="helper"><label><input type="checkbox" checked> Keep me signed in</label><span class="link" onclick="switchById('forgot')">Forgot password?</span></div>
+      <button class="btn primary" style="width:100%;padding:12px;margin-top:18px">Sign In</button>
+      <div class="notice green" style="margin-top:14px"><b>PWA ready.</b><br>Push notifications and background sync are available on this device.</div>
+    </div>
+  </div>
+</section>
+
+<section id="forgot" class="view centerstate">
+ <div class="statecard">
+   <div class="stateicon">🔑</div>
+   <div class="sub">Account Recovery</div>
+   <h2>Request a password reset</h2>
+   <p>Enter your username. Supervisors and Sales Managers will receive a password-reset request. A manager assigns the replacement password through User Administration.</p>
+   <div class="field"><label>Username</label><input value="tnelson"></div>
+   <button class="btn primary" style="width:100%;padding:12px" onclick="document.getElementById('forgotmsg').textContent='Request sent to Supervisors and Sales Managers.'">Send Reset Request</button>
+   <div id="forgotmsg" class="sub" style="text-align:center;margin-top:9px"></div>
+   <div class="notice blue" style="margin-top:16px">No email recovery link is required in the initial design. Account recovery stays inside the management workflow.</div>
+ </div>
+</section>
+
+<section id="deactivated" class="view centerstate">
+ <div class="statecard">
+   <div class="stateicon" style="background:var(--softr)">⛔</div>
+   <span class="badge red">ACCOUNT DEACTIVATED</span>
+   <h2 style="margin-top:10px">This account is not currently active.</h2>
+   <p>Your profile and work history are preserved, but sign-in is blocked until management reactivates the account.</p>
+   <div class="notice yellow"><b>Scheduled reactivation:</b><br>Monday, August 17 at 10:00 AM Central</div>
+   <div class="row" style="margin-top:15px"><button class="btn">Contact Management</button><button class="btn">Return to Login</button></div>
+ </div>
+</section>
+
+<section id="maintenance" class="view centerstate">
+ <div class="statecard">
+   <div class="between">
+     <div><div class="stateicon" style="background:var(--softy)">🛠</div><span class="badge yellow">MAINTENANCE MODE</span></div>
+     <span class="badge blue">OWNER CONTROLLED</span>
+   </div>
+   <h2>We’ll be back shortly.</h2>
+   <p>Scheduled maintenance is in progress. New work is temporarily blocked while the system is updated.</p>
+   <div class="notice blue"><b>Expected return:</b> 10:15 PM Central<br><b>Time remaining:</b> approximately 18 minutes</div>
+   <div class="progress"><span style="width:60%"></span></div>
+   <div class="statusline"><div class="dot">✓</div><div><b>Pending local changes</b><div class="sub">Safely preserved</div></div><span class="badge green">SAFE</span></div>
+   <div class="statusline"><div class="dot">↻</div><div><b>Automatic reconnect</b><div class="sub">The app will retry when maintenance ends</div></div><span class="badge blue">ON</span></div>
+   <button class="btn" style="width:100%;margin-top:12px">Check Again</button>
+ </div>
+</section>
+
+<section id="update" class="view centerstate">
+ <div class="statecard">
+   <div class="stateicon" style="background:var(--softb)">⬆</div>
+   <span class="badge blue">UPDATE REQUIRED</span>
+   <h2 style="margin-top:10px">A new app version is ready.</h2>
+   <p>This device is running an older PWA version. Your current work has been preserved. Refresh before starting another protected or sensitive action.</p>
+   <div class="statusline"><div class="dot">I</div><div><b>Installed</b></div><span>v1.8.4</span></div>
+   <div class="statusline"><div class="dot">R</div><div><b>Required</b></div><span>v1.8.5</span></div>
+   <div class="statusline"><div class="dot">✓</div><div><b>Unsaved work</b><div class="sub">Preserved</div></div><span class="badge green">SAFE</span></div>
+   <button class="btn primary" style="width:100%;padding:12px;margin-top:13px">Refresh & Update</button>
+ </div>
+</section>
+
+<section id="offline" class="view offlineShell">
+ <aside class="sidebar">
+   <div style="font-weight:800;margin-bottom:18px;color:var(--g)">Weed Man Sales Hub</div>
+   <div class="nav"><button class="active">Sales Dashboard</button><button>Chat</button><button>Tasks</button><button>Resources</button><button>Profile</button></div>
+ </aside>
+ <main class="main">
+   <div class="offlinebanner">
+     <div><b>You’re offline.</b><div class="sub">Safe cached views remain available. Some actions will wait for connection.</div></div>
+     <span class="badge yellow">2 PENDING SYNC</span>
+   </div>
+   <div class="cardgrid">
+     <div class="card"><div class="sub">Last successful sync</div><div class="num">2m</div><div class="sub">ago</div></div>
+     <div class="card"><div class="sub">Pending actions</div><div class="num">2</div><div class="sub">safe-to-queue items</div></div>
+     <div class="card"><div class="sub">Sensitive actions</div><div class="num" style="color:var(--r)">Blocked</div><div class="sub">until reconnected</div></div>
+   </div>
+   <div class="queue">
+     <div class="qrow"><span>Action</span><span>Created</span><span>Status</span><span>Control</span></div>
+     <div class="qrow"><span>Task comment</span><span>2:14 PM</span><span><span class="badge yellow">PENDING SYNC</span></span><span>Retry</span></div>
+     <div class="qrow"><span>Recognition reaction</span><span>2:15 PM</span><span><span class="badge yellow">PENDING SYNC</span></span><span>Retry</span></div>
+   </div>
+   <div class="notice red" style="margin-top:12px"><b>Add Sale is unavailable offline.</b><br>Sales entries and other sensitive actions require a live server connection and will never be silently queued.</div>
+ </main>
+</section>
+
+<section id="forced" class="view centerstate">
+ <div class="statecard">
+   <div class="stateicon" style="background:var(--softr)">🔒</div>
+   <span class="badge red">SESSION ENDED</span>
+   <h2 style="margin-top:10px">You’ve been signed out.</h2>
+   <p>Management ended this session. This can happen after a password reset, account security action, or administrative logout.</p>
+   <div class="notice blue"><b>No local work was discarded.</b><br>Any completed synced work remains on the server.</div>
+   <button class="btn primary" style="width:100%;padding:12px;margin-top:14px">Return to Sign In</button>
+ </div>
+</section>
+
+</div>
+
+<script>
+function show(id,btn){
+ document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.switch button').forEach(x=>x.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+}
+function switchById(id){
+ const buttons=[...document.querySelectorAll('.switch button')];
+ const target=buttons.find(b=>b.textContent.toLowerCase().includes(id==='forgot'?'forgot':id));
+ show(id,target);
+}
+</script>
+</body>
+</html>

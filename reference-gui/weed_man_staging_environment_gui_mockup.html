@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Staging Environment</title>
+<style>
+:root{--g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;--bg:#f6f7f5;--p:#fff;--bd:#dde3dc;--t:#20251f;--m:#6f786f;--sg:#e8f2ea;--sy:#fff6c8;--sr:#fdeaea;--sb:#eaf1fb;--chip:#eef2ed}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.top{padding:18px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.sub{font-size:12px;color:var(--m)}.title{font-size:20px;font-weight:760}.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--bd);background:#fff;padding:9px 12px;border-radius:12px;color:var(--t)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}.btn.danger{background:#fff5f5;color:#9b3030;border-color:#e5bcbc}
+.shell{margin:0 20px 20px;border:1px solid var(--bd);border-radius:18px;overflow:hidden;background:#fff;min-height:760px}.desktop{display:grid;grid-template-columns:205px 1fr;min-height:760px}
+.side{border-right:1px solid var(--bd);background:#fbfcfa;padding:14px}.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
+.brand small{display:block;color:var(--m)}.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--m);padding:12px 10px 5px}.nav button{width:100%;border:0;background:transparent;text-align:left;padding:10px 12px;border-radius:11px;margin-bottom:3px}.nav button.active{background:var(--sg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.head h2{font-size:23px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--bd);border-radius:14px;padding:12px}.num{font-size:28px;font-weight:800}
+.grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
+.card{border:1px solid var(--bd);border-radius:16px;background:#fff;padding:14px}.between{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.grow{flex:1}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--m)}.green{background:var(--sg);color:var(--gd)}.yellow{background:var(--sy);color:#665700}.red{background:var(--sr);color:#973030}.blue{background:var(--sb);color:#345f91}
+.check{display:grid;grid-template-columns:28px 1fr auto;gap:9px;padding:10px 0;border-top:1px solid var(--bd);align-items:center;font-size:12px}.check:first-of-type{border-top:0}.ico{width:27px;height:27px;border-radius:8px;background:var(--sg);display:flex;align-items:center;justify-content:center;color:var(--g);font-weight:800}.ico.warn{background:var(--sy);color:#6a5900}.ico.red{background:var(--sr);color:#9a3030}
+.table{border:1px solid var(--bd);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1.1fr .85fr .9fr .85fr .85fr .8fr;gap:8px;padding:10px 12px;border-top:1px solid var(--bd);font-size:12px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.safe{border-left:5px solid var(--g);background:#f8fcf8}.warnbox{border-left:5px solid var(--y);background:#fffdf3}.risk{border-left:5px solid var(--r);background:#fffafa}
+.validation,.refresh,.access{display:none;padding:18px}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(690px,100%);max-height:92vh;overflow:auto;background:#fff;border:1px solid var(--bd);border-radius:18px;padding:16px}.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--m);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--bd);border-radius:11px;padding:10px;background:#fff}
+@media(max-width:1050px){.desktop{grid-template-columns:175px 1fr}.stats{grid-template-columns:repeat(2,1fr)}.c4,.c5,.c6,.c7,.c8{grid-column:span 12}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div><div class="sub">GUI Phase · Screen 22</div><div class="title">Staging Environment</div></div>
+  <div class="switch">
+    <button id="overviewBtn" class="active">Staging Overview</button>
+    <button id="validationBtn">Validation</button>
+    <button id="refreshBtn">Refresh Staging</button>
+    <button id="accessBtn">Access & Data Rules</button>
+  </div>
+</div>
+
+<div class="shell">
+<section id="overview" class="desktop">
+  <aside class="side">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Owner Console</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">Deployment</div>
+      <button>🚀 Launch Center</button><button class="active">🧪 Staging</button><button>↩ Rollbacks</button><button>📚 Launch History</button>
+      <div class="navlabel">System</div><button>🩺 System Health</button><button>⚙ Settings</button>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="head">
+      <div><div class="sub">Management-Only Environment</div><h2>Staging · v1.8.5-rc1</h2></div>
+      <div class="row"><button class="btn">Open Staging PWA</button><button class="btn primary">Start Validation</button></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="sub">Environment</div><div class="num" style="color:var(--b)">Staging</div><div class="sub">Isolated DB + storage</div></div>
+      <div class="stat"><div class="sub">Candidate</div><div class="num">v1.8.5</div><div class="sub">rc1</div></div>
+      <div class="stat"><div class="sub">Validation</div><div class="num">11/12</div><div class="sub">1 warning</div></div>
+      <div class="stat"><div class="sub">Last Refresh</div><div class="num">Aug 10</div><div class="sub">9:18 AM CT</div></div>
+    </div>
+
+    <div class="grid12">
+      <section class="card c7">
+        <div class="between"><div><b>Environment Status</b><div class="sub">Production-like behavior without touching production data</div></div><span class="badge green">HEALTHY</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Application server</b><div class="sub">Online · staging hostname isolated from production</div></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Staging database</b><div class="sub">Separate database · refreshed snapshot sanitized</div></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Staging file storage</b><div class="sub">Separate directory · sensitive resources replaced with placeholders</div></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Push behavior</b><div class="sub">Staging-only recipients · never production employees</div></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="ico warn">!</div><div><b>Resources mobile spacing</b><div class="sub">Minor UI variance from approved mockup</div></div><span class="badge yellow">WARNING</span></div>
+      </section>
+
+      <aside class="card c5 safe">
+        <div class="between"><div><b>Data Sanitization</b><div class="sub">Applied during staging refresh</div></div><span class="badge green">ENFORCED</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Passwords</b><div class="sub">Never copied from production</div></div><span class="badge green">EXCLUDED</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Direct messages</b><div class="sub">Not copied</div></div><span class="badge green">EXCLUDED</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Group chat history</b><div class="sub">Not copied</div></div><span class="badge green">EXCLUDED</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Sensitive documents</b><div class="sub">Placeholder resources only</div></div><span class="badge green">SANITIZED</span></div>
+      </aside>
+
+      <section class="card c6">
+        <div class="between"><div><b>Latest Validation Run</b><div class="sub">STAGE-2026-00141</div></div><span class="badge yellow">PASSED WITH WARNING</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Login & permissions</b></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Add Sale + duplicate rules</b></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Chat + attachments</b></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="ico">✓</div><div><b>Forms + Resources</b></div><span class="badge yellow">WARNING</span></div>
+        <button class="btn" style="margin-top:10px">Open Full Validation</button>
+      </section>
+
+      <section class="card c6 warnbox">
+        <div class="between"><div><b>Ready for Launch Center?</b><div class="sub">Candidate handoff</div></div><span class="badge yellow">YES, WITH WARNING</span></div>
+        <div class="sub" style="margin-top:8px;line-height:1.55">All required staging checks passed. One overridable UI warning remains. Launch Center will surface the same warning during final production readiness.</div>
+        <button class="btn primary" style="margin-top:12px">Send Candidate to Launch Center</button>
+      </section>
+    </div>
+  </main>
+</section>
+
+<section id="validation" class="validation">
+  <div class="head">
+    <div><div class="sub">Staging Test Run</div><h2>Validation Checklist</h2></div>
+    <div class="row"><button class="btn">Rerun Automated</button><button class="btn primary">Complete Manual Checks</button></div>
+  </div>
+  <div class="table">
+    <div class="tr"><span>Check</span><span>Type</span><span>Status</span><span>Owner</span><span>Evidence</span><span>Action</span></div>
+    <div class="tr"><span>Login & Role Permissions</span><span>Automated</span><span><span class="badge green">PASS</span></span><span>System</span><span>14/14 scenarios</span><span>View</span></div>
+    <div class="tr"><span>Add Sale</span><span>Automated</span><span><span class="badge green">PASS</span></span><span>System</span><span>8/8 tests</span><span>View</span></div>
+    <div class="tr"><span>Duplicate Program CID</span><span>Automated</span><span><span class="badge green">PASS</span></span><span>System</span><span>Current-year rule</span><span>View</span></div>
+    <div class="tr"><span>Chat Sidebar Hide</span><span>Manual</span><span><span class="badge green">PASS</span></span><span>Jonathan</span><span>Desktop verified</span><span>Open</span></div>
+    <div class="tr"><span>Resources Mobile Layout</span><span>Manual</span><span><span class="badge yellow">WARNING</span></span><span>Jonathan</span><span>Spacing issue</span><span>Review</span></div>
+    <div class="tr"><span>Owner Recovery Flow</span><span>Manual</span><span><span class="badge green">PASS</span></span><span>Owner</span><span>Protected action verified</span><span>Open</span></div>
+  </div>
+
+  <div class="card warnbox" style="margin-top:14px">
+    <div class="between"><div><b>Warning Detail · Resources Mobile Layout</b><div class="sub">Non-blocking UI variance</div></div><span class="badge yellow">OVERRIDABLE</span></div>
+    <div class="sub" style="margin-top:8px;line-height:1.55">Mobile resource cards render with tighter vertical spacing than the approved design. No functional, security, or data-loss impact.</div>
+    <div class="row" style="margin-top:12px"><button class="btn">Create Fix Ticket</button><button class="btn">Accept for Candidate</button></div>
+  </div>
+</section>
+
+<section id="refresh" class="refresh">
+  <div class="head">
+    <div><div class="sub">Owner Control</div><h2>Refresh Staging From Production</h2></div>
+    <span class="badge red">PROTECTED ACTION</span>
+  </div>
+  <div class="grid12">
+    <section class="card c7 risk">
+      <div class="between"><div><b>Refresh Preview</b><div class="sub">Replaces current staging data with a sanitized production snapshot</div></div><span class="badge red">MASTER RECOVERY</span></div>
+      <div class="check"><div class="ico">1</div><div><b>Take production snapshot</b><div class="sub">Read-only source snapshot</div></div><span class="badge green">SAFE</span></div>
+      <div class="check"><div class="ico">2</div><div><b>Remove protected content</b><div class="sub">Passwords, private chat history, sensitive documents</div></div><span class="badge green">SANITIZE</span></div>
+      <div class="check"><div class="ico">3</div><div><b>Replace staging DB/storage</b><div class="sub">Production remains untouched</div></div><span class="badge blue">STAGING ONLY</span></div>
+      <div class="check"><div class="ico">4</div><div><b>Re-seed staging access</b><div class="sub">Management test accounts retained/recreated</div></div><span class="badge green">READY</span></div>
+      <button class="btn danger" style="width:100%;padding:12px;margin-top:12px" onclick="openRefresh()">Authenticate & Refresh Staging</button>
+    </section>
+    <aside class="card c5 safe">
+      <b>Refresh Safeguards</b>
+      <div class="sub" style="margin-top:8px;line-height:1.6">Refresh requires authenticated Owner, master recovery credential, TOTP, reason, and permanent audit. Production is never modified by the refresh process.</div>
+    </aside>
+  </div>
+</section>
+
+<section id="access" class="access">
+  <div class="head">
+    <div><div class="sub">Staging Governance</div><h2>Access & Data Rules</h2></div>
+    <button class="btn">Edit Rules</button>
+  </div>
+  <div class="grid12">
+    <section class="card c6">
+      <div class="between"><div><b>Who Can Access Staging</b><div class="sub">Agents are excluded</div></div><span class="badge blue">MANAGEMENT ONLY</span></div>
+      <div class="check"><div class="ico">✓</div><div><b>Owner</b></div><span class="badge green">ALLOWED</span></div>
+      <div class="check"><div class="ico">✓</div><div><b>Sales Manager</b></div><span class="badge green">ALLOWED</span></div>
+      <div class="check"><div class="ico">✓</div><div><b>Sales Supervisor</b></div><span class="badge green">ALLOWED</span></div>
+      <div class="check"><div class="ico red">×</div><div><b>Sales Agent</b></div><span class="badge red">BLOCKED</span></div>
+    </section>
+
+    <section class="card c6">
+      <div class="between"><div><b>Production Data Treatment</b><div class="sub">Sanitized before staging use</div></div><span class="badge green">ENFORCED</span></div>
+      <div class="check"><div class="ico">✓</div><div><b>Operational records</b><div class="sub">Copied when needed for realistic testing</div></div><span class="badge green">ALLOWED</span></div>
+      <div class="check"><div class="ico red">×</div><div><b>Private communications</b><div class="sub">Never copied</div></div><span class="badge red">EXCLUDED</span></div>
+      <div class="check"><div class="ico red">×</div><div><b>Production passwords</b><div class="sub">Never copied</div></div><span class="badge red">EXCLUDED</span></div>
+      <div class="check"><div class="ico warn">!</div><div><b>Sensitive documents</b><div class="sub">Placeholder item retains structure only</div></div><span class="badge yellow">PLACEHOLDER</span></div>
+    </section>
+  </div>
+</section>
+</div>
+
+<div class="modal" id="refreshModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Protected Owner Action</div><div style="font-size:20px;font-weight:800">Refresh Staging</div></div><button class="btn" onclick="closeRefresh()">Close</button></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Required reason">Refresh staging for v1.8.5 validation</textarea></div>
+    <div class="field"><label>Fresh Authentication</label><input type="password" placeholder="Owner password"></div>
+    <div class="field"><label>Master Recovery Credential</label><input type="password" placeholder="Write-only recovery credential"></div>
+    <div class="field"><label>TOTP Code</label><input placeholder="6-digit code"></div>
+    <button class="btn danger" style="width:100%;padding:12px">Confirm Staging Refresh</button>
+  </div>
+</div>
+
+<script>
+const ids=['overview','validation','refresh','access'];
+const btns=[document.getElementById('overviewBtn'),document.getElementById('validationBtn'),document.getElementById('refreshBtn'),document.getElementById('accessBtn')];
+function show(id,btn){
+ ids.forEach(x=>document.getElementById(x).style.display='none');
+ document.getElementById(id).style.display=id==='overview'?'grid':'block';
+ btns.forEach(x=>x.classList.remove('active')); btn.classList.add('active');
+}
+btns[0].onclick=()=>show('overview',btns[0]);btns[1].onclick=()=>show('validation',btns[1]);btns[2].onclick=()=>show('refresh',btns[2]);btns[3].onclick=()=>show('access',btns[3]);
+function openRefresh(){document.getElementById('refreshModal').classList.add('open')}function closeRefresh(){document.getElementById('refreshModal').classList.remove('open')}
+</script>
+</body>
+</html>

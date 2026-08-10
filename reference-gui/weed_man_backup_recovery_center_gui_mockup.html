@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Backup & Recovery Center</title>
+<style>
+:root{
+ --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+ --bg:#f5f7f4;--p:#fff;--bd:#dde3dc;--t:#20251f;--m:#6f786f;
+ --sg:#e8f2ea;--sy:#fff6c8;--sr:#fdeaea;--sb:#eaf1fb;--chip:#eef2ed;
+}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{padding:18px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.sub{font-size:12px;color:var(--m)}.title{font-size:20px;font-weight:760}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--bd);background:#fff;padding:9px 12px;border-radius:12px;color:var(--t)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}.btn.danger{background:#fff5f5;color:#9b3030;border-color:#e5bcbc}
+.shell{margin:0 20px 20px;border:1px solid var(--bd);border-radius:18px;overflow:hidden;background:#fff;min-height:760px}
+.desktop{display:grid;grid-template-columns:205px 1fr;min-height:760px}
+.side{border-right:1px solid var(--bd);background:#fbfcfa;padding:14px}.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}.brand small{display:block;color:var(--m)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--m);padding:12px 10px 5px}.nav button{width:100%;border:0;background:transparent;text-align:left;padding:10px 12px;border-radius:11px;margin-bottom:3px}.nav button.active{background:var(--sg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.head h2{font-size:23px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--bd);border-radius:14px;padding:12px}.num{font-size:28px;font-weight:800}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.card{border:1px solid var(--bd);border-radius:16px;background:#fff;padding:14px}
+.between{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--m)}.green{background:var(--sg);color:var(--gd)}.yellow{background:var(--sy);color:#665700}.red{background:var(--sr);color:#973030}.blue{background:var(--sb);color:#345f91}
+.item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-top:1px solid var(--bd);font-size:12px;align-items:center}.item:first-of-type{border-top:0}
+.safe{border-left:5px solid var(--g);background:#f8fcf8}.warn{border-left:5px solid var(--y);background:#fffdf3}.risk{border-left:5px solid var(--r);background:#fffafa}
+.table{border:1px solid var(--bd);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1.05fr .85fr .9fr .85fr .9fr .8fr;gap:8px;padding:10px 12px;border-top:1px solid var(--bd);font-size:12px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.progress{height:9px;background:#e7ebe5;border-radius:999px;overflow:hidden}.progress span{display:block;height:100%;background:var(--g)}
+.restore,.recovery,.audit{display:none;padding:18px}
+.timeline{margin-top:8px}.event{display:grid;grid-template-columns:30px 1fr auto;gap:9px;padding:9px 0}.line{position:relative}.line:before{content:"";position:absolute;left:14px;top:24px;bottom:-12px;width:2px;background:var(--bd)}.event:last-child .line:before{display:none}.edot{width:30px;height:30px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:12px}.edot.green{background:var(--sg)}.edot.red{background:var(--sr)}.edot.blue{background:var(--sb)}.edot.yellow{background:var(--sy)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(700px,100%);background:#fff;border:1px solid var(--bd);border-radius:18px;padding:16px;max-height:92vh;overflow:auto}.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--m);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--bd);border-radius:11px;padding:10px;background:#fff}
+@media(max-width:1050px){.desktop{grid-template-columns:175px 1fr}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.tr{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div><div class="sub">GUI Phase · Screen 27</div><div class="title">Backup & Recovery Center</div></div>
+  <div class="switch">
+    <button id="overviewBtn" class="active">Backup Overview</button>
+    <button id="restoreBtn">Full Restore</button>
+    <button id="recoveryBtn">Report Recovery</button>
+    <button id="auditBtn">Recovery Audit</button>
+  </div>
+</div>
+
+<div class="shell">
+<section id="overview" class="desktop">
+  <aside class="side">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Owner Console</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">System</div>
+      <button>🩺 System Health</button>
+      <button class="active">💾 Backup & Recovery</button>
+      <button>⚙ System Settings</button>
+      <div class="navlabel">Deployment</div>
+      <button>🚀 Launch Center</button>
+      <button>🧪 Staging</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="head">
+      <div><div class="sub">Owner Recovery</div><h2>Backup & Recovery Center</h2></div>
+      <div class="row"><button class="btn">Verify Latest Backup</button><button class="btn primary" onclick="showRestore()">Restore Options</button></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="sub">Latest Backup</div><div class="num">12:30 AM</div><div class="sub">Today · Central Time</div></div>
+      <div class="stat"><div class="sub">Retention</div><div class="num">7 Days</div><div class="sub">Daily encrypted backups</div></div>
+      <div class="stat"><div class="sub">Storage</div><div class="num">Dropbox</div><div class="sub">Encrypted off-server copy</div></div>
+      <div class="stat"><div class="sub">Backup Health</div><div class="num" style="color:var(--g)">Healthy</div><div class="sub">Latest verification passed</div></div>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <div class="between"><div><b>Recent Backups</b><div class="sub">Consistent database + storage snapshots</div></div><span class="badge green">7 AVAILABLE</span></div>
+        <div class="table" style="margin-top:12px">
+          <div class="tr"><span>Backup</span><span>Date</span><span>Database</span><span>Files</span><span>Verify</span><span>Action</span></div>
+          <div class="tr"><span>BK-2026-0810</span><span>Aug 10 · 12:30 AM</span><span><span class="badge green">OK</span></span><span><span class="badge green">OK</span></span><span><span class="badge green">PASSED</span></span><span><button class="btn" style="padding:6px 8px" onclick="openLatest()">Restore</button></span></div>
+          <div class="tr"><span>BK-2026-0809</span><span>Aug 9 · 12:30 AM</span><span><span class="badge green">OK</span></span><span><span class="badge green">OK</span></span><span><span class="badge green">PASSED</span></span><span>Recovery only</span></div>
+          <div class="tr"><span>BK-2026-0808</span><span>Aug 8 · 12:30 AM</span><span><span class="badge green">OK</span></span><span><span class="badge green">OK</span></span><span><span class="badge green">PASSED</span></span><span>Recovery only</span></div>
+          <div class="tr"><span>BK-2026-0807</span><span>Aug 7 · 12:30 AM</span><span><span class="badge green">OK</span></span><span><span class="badge green">OK</span></span><span><span class="badge green">PASSED</span></span><span>Recovery only</span></div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card safe">
+          <div class="between"><div><b>Backup Scope</b><div class="sub">What each backup protects</div></div><span class="badge blue">FULL SYSTEM</span></div>
+          <div class="item"><span>Application database</span><span class="badge green">INCLUDED</span></div>
+          <div class="item"><span>Uploaded files</span><span class="badge green">INCLUDED</span></div>
+          <div class="item"><span>Resources storage</span><span class="badge green">INCLUDED</span></div>
+          <div class="item"><span>Report archive metadata</span><span class="badge green">INCLUDED</span></div>
+          <div class="item"><span>Deployment code</span><span class="badge blue">SEPARATE</span></div>
+        </div>
+
+        <div class="card risk" style="margin-top:12px">
+          <b>Full Restore Protection</b>
+          <div class="sub" style="margin-top:6px;line-height:1.55">Full production restore is limited to the latest verified backup and requires Owner authentication, master recovery credential, TOTP, reason, and a protected audit record.</div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="card warn" style="margin-top:14px">
+      <div class="between"><div><b>Backup Storage Health</b><div class="sub">Encrypted Dropbox destination</div></div><span class="badge green">CONNECTED</span></div>
+      <div class="item"><span>Latest upload</span><span>Completed · 12:37 AM</span></div>
+      <div class="item"><span>Encryption</span><span>Separate server-held recovery key</span></div>
+      <div class="item"><span>Integrity verification</span><span>Passed</span></div>
+      <div class="progress" style="margin-top:10px"><span style="width:100%"></span></div>
+    </div>
+  </main>
+</section>
+
+<section id="restore" class="restore">
+  <div class="head">
+    <div><div class="sub">Owner-Protected Recovery</div><h2>Full Production Restore</h2></div>
+    <span class="badge red">LATEST BACKUP ONLY</span>
+  </div>
+
+  <div class="grid">
+    <section class="card risk">
+      <div class="between"><div><b>Restore Target</b><div class="sub">BK-2026-0810 · Aug 10 · 12:30 AM Central</div></div><span class="badge green">VERIFIED</span></div>
+      <div class="item"><span>Database snapshot</span><span class="badge green">READY</span></div>
+      <div class="item"><span>File storage snapshot</span><span class="badge green">READY</span></div>
+      <div class="item"><span>Integrity check</span><span class="badge green">PASSED</span></div>
+      <div class="item"><span>Production impact</span><span>Maintenance required</span></div>
+      <button class="btn danger" style="width:100%;padding:12px;margin-top:12px" onclick="openRestore()">Authenticate & Begin Restore</button>
+    </section>
+
+    <aside class="card safe">
+      <b>Transactional Restore Sequence</b>
+      <div class="item"><span>1. Enter maintenance</span><span>Safe stop</span></div>
+      <div class="item"><span>2. Preserve current state</span><span>Rollback point</span></div>
+      <div class="item"><span>3. Restore DB + storage</span><span>Atomic</span></div>
+      <div class="item"><span>4. Run health checks</span><span>Required</span></div>
+      <div class="item"><span>5. Reopen production</span><span>Only if healthy</span></div>
+    </aside>
+  </div>
+
+  <div class="card warn" style="margin-top:14px">
+    <b>Why older backups cannot full-restore directly</b>
+    <div class="sub" style="margin-top:6px;line-height:1.55">Older retained backups remain available for report-only recovery. Full production restore uses the latest verified backup to reduce destructive rollback risk and avoid restoring stale operational state.</div>
+  </div>
+</section>
+
+<section id="recovery" class="recovery">
+  <div class="head">
+    <div><div class="sub">Selective Recovery</div><h2>Recover Reports Without Restoring Production</h2></div>
+    <span class="badge blue">REPORT ONLY</span>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="between"><div><b>Available Recovery Backups</b><div class="sub">Any retained daily backup may be searched</div></div><span class="badge green">7 DAYS</span></div>
+      <div class="item"><span>Aug 10 · 12:30 AM</span><button class="btn" style="padding:6px 8px">Browse Reports</button></div>
+      <div class="item"><span>Aug 9 · 12:30 AM</span><button class="btn" style="padding:6px 8px">Browse Reports</button></div>
+      <div class="item"><span>Aug 8 · 12:30 AM</span><button class="btn" style="padding:6px 8px">Browse Reports</button></div>
+      <div class="item"><span>Aug 7 · 12:30 AM</span><button class="btn" style="padding:6px 8px">Browse Reports</button></div>
+      <button class="btn primary" style="margin-top:12px" onclick="openReportRecovery()">Start Report Recovery</button>
+    </section>
+
+    <aside class="card safe">
+      <b>Recovered Report Rules</b>
+      <div class="item"><span>Original preserved</span><span class="badge green">YES</span></div>
+      <div class="item"><span>Recovered badge</span><span class="badge blue">RECOVERED</span></div>
+      <div class="item"><span>Recovery ID</span><span>REC-YYYY-#####</span></div>
+      <div class="item"><span>New retention allowed</span><span class="badge green">YES</span></div>
+      <div class="item"><span>Permanent Owner audit</span><span class="badge green">YES</span></div>
+    </aside>
+  </div>
+</section>
+
+<section id="audit" class="audit">
+  <div class="head">
+    <div><div class="sub">Owner Audit</div><h2>Backup & Recovery History</h2></div>
+    <button class="btn">Search</button>
+  </div>
+
+  <div class="timeline">
+    <div class="event"><div class="line"><div class="edot green">✓</div></div><div><b>Backup verified · BK-2026-0810</b><div class="sub">Aug 10 · 12:42 AM · system verification completed successfully</div></div><span class="badge green">HEALTHY</span></div>
+    <div class="event"><div class="line"><div class="edot blue">R</div></div><div><b>REC-2026-00017 · report recovered</b><div class="sub">Aug 4 · Owner · source BK-2026-0803 · original preserved</div></div><span class="badge blue">RECOVERY</span></div>
+    <div class="event"><div class="line"><div class="edot yellow">A</div></div><div><b>Restore authentication initiated</b><div class="sub">Aug 3 · Owner · credentials verified · restore canceled before execution</div></div><span class="badge yellow">NO CHANGE</span></div>
+    <div class="event"><div class="line"><div class="edot green">✓</div></div><div><b>Backup verified · BK-2026-0803</b><div class="sub">Aug 3 · integrity check passed</div></div><span class="badge green">HEALTHY</span></div>
+  </div>
+</section>
+</div>
+
+<div class="modal" id="restoreModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Protected Owner Action</div><div style="font-size:20px;font-weight:800">Restore Latest Production Backup</div></div><button class="btn" onclick="closeM('restoreModal')">Close</button></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Required restore reason"></textarea></div>
+    <div class="field"><label>Fresh Authentication</label><input type="password" placeholder="Owner password"></div>
+    <div class="field"><label>Master Recovery Credential</label><input type="password" placeholder="Write-only recovery credential"></div>
+    <div class="field"><label>TOTP Code</label><input placeholder="6-digit code"></div>
+    <div class="card risk"><b>Final confirmation</b><div class="sub" style="margin-top:5px">Production will enter maintenance and restore BK-2026-0810. The current state will first be captured as a temporary rollback point.</div></div>
+    <button class="btn danger" style="width:100%;padding:12px;margin-top:12px">Begin Protected Restore</button>
+  </div>
+</div>
+
+<div class="modal" id="reportRecoveryModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Owner Report Recovery</div><div style="font-size:20px;font-weight:800">Recover Report</div></div><button class="btn" onclick="closeM('reportRecoveryModal')">Close</button></div>
+    <div class="field"><label>Source Backup</label><select><option>Aug 9 · 12:30 AM Central</option><option>Aug 8 · 12:30 AM Central</option><option>Aug 7 · 12:30 AM Central</option></select></div>
+    <div class="field"><label>Report / Search</label><input value="Tiffany 90-Day History"></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Required recovery reason"></textarea></div>
+    <div class="field"><label>Recovered Report Retention</label><select><option>Keep original retention</option><option>90 days then archive</option><option>365 days then delete</option></select></div>
+    <button class="btn primary" style="width:100%;padding:12px">Preview Recovery</button>
+  </div>
+</div>
+
+<script>
+const views={overview:document.getElementById('overview'),restore:document.getElementById('restore'),recovery:document.getElementById('recovery'),audit:document.getElementById('audit')};
+const buttons={overview:document.getElementById('overviewBtn'),restore:document.getElementById('restoreBtn'),recovery:document.getElementById('recoveryBtn'),audit:document.getElementById('auditBtn')};
+function show(k){Object.values(views).forEach(v=>v.style.display='none');Object.values(buttons).forEach(b=>b.classList.remove('active'));views[k].style.display=k==='overview'?'grid':'block';buttons[k].classList.add('active')}
+Object.keys(buttons).forEach(k=>buttons[k].onclick=()=>show(k));
+function showRestore(){show('restore')}
+function openLatest(){show('restore')}
+function openRestore(){document.getElementById('restoreModal').classList.add('open')}
+function openReportRecovery(){document.getElementById('reportRecoveryModal').classList.add('open')}
+function closeM(id){document.getElementById(id).classList.remove('open')}
+</script>
+</body>
+</html>

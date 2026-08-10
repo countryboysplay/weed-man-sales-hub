@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Presence, Scheduling & Time Off</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+  --bg:#f6f7f5;--panel:#fff;--border:#dfe4dd;--text:#20251f;--muted:#6f786f;
+  --chip:#eef2ed;--softg:#e8f2ea;--softy:#fff6c8;--softr:#fdeaea;--softb:#eaf1fb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow,.sub{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:750}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--border);background:#fff;padding:9px 12px;border-radius:12px;color:var(--text)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:#fff;min-height:740px}
+.desktop{display:grid;grid-template-columns:200px 1fr;min-height:740px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:12px 10px 5px}
+.nav button{width:100%;display:block;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:15px}.header h2{margin:0;font-size:23px}
+.grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
+.card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px}.softg{background:var(--softg)}.softy{background:var(--softy)}.softr{background:#fffafa}
+.cardhead,.between{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.cardhead{margin-bottom:10px}.cardhead h3{margin:0;font-size:15px}
+.bigstatus{display:flex;align-items:center;gap:12px}.statusdot{width:17px;height:17px;border-radius:50%;background:#2aa75d;box-shadow:0 0 0 5px #e9f7ee}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);white-space:nowrap}.badge.green{background:var(--softg);color:var(--gd)}.badge.yellow{background:var(--softy);color:#665700}.badge.red{background:var(--softr);color:#982f2f}.badge.blue{background:var(--softb);color:#345f91}
+.metric{font-size:28px;font-weight:800}.row{display:flex;align-items:center;gap:9px}.listitem{padding:9px 0;border-top:1px solid var(--border);font-size:12px;display:flex;align-items:center;gap:9px}.listitem:first-of-type{border-top:0}.grow{flex:1;min-width:0}
+.avatar{width:34px;height:34px;border-radius:10px;background:var(--softg);display:flex;align-items:center;justify-content:center;color:var(--g);font-weight:800;font-size:11px;position:relative;flex:0 0 auto}.dot{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;border:2px solid white;background:#2aa75d}.dot.away{background:#e1b522}.dot.busy{background:#d85555}.dot.off{background:#a5ada5}
+.timeline{display:flex;align-items:center;gap:4px;margin-top:10px}.seg{height:14px;border-radius:5px}.avail{background:#5fb879}.away{background:#e8c75d}.busy{background:#d96d6d}.break{background:#6d8fcc}.offline{background:#b7bdb7}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:11px;color:var(--muted)}.legend i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:4px}
+.actiongrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.actiongrid button{border:1px solid var(--border);background:#fff;border-radius:12px;padding:11px;text-align:left}.actiongrid b{display:block;font-size:12px}.actiongrid span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+.schedule{display:grid;grid-template-columns:80px repeat(5,1fr);border:1px solid var(--border);border-radius:14px;overflow:hidden;font-size:11px}.schedule>div{padding:9px;border-left:1px solid var(--border);border-top:1px solid var(--border)}.schedule>div:nth-child(-n+6){border-top:0;font-weight:700;background:var(--chip)}.schedule>div:nth-child(6n+1){border-left:0;font-weight:700}
+.shift{background:var(--softg);border-radius:8px;padding:7px!important;margin:4px}.exception{background:var(--softy);border-radius:8px;padding:7px!important;margin:4px}
+.table{border:1px solid var(--border);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1.15fr .85fr .85fr .9fr .85fr;gap:9px;padding:10px 12px;border-top:1px solid var(--border);font-size:12px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.mobile{display:none;max-width:390px;margin:auto;min-height:740px;background:#fff}.mobilehead{padding:15px;border-bottom:1px solid var(--border)}.mobilebody{padding:12px 12px 94px}.mobilecard{border:1px solid var(--border);border-radius:15px;padding:13px;margin-bottom:10px}.mobilebottom{position:sticky;bottom:0;border-top:1px solid var(--border);background:#fff;padding:9px 8px}.tabs{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;text-align:center;font-size:11px}.addsale{width:56px;height:56px;margin:-28px auto 0;border-radius:50%;border:4px solid var(--y);background:var(--g);color:#fff;font-size:26px}
+.approvals{display:none;padding:18px}.approvalgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:15px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.day{min-height:76px;border:1px solid var(--border);border-radius:10px;padding:7px;font-size:11px}.day b{display:block;margin-bottom:4px}.event{border-radius:7px;padding:5px;margin-top:4px;background:var(--softg);color:var(--gd)}.pending{background:var(--softy);color:#665700}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(600px,100%);background:#fff;border-radius:18px;border:1px solid var(--border);padding:16px;max-height:92vh;overflow:auto}
+.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:11px;padding:10px;background:#fff}
+@media(max-width:1050px){.c4,.c5,.c6,.c7,.c8{grid-column:span 12}.desktop{grid-template-columns:170px 1fr}.approvalgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 10</div><div class="h1">Presence, Shifts, Breaks & Time Off</div></div>
+  <div class="switch">
+    <button id="employeeBtn" class="active">Employee Desktop</button>
+    <button id="mobileBtn">Mobile</button>
+    <button id="managerBtn">Management Live View</button>
+    <button id="approvalBtn">Approvals & Calendar</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section class="desktop" id="employee">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Sales Hub</small></div></div>
+    <div class="nav">
+      <button>★ Sales Dashboard</button><button>★ Chat</button><button>📣 Announcements</button><button>✓ Tasks</button>
+      <div class="navlabel">My Work</div>
+      <button class="active">🕒 My Schedule</button><button>🏖 Time Off</button><button>👤 Profile</button>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">Monday, August 10 · Central Time</div><h2>My Schedule & Presence</h2></div>
+      <button class="btn" onclick="openTimeOff()">Request Time Off</button>
+    </div>
+
+    <div class="grid12">
+      <section class="card c7 softg">
+        <div class="cardhead"><div><h3>Current Status</h3><div class="sub">Simple employee view</div></div><span class="badge green">AVAILABLE</span></div>
+        <div class="bigstatus"><div class="statusdot"></div><div><div style="font-size:20px;font-weight:800">Available</div><div class="sub">Shift: 10:30 AM–7:30 PM · On time</div></div></div>
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+          <button class="btn primary">Available</button><button class="btn">Busy</button><button class="btn">DND</button><button class="btn">Set Status Message</button>
+        </div>
+      </section>
+
+      <section class="card c5">
+        <div class="cardhead"><div><h3>Breaks</h3><div class="sub">One active break at a time</div></div></div>
+        <div class="actiongrid">
+          <button onclick="startBreak('Lunch')"><b>🍽 Start Lunch</b><span>30-minute default</span></button>
+          <button onclick="startBreak('Break')"><b>☕ Start Break</b><span>Configured limit</span></button>
+          <button onclick="startBreak('Other')"><b>⏱ Other</b><span>Manual break type</span></button>
+          <button onclick="openCorrection()"><b>✎ Correction</b><span>Same-day request</span></button>
+        </div>
+        <div id="breakStatus" class="sub" style="margin-top:10px">No active break.</div>
+      </section>
+
+      <section class="card c8">
+        <div class="cardhead"><div><h3>Today’s Presence</h3><div class="sub">Employees see current day only</div></div><span class="badge">LIVE</span></div>
+        <div class="timeline">
+          <span class="seg avail" style="width:27%"></span>
+          <span class="seg break" style="width:8%"></span>
+          <span class="seg avail" style="width:25%"></span>
+          <span class="seg busy" style="width:12%"></span>
+          <span class="seg avail" style="width:28%"></span>
+        </div>
+        <div class="legend">
+          <span><i style="background:#5fb879"></i>Available 2h 43m</span>
+          <span><i style="background:#6d8fcc"></i>Break 18m</span>
+          <span><i style="background:#d96d6d"></i>Busy 41m</span>
+        </div>
+      </section>
+
+      <section class="card c4">
+        <div class="cardhead"><div><h3>Today</h3><div class="sub">Assigned shift</div></div></div>
+        <div class="metric">10:30</div><div class="sub">AM start</div>
+        <div style="height:8px"></div>
+        <div class="metric">7:30</div><div class="sub">PM end</div>
+        <div style="margin-top:12px"><span class="badge green">NO EXCEPTIONS TODAY</span></div>
+      </section>
+
+      <section class="card c12">
+        <div class="cardhead"><div><h3>Upcoming Schedule</h3><div class="sub">Shift changes and exceptions appear here automatically</div></div></div>
+        <div class="schedule">
+          <div>Week</div><div>Mon 10</div><div>Tue 11</div><div>Wed 12</div><div>Thu 13</div><div>Fri 14</div>
+          <div>Shift</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div><div class="exception">12:00–7:30<br>Late start</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div>
+          <div>Status</div><div>Today</div><div>Normal</div><div>Ack required</div><div>Normal</div><div>Normal</div>
+        </div>
+      </section>
+
+      <section class="card c6">
+        <div class="cardhead"><div><h3>My Time Off</h3><div class="sub">Pending, approved and denied</div></div><button class="btn" onclick="openTimeOff()">New Request</button></div>
+        <div class="listitem"><div class="grow"><b>Aug 21 · Full Day</b><div class="sub">Vacation</div></div><span class="badge green">APPROVED</span></div>
+        <div class="listitem"><div class="grow"><b>Sep 4 · 2:00–5:00 PM</b><div class="sub">Personal</div></div><span class="badge yellow">PENDING</span></div>
+      </section>
+
+      <section class="card c6">
+        <div class="cardhead"><div><h3>Technical Issue</h3><div class="sub">Report a work-impacting problem</div></div></div>
+        <div class="sub" style="line-height:1.55">Reporting an issue records app version, browser, device, page and Central Time. Presence does not pause unless management grants grace.</div>
+        <button class="btn" style="margin-top:11px">Report Technical Issue</button>
+      </section>
+    </div>
+  </main>
+</section>
+
+<section class="mobile" id="mobile">
+  <div class="mobilehead">
+    <div class="between"><div><div class="sub">My Work</div><div style="font-size:20px;font-weight:800">Schedule</div></div><span class="badge green">AVAILABLE</span></div>
+  </div>
+  <div class="mobilebody">
+    <div class="mobilecard softg">
+      <div class="bigstatus"><div class="statusdot"></div><div><b style="font-size:18px">Available</b><div class="sub">10:30 AM–7:30 PM · On time</div></div></div>
+      <div style="display:flex;gap:7px;margin-top:12px"><button class="btn primary">Available</button><button class="btn">Busy</button><button class="btn">DND</button></div>
+    </div>
+
+    <div class="mobilecard">
+      <div class="between"><b>Breaks</b><span id="mobileBreak" class="sub">None active</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+        <button class="btn" onclick="startBreak('Lunch')">🍽 Lunch</button>
+        <button class="btn" onclick="startBreak('Break')">☕ Break</button>
+      </div>
+    </div>
+
+    <div class="mobilecard">
+      <div class="between"><b>Today’s Shift</b><span class="badge green">ON TIME</span></div>
+      <div style="font-size:25px;font-weight:800;margin-top:8px">10:30 AM–7:30 PM</div>
+    </div>
+
+    <div class="mobilecard">
+      <div class="between"><b>Upcoming Exception</b><span class="badge yellow">ACK REQUIRED</span></div>
+      <div style="margin-top:8px"><b>Wednesday, Aug 12</b><div class="sub">Temporary shift: 12:00 PM–7:30 PM</div></div>
+      <button class="btn primary" style="width:100%;margin-top:10px">Acknowledge</button>
+    </div>
+
+    <div class="mobilecard">
+      <div class="between"><b>Time Off</b><button class="btn" onclick="openTimeOff()">Request</button></div>
+      <div class="listitem"><div class="grow">Aug 21 · Vacation</div><span class="badge green">APPROVED</span></div>
+      <div class="listitem"><div class="grow">Sep 4 · Personal</div><span class="badge yellow">PENDING</span></div>
+    </div>
+  </div>
+  <div class="mobilebottom"><div class="tabs"><div>Sales</div><div>Chat</div><div><button class="addsale">＋</button></div><div>Tasks</div><div style="color:var(--g);font-weight:700">Menu</div></div></div>
+</section>
+
+<section class="desktop" id="manager" style="display:none">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Management</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">Operations</div>
+      <button class="active">🕒 Presence & Shifts</button><button>🏖 Time Off</button><button>👥 Employees</button><button>🛠 Support</button>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">Live Operations · Central Time</div><h2>Presence & Shift Management</h2></div>
+      <div style="display:flex;gap:8px"><button class="btn">Rules</button><button class="btn primary">＋ Schedule Exception</button></div>
+    </div>
+
+    <div class="grid12">
+      <section class="card c8">
+        <div class="cardhead"><div><h3>Live Team Presence</h3><div class="sub">Realtime with browser/device context</div></div><span class="badge green">14 ONLINE</span></div>
+        <div class="listitem"><div class="avatar">AB<span class="dot"></span></div><div class="grow"><b>Ashley Boggess</b><div class="sub">Available · Chrome · Last sync now</div></div><span class="badge green">ON TIME</span><button class="btn" style="padding:6px 8px">Open</button></div>
+        <div class="listitem"><div class="avatar">TN<span class="dot away"></span></div><div class="grow"><b>Tiffany Nelson</b><div class="sub">Away 8m · device active signals limited</div></div><span class="badge">WITHIN GRACE</span><button class="btn" style="padding:6px 8px">Open</button></div>
+        <div class="listitem"><div class="avatar">CW<span class="dot busy"></span></div><div class="grow"><b>Courtney Wathen</b><div class="sub">Busy · “Customer call”</div></div><span class="badge blue">BUSY</span><button class="btn" style="padding:6px 8px">Open</button></div>
+        <div class="listitem"><div class="avatar">SC<span class="dot off"></span></div><div class="grow"><b>Sharon Coleman</b><div class="sub">PWA closed · 18m · last sync 11:20 AM</div></div><span class="badge red">SERIOUS</span><button class="btn primary" style="padding:6px 8px">Review</button></div>
+      </section>
+
+      <section class="card c4 softr">
+        <div class="cardhead"><div><h3>Exceptions Needing Attention</h3><div class="sub">Smart detection</div></div><span class="badge red">3</span></div>
+        <div class="listitem"><div class="grow"><b>PRS-2026-00418</b><div class="sub">Sharon · PWA closed/offline</div></div><span class="badge red">SERIOUS</span></div>
+        <div class="listitem"><div class="grow"><b>PRS-2026-00415</b><div class="sub">Late return from lunch</div></div><span class="badge yellow">WARNING</span></div>
+        <div class="listitem"><div class="grow"><b>PRS-2026-00411</b><div class="sub">Pre-end inactivity</div></div><span class="badge">LOGGED</span></div>
+      </section>
+
+      <section class="card c12">
+        <div class="cardhead"><div><h3>Assigned Shifts & Exceptions</h3><div class="sub">Shift-relative monitoring replaces generic business hours</div></div><button class="btn">Week of Aug 10</button></div>
+        <div class="schedule">
+          <div>Employee</div><div>Mon 10</div><div>Tue 11</div><div>Wed 12</div><div>Thu 13</div><div>Fri 14</div>
+          <div>Ashley</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div>
+          <div>Tiffany</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div><div class="exception">12:00–7:30<br>SCH-2026-00042</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div>
+          <div>Courtney</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div><div class="shift">10:30–7:30</div><div class="exception">Approved TO<br>TO-2026-00071</div>
+        </div>
+      </section>
+
+      <section class="card c6">
+        <div class="cardhead"><div><h3>Break Monitoring</h3><div class="sub">Manual employee start/end</div></div><span class="badge yellow">1 OVERAGE</span></div>
+        <div class="listitem"><div class="grow"><b>Ashley · Lunch</b><div class="sub">Ended 12:43 PM · 30m</div></div><span class="badge green">OK</span></div>
+        <div class="listitem"><div class="grow"><b>Tiffany · Break</b><div class="sub">Active 17m · configured limit 15m</div></div><span class="badge yellow">2m OVER</span><button class="btn" style="padding:6px 8px">End</button></div>
+      </section>
+
+      <section class="card c6">
+        <div class="cardhead"><div><h3>Technical Grace</h3><div class="sub">Manager-approved only</div></div><button class="btn">Open Reports</button></div>
+        <div class="listitem"><div class="grow"><b>TECH-2026-00106 · Tiffany</b><div class="sub">Browser/PWA issue · reported 11:07 AM</div></div><button class="btn primary" style="padding:6px 8px">Grant Grace</button></div>
+      </section>
+    </div>
+  </main>
+</section>
+
+<section class="approvals" id="approvals">
+  <div class="header">
+    <div><div class="sub">Management</div><h2>Time Off, Corrections & Coverage</h2></div>
+    <button class="btn">Configure Staffing Thresholds</button>
+  </div>
+
+  <div class="approvalgrid">
+    <section class="card">
+      <div class="cardhead"><div><h3>Team Calendar · August 2026</h3><div class="sub">Management sees approved and pending requests</div></div><button class="btn">Month</button></div>
+      <div class="calendar">
+        <div class="day"><b>Mon 10</b></div><div class="day"><b>Tue 11</b></div><div class="day"><b>Wed 12</b><div class="event pending">Tiffany · Pending</div></div><div class="day"><b>Thu 13</b></div><div class="day"><b>Fri 14</b><div class="event">Courtney · Approved</div></div><div class="day"><b>Sat 15</b></div><div class="day"><b>Sun 16</b></div>
+        <div class="day"><b>Mon 17</b></div><div class="day"><b>Tue 18</b></div><div class="day"><b>Wed 19</b></div><div class="day"><b>Thu 20</b></div><div class="day"><b>Fri 21</b><div class="event">Jonathan · Approved</div></div><div class="day"><b>Sat 22</b></div><div class="day"><b>Sun 23</b></div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card softy">
+        <div class="cardhead"><div><h3>Coverage Warning</h3><div class="sub">Friday, Aug 14</div></div><span class="badge yellow">CONFIRM</span></div>
+        <div style="font-size:13px;line-height:1.55">Approving Tiffany’s request would leave 5 scheduled Sales Agents against a configured threshold of 6.</div>
+        <div style="display:flex;gap:8px;margin-top:12px"><button class="btn">Decline</button><button class="btn primary">Review & Confirm</button></div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <div class="cardhead"><div><h3>Pending Requests</h3><div class="sub">Any Supervisor, Manager or Owner may approve</div></div><span class="badge yellow">4</span></div>
+        <div class="listitem"><div class="grow"><b>TO-2026-00074</b><div class="sub">Tiffany · Aug 14 · Full day</div></div><button class="btn" style="padding:6px 8px">Review</button></div>
+        <div class="listitem"><div class="grow"><b>BRK-2026-00031</b><div class="sub">Ashley · Lunch correction</div></div><button class="btn" style="padding:6px 8px">Review</button></div>
+        <div class="listitem"><div class="grow"><b>TO-2026-00075</b><div class="sub">Sharon · Aug 28 · Partial</div></div><button class="btn" style="padding:6px 8px">Review</button></div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="card" style="margin-top:15px">
+    <div class="cardhead"><div><h3>Request Queue</h3><div class="sub">Time off, cancellation requests, break corrections and missed-break requests</div></div><button class="btn">Filters</button></div>
+    <div class="table">
+      <div class="tr"><span>Request</span><span>Employee</span><span>Type</span><span>Status</span><span>Action</span></div>
+      <div class="tr"><span>TO-2026-00074</span><span>Tiffany Nelson</span><span>Vacation</span><span><span class="badge yellow">PENDING</span></span><span><button class="btn" style="padding:6px 8px">Open</button></span></div>
+      <div class="tr"><span>BRK-2026-00031</span><span>Ashley Boggess</span><span>Correction</span><span><span class="badge yellow">PENDING</span></span><span><button class="btn" style="padding:6px 8px">Open</button></span></div>
+      <div class="tr"><span>TO-2026-00071</span><span>Courtney Wathen</span><span>Personal</span><span><span class="badge green">APPROVED</span></span><span><button class="btn" style="padding:6px 8px">View</button></span></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="modal" id="timeModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Employee Request</div><div style="font-size:20px;font-weight:800">Request Time Off</div></div><button class="btn" onclick="closeTimeOff()">Close</button></div>
+    <div class="field"><label>Time Off Type</label><select><option>Vacation</option><option>Personal</option><option>Unpaid</option></select></div>
+    <div class="field"><label>Request Type</label><select id="requestType" onchange="togglePartial()"><option>Full Day</option><option>Partial Day</option><option>Date Range</option></select></div>
+    <div class="field"><label>Date</label><input value="Aug 21, 2026"></div>
+    <div id="partialFields" style="display:none">
+      <div style="display:flex;gap:10px"><div class="field" style="flex:1"><label>Start</label><input value="2:00 PM"></div><div class="field" style="flex:1"><label>End</label><input value="5:00 PM"></div></div>
+    </div>
+    <div class="field"><label>Reason (optional)</label><textarea rows="3" placeholder="Optional reason"></textarea></div>
+    <button class="btn primary" style="width:100%;padding:12px">Submit Request</button>
+  </div>
+</div>
+
+<div class="modal" id="correctionModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Same-Day Request</div><div style="font-size:20px;font-weight:800">Break Correction</div></div><button class="btn" onclick="closeCorrection()">Close</button></div>
+    <div class="field"><label>Break</label><select><option>Lunch · 12:13 PM–12:43 PM</option></select></div>
+    <div style="display:flex;gap:10px"><div class="field" style="flex:1"><label>Correct Start</label><input value="12:10 PM"></div><div class="field" style="flex:1"><label>Correct End</label><input value="12:40 PM"></div></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Explain what needs corrected"></textarea></div>
+    <button class="btn primary" style="width:100%;padding:12px">Submit Correction Request</button>
+  </div>
+</div>
+
+<script>
+const employee=document.getElementById('employee'),mobile=document.getElementById('mobile'),manager=document.getElementById('manager'),approvals=document.getElementById('approvals');
+const eb=document.getElementById('employeeBtn'),mb=document.getElementById('mobileBtn'),gb=document.getElementById('managerBtn'),ab=document.getElementById('approvalBtn');
+function show(v){
+  employee.style.display='none';mobile.style.display='none';manager.style.display='none';approvals.style.display='none';
+  [eb,mb,gb,ab].forEach(x=>x.classList.remove('active'));
+  if(v==='e'){employee.style.display='grid';eb.classList.add('active')}
+  if(v==='m'){mobile.style.display='block';mb.classList.add('active')}
+  if(v==='g'){manager.style.display='grid';gb.classList.add('active')}
+  if(v==='a'){approvals.style.display='block';ab.classList.add('active')}
+}
+eb.onclick=()=>show('e');mb.onclick=()=>show('m');gb.onclick=()=>show('g');ab.onclick=()=>show('a');
+
+function startBreak(type){
+  document.getElementById('breakStatus').textContent=type+' active · started just now';
+  document.getElementById('mobileBreak').textContent=type+' active';
+}
+function openTimeOff(){document.getElementById('timeModal').classList.add('open')}
+function closeTimeOff(){document.getElementById('timeModal').classList.remove('open')}
+function openCorrection(){document.getElementById('correctionModal').classList.add('open')}
+function closeCorrection(){document.getElementById('correctionModal').classList.remove('open')}
+function togglePartial(){document.getElementById('partialFields').style.display=document.getElementById('requestType').value==='Partial Day'?'block':'none'}
+</script>
+</body>
+</html>

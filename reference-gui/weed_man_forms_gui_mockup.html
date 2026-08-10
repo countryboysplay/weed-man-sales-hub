@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Weed Man Sales Hub - Forms Mockup</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;
+  --bg:#f6f7f5;--panel:#ffffff;--card:#ffffff;--border:#dfe4dd;
+  --text:#20251f;--muted:#6f786f;--chip:#eef2ed;--softg:#e8f2ea;--softy:#fff6c8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit} button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow{font-size:12px;color:var(--muted)} .h1{font-size:20px;font-weight:700}
+.switch{display:flex;gap:8px}.switch button,.btn{border:1px solid var(--border);background:var(--panel);padding:9px 12px;border-radius:12px;color:var(--text)}
+.switch button.active,.btn.primary{background:var(--g);color:white;border-color:var(--g)}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--panel);min-height:700px}
+.desktop{display:grid;grid-template-columns:190px 1fr;min-height:700px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.nav button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px;color:var(--text)}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:650}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.header h2{margin:0;font-size:22px}.sub{color:var(--muted);font-size:13px}
+.searchrow{display:flex;gap:8px;margin-bottom:14px}.searchrow input{flex:1;border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fff}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.chip{border:1px solid var(--border);padding:6px 10px;border-radius:999px;background:#fff;font-size:12px}.chip.active{background:var(--g);color:#fff;border-color:var(--g)}
+.formgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.formcard{border:1px solid var(--border);border-radius:16px;padding:14px;background:#fff;min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
+.typeicon{width:44px;height:44px;border-radius:13px;background:var(--softg);display:flex;align-items:center;justify-content:center;font-size:21px}
+.formcard h3{margin:12px 0 5px;font-size:15px}.formcard p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+.formfoot{display:flex;justify-content:space-between;align-items:center;margin-top:14px}.badge{font-size:10px;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);font-weight:700}.badge.green{background:var(--softg);color:var(--gd)}.badge.yellow{background:var(--softy);color:#6a5a00}
+.mobilewrap{display:none;max-width:390px;margin:auto;min-height:710px;background:#fff}.mobilehead{padding:15px;border-bottom:1px solid var(--border)}.mobilebody{padding:12px 12px 92px}
+.mobile-card{border:1px solid var(--border);border-radius:14px;padding:13px;margin-bottom:10px}.mobilebottom{position:sticky;bottom:0;border-top:1px solid var(--border);background:#fff;padding:9px 8px}.tabs{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;text-align:center;font-size:11px}.addsale{width:56px;height:56px;margin:-28px auto 0;border-radius:50%;border:4px solid var(--y);background:var(--g);color:#fff;font-size:26px}
+.builder{display:none;padding:18px;background:#f1f4ef;min-height:700px}
+.buildertop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.builderlayout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:16px;align-items:start}
+.canvas{max-width:760px;width:100%;margin:0 auto}
+.titlecard,.qcard,.sectioncard{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.titlecard{border-top:6px solid var(--g)}
+.qhead{display:flex;gap:10px;align-items:center}.drag{color:#a0a7a0;letter-spacing:1px}.qtitle{flex:1;border:0;border-bottom:1px solid var(--border);padding:8px 2px;font-size:15px;background:transparent}
+.qselect{border:1px solid var(--border);border-radius:10px;padding:8px;background:#fff}
+.fakeinput{margin-top:13px;border-bottom:1px dashed #aab1aa;padding:8px 2px;color:var(--muted);font-size:13px}
+.qfoot{display:flex;justify-content:flex-end;gap:8px;align-items:center;margin-top:13px;border-top:1px solid var(--border);padding-top:12px}.toggle{width:38px;height:22px;border-radius:999px;background:var(--g);position:relative}.toggle:after{content:"";position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;right:2px;top:2px}
+.sidepanel{position:sticky;top:14px}.panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:12px}.panel h3{font-size:14px;margin:0 0 10px}.action{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding:10px 0;font-size:13px}.action:first-of-type{border-top:0}
+.responses{display:none;padding:18px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.stat{border:1px solid var(--border);border-radius:15px;padding:13px;background:#fff}.num{font-size:27px;font-weight:800}
+.table{border:1px solid var(--border);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1.15fr 1fr .85fr .8fr .9fr;gap:10px;padding:10px 12px;border-top:1px solid var(--border);font-size:13px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:20}.modal.open{display:flex}
+.modalbox{width:min(650px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:18px;border:1px solid var(--border);padding:16px}
+.formpreview{max-width:560px;margin:auto}.previewtitle{border-top:7px solid var(--g);border-radius:14px;border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px;margin-bottom:12px}
+.field{margin:12px 0}.field label{display:block;font-size:13px;font-weight:650;margin-bottom:6px}.field input,.field select{width:100%;border:1px solid var(--border);border-radius:11px;padding:10px;background:#fff}
+@media(max-width:920px){.formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.builderlayout{grid-template-columns:1fr}.sidepanel{position:static}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 6</div><div class="h1">Forms Experience</div></div>
+  <div class="switch">
+    <button class="active" id="deskBtn">Employee Desktop</button>
+    <button id="mobBtn">Mobile</button>
+    <button id="buildBtn">Form Builder</button>
+    <button id="respBtn">Submissions</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section class="desktop" id="desktop">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Sales Hub</small></div></div>
+    <div class="nav">
+      <button>★ Sales Dashboard</button><button>★ Chat</button><button>📣 Announcements</button><button>✓ Tasks</button><button class="active">▤ Forms</button><button>📁 Resources</button><button>👥 Directory</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">Employee Tools</div><h2>Forms</h2></div>
+      <button class="btn">☆ Pinned Forms</button>
+    </div>
+
+    <div class="searchrow"><input placeholder="Search forms…"><button class="btn">⌕</button></div>
+
+    <div class="chips"><button class="chip active">All Forms</button><button class="chip">Pinned</button><button class="chip">Open Submissions</button></div>
+
+    <div class="formgrid">
+      <div class="formcard" onclick="openNative()">
+        <div>
+          <div class="typeicon">✉</div>
+          <h3>Email Request Form</h3>
+          <p>Submit customer email and quote details to management.</p>
+        </div>
+        <div class="formfoot"><span class="badge green">NATIVE FORM</span><span>★</span></div>
+      </div>
+
+      <div class="formcard" onclick="openNative()">
+        <div>
+          <div class="typeicon">🧾</div>
+          <h3>Customer Follow-Up Request</h3>
+          <p>Tracked workflow. Remains Open until management marks Completed.</p>
+        </div>
+        <div class="formfoot"><span class="badge yellow">OPEN → COMPLETED</span><span>☆</span></div>
+      </div>
+
+      <div class="formcard" onclick="openGoogle()">
+        <div>
+          <div class="typeicon">G</div>
+          <h3>Cancellation Request</h3>
+          <p>External Google Form opens full-screen inside the app.</p>
+        </div>
+        <div class="formfoot"><span class="badge">GOOGLE FORM</span><span>★</span></div>
+      </div>
+
+      <div class="formcard" onclick="openNative()">
+        <div>
+          <div class="typeicon">✓</div>
+          <h3>Sales Correction Request</h3>
+          <p>Simple native form with dropdowns and conditional fields.</p>
+        </div>
+        <div class="formfoot"><span class="badge green">NATIVE FORM</span><span>☆</span></div>
+      </div>
+
+      <div class="formcard" onclick="openGoogle()">
+        <div>
+          <div class="typeicon">G</div>
+          <h3>Equipment Issue Intake</h3>
+          <p>Embedded Google Form link with custom app display name.</p>
+        </div>
+        <div class="formfoot"><span class="badge">GOOGLE FORM</span><span>☆</span></div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<section class="mobilewrap" id="mobile">
+  <div class="mobilehead">
+    <div><div class="sub">Employee Tools</div><div style="font-size:20px;font-weight:700">Forms</div></div>
+    <div style="margin-top:12px"><input style="width:100%;border:1px solid var(--border);border-radius:12px;padding:10px" placeholder="Search forms…"></div>
+  </div>
+  <div class="mobilebody">
+    <div class="mobile-card" onclick="openNative()"><div style="display:flex;justify-content:space-between"><b>Email Request Form</b><span>★</span></div><div class="sub" style="margin-top:5px">Native form</div></div>
+    <div class="mobile-card" onclick="openNative()"><div style="display:flex;justify-content:space-between"><b>Customer Follow-Up Request</b><span>☆</span></div><div class="sub" style="margin-top:5px">Tracked workflow · Open</div></div>
+    <div class="mobile-card" onclick="openGoogle()"><div style="display:flex;justify-content:space-between"><b>Cancellation Request</b><span>★</span></div><div class="sub" style="margin-top:5px">Google Form</div></div>
+    <div class="mobile-card" onclick="openNative()"><div style="display:flex;justify-content:space-between"><b>Sales Correction Request</b><span>☆</span></div><div class="sub" style="margin-top:5px">Native form</div></div>
+  </div>
+  <div class="mobilebottom"><div class="tabs"><div>Sales</div><div>Chat</div><div><button class="addsale">＋</button></div><div>Tasks</div><div style="color:var(--g);font-weight:700">Menu</div></div></div>
+</section>
+
+<section class="builder" id="builder">
+  <div class="buildertop">
+    <div><div class="sub">Management · Draft</div><div style="font-size:22px;font-weight:700">Email Request Form</div></div>
+    <div style="display:flex;gap:8px"><button class="btn" onclick="openNative()">Preview</button><button class="btn primary">Publish</button></div>
+  </div>
+
+  <div class="builderlayout">
+    <div class="canvas">
+      <div class="titlecard">
+        <input value="Email Request Form" style="width:100%;border:0;font-size:24px;font-weight:700;outline:none">
+        <input value="Submit customer information for an email quote request." style="width:100%;border:0;border-bottom:1px solid var(--border);padding:10px 0;color:var(--muted);outline:none">
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="drag">⋮⋮</span><input class="qtitle" value="CID"><select class="qselect"><option>Short answer</option></select></div>
+        <div class="fakeinput">Short-answer text</div>
+        <div class="qfoot"><button class="btn" style="padding:6px 9px">Duplicate</button><button class="btn" style="padding:6px 9px">Delete</button><span class="sub">Required</span><span class="toggle"></span></div>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="drag">⋮⋮</span><input class="qtitle" value="Customer Email"><select class="qselect"><option>Short answer</option></select></div>
+        <div class="fakeinput">Short-answer text</div>
+        <div class="qfoot"><button class="btn" style="padding:6px 9px">Duplicate</button><button class="btn" style="padding:6px 9px">Delete</button><span class="sub">Required</span><span class="toggle"></span></div>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="drag">⋮⋮</span><input class="qtitle" value="Quote Type"><select class="qselect"><option>Dropdown</option></select></div>
+        <div style="margin-top:12px">
+          <div class="fakeinput">1. Program Quote</div><div class="fakeinput">2. Upsell Quote</div><div class="fakeinput">3. Other</div>
+        </div>
+        <div class="qfoot"><button class="btn" style="padding:6px 9px">Branching</button><button class="btn" style="padding:6px 9px">Duplicate</button><button class="btn" style="padding:6px 9px">Delete</button><span class="sub">Required</span><span class="toggle"></span></div>
+      </div>
+
+      <div class="qcard">
+        <div class="qhead"><span class="drag">⋮⋮</span><input class="qtitle" value="Lawn Area"><select class="qselect"><option>Number</option></select></div>
+        <div class="fakeinput">Number</div>
+        <div class="qfoot"><button class="btn" style="padding:6px 9px">Duplicate</button><button class="btn" style="padding:6px 9px">Delete</button><span class="sub">Required</span><span class="toggle"></span></div>
+      </div>
+    </div>
+
+    <aside class="sidepanel">
+      <div class="panel">
+        <h3>Add</h3>
+        <div class="action"><span>＋ Question</span><span>›</span></div>
+        <div class="action"><span>▤ Section</span><span>›</span></div>
+        <div class="action"><span>⧉ Duplicate section</span><span>›</span></div>
+      </div>
+      <div class="panel">
+        <h3>Form Settings</h3>
+        <div class="action"><span>Workflow</span><b>Open → Completed</b></div>
+        <div class="action"><span>Published order</span><b>Manual</b></div>
+        <div class="action"><span>Audience</span><b>All active users</b></div>
+        <div class="action"><span>Status</span><b>Draft</b></div>
+      </div>
+      <div class="panel" style="background:var(--softy)">
+        <h3>Google Forms parity</h3>
+        <div class="sub">Question cards, drag/drop, duplicate/delete, required fields, dropdown options, sections, branching, preview, and published editing.</div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="responses" id="responses">
+  <div class="header">
+    <div><div class="sub">Management</div><h2>Form Submissions</h2></div>
+    <div style="display:flex;gap:8px"><button class="btn">Filters</button><button class="btn">Export</button></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="sub">Open</div><div class="num">7</div></div>
+    <div class="stat"><div class="sub">Completed Today</div><div class="num">12</div></div>
+    <div class="stat"><div class="sub">Forms Submitted</div><div class="num">23</div></div>
+    <div class="stat"><div class="sub">Needs Review</div><div class="num">4</div></div>
+  </div>
+
+  <div style="display:flex;gap:8px;margin-bottom:12px"><input style="flex:1;border:1px solid var(--border);border-radius:12px;padding:10px" placeholder="Search employee, form, CID…"><button class="btn">Date</button><button class="btn">Status</button></div>
+
+  <div class="table">
+    <div class="tr"><span>Employee</span><span>Form</span><span>Status</span><span>Submitted</span><span>Action</span></div>
+    <div class="tr"><span>Ashley Boggess</span><span>Email Request Form</span><span class="badge yellow">Open</span><span>11:21 AM</span><span><button class="btn" style="padding:6px 8px">Open</button></span></div>
+    <div class="tr"><span>Tiffany Nelson</span><span>Customer Follow-Up</span><span class="badge yellow">Open</span><span>10:58 AM</span><span><button class="btn" style="padding:6px 8px">Open</button></span></div>
+    <div class="tr"><span>Courtney Wathen</span><span>Email Request Form</span><span class="badge green">Completed</span><span>10:14 AM</span><span><button class="btn" style="padding:6px 8px">View</button></span></div>
+  </div>
+</section>
+
+</div>
+
+<div class="modal" id="nativeModal">
+  <div class="modalbox">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div><div class="sub">Native Form</div><div style="font-size:20px;font-weight:700">Email Request Form</div></div><button class="btn" onclick="closeNative()">Close</button></div>
+    <div class="formpreview" style="margin-top:14px">
+      <div class="previewtitle">
+        <div style="font-size:24px;font-weight:700">Email Request Form</div>
+        <div class="sub" style="margin-top:5px">Submit customer information for an email quote request.</div>
+      </div>
+      <div class="field"><label>CID *</label><input placeholder="Customer CID"></div>
+      <div class="field"><label>Customer Email *</label><input placeholder="customer@example.com"></div>
+      <div class="field"><label>Quote Type *</label><select><option>Select one</option><option>Program Quote</option><option>Upsell Quote</option><option>Other</option></select></div>
+      <div class="field"><label>Lawn Area *</label><input placeholder="7500"></div>
+      <div class="field"><label>What should the quote cover? *</label><select><option>Select one</option><option>Full program</option><option>Aeration & Overseeding</option><option>Grub Control</option><option>Other</option></select></div>
+      <button class="btn primary" style="width:100%;padding:12px" onclick="submitNative()">Submit</button>
+      <div id="submitMsg" class="sub" style="text-align:center;margin-top:9px"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="googleModal">
+  <div class="modalbox" style="width:min(900px,100%);height:min(720px,92vh);padding:0;display:flex;flex-direction:column">
+    <div style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div><b>Cancellation Request</b><div class="sub">Google Form · full-screen app view</div></div><button class="btn" onclick="closeGoogle()">Close</button></div>
+    <div style="flex:1;background:#f3f0f8;padding:24px;overflow:auto">
+      <div style="max-width:650px;margin:auto">
+        <div style="background:#fff;border-radius:14px;border-top:10px solid #673ab7;padding:22px;border-left:1px solid #ddd;border-right:1px solid #ddd;border-bottom:1px solid #ddd">
+          <div style="font-size:26px">Cancellation Request</div><div style="margin-top:8px;color:#666">Embedded external Google Form placeholder.</div>
+        </div>
+        <div style="background:#fff;border-radius:14px;border:1px solid #ddd;padding:18px;margin-top:12px"><b>Customer ID *</b><div style="border-bottom:1px solid #aaa;color:#888;padding:18px 0 6px">Your answer</div></div>
+        <div style="background:#fff;border-radius:14px;border:1px solid #ddd;padding:18px;margin-top:12px"><b>Reason for cancellation *</b><div style="border-bottom:1px solid #aaa;color:#888;padding:18px 0 6px">Your answer</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const d=document.getElementById('desktop'),m=document.getElementById('mobile'),b=document.getElementById('builder'),r=document.getElementById('responses');
+const db=document.getElementById('deskBtn'),mb=document.getElementById('mobBtn'),bb=document.getElementById('buildBtn'),rb=document.getElementById('respBtn');
+function show(v){
+  [d,m,b,r].forEach(x=>x.style.display='none');[db,mb,bb,rb].forEach(x=>x.classList.remove('active'));
+  if(v==='d'){d.style.display='grid';db.classList.add('active')}
+  if(v==='m'){m.style.display='block';mb.classList.add('active')}
+  if(v==='b'){b.style.display='block';bb.classList.add('active')}
+  if(v==='r'){r.style.display='block';rb.classList.add('active')}
+}
+db.onclick=()=>show('d');mb.onclick=()=>show('m');bb.onclick=()=>show('b');rb.onclick=()=>show('r');
+
+function openNative(){document.getElementById('nativeModal').classList.add('open')}
+function closeNative(){document.getElementById('nativeModal').classList.remove('open')}
+function submitNative(){document.getElementById('submitMsg').textContent='Submitted · Status: Open';}
+function openGoogle(){document.getElementById('googleModal').classList.add('open')}
+function closeGoogle(){document.getElementById('googleModal').classList.remove('open')}
+</script>
+
+</body>
+</html>

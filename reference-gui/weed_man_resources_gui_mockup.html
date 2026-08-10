@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Weed Man Sales Hub - Resources Mockup</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;
+  --bg:#f6f7f5;--panel:#ffffff;--card:#ffffff;--border:#dfe4dd;
+  --text:#20251f;--muted:#6f786f;--chip:#eef2ed;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:700}
+.switch{display:flex;gap:8px}.switch button,.btn{border:1px solid var(--border);background:var(--panel);padding:9px 12px;border-radius:12px;color:var(--text)}
+.switch button.active,.btn.primary{background:var(--g);color:white;border-color:var(--g)}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--panel);min-height:690px}
+.desktop{display:grid;grid-template-columns:190px 255px 1fr;min-height:690px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+.brand small{display:block;color:var(--muted)}
+.nav button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px;color:var(--text)}
+.nav button.active{background:#e8f2ea;color:var(--g);font-weight:650}
+.folderpane{border-right:1px solid var(--border);padding:14px;background:var(--panel)}
+.foldertitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.folderlist button{display:flex;width:100%;align-items:center;gap:8px;border:0;background:transparent;padding:9px 10px;border-radius:10px;text-align:left}
+.folderlist button.active{background:#e8f2ea;color:var(--g);font-weight:700}
+.indent{padding-left:26px!important}.indent2{padding-left:42px!important}
+.main{padding:18px;min-width:0}
+.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.header h2{margin:0;font-size:22px}.sub{color:var(--muted);font-size:13px}
+.searchrow{display:flex;gap:8px;margin-bottom:14px}.searchrow input{flex:1;border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fff}
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:12px}.crumbs b{color:var(--text)}
+.toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--border);padding:6px 10px;border-radius:999px;background:#fff;font-size:12px}.chip.active{background:var(--g);color:#fff;border-color:var(--g)}
+.resourcegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.res{border:1px solid var(--border);border-radius:15px;padding:13px;background:#fff;min-width:0;transition:.15s}
+.res:hover{box-shadow:0 6px 20px rgba(0,0,0,.06);transform:translateY(-1px)}
+.iconbox{width:42px;height:42px;border-radius:12px;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:20px}
+.res h3{font-size:14px;margin:10px 0 4px}.res p{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
+.resfoot{display:flex;justify-content:space-between;align-items:center;margin-top:11px}.star{border:0;background:transparent;font-size:19px;color:#d6aa00}.more{border:0;background:transparent;color:var(--muted)}
+.badge{font-size:10px;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);font-weight:700}
+.mobilewrap{display:none;max-width:390px;margin:auto;min-height:700px;background:#fff}
+.mobilehead{padding:15px;border-bottom:1px solid var(--border)}.mobilebody{padding:12px 12px 92px}
+.mobile-card{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--border);border-radius:14px;padding:11px;margin-bottom:9px}
+.mobilebottom{position:sticky;bottom:0;border-top:1px solid var(--border);background:#fff;padding:9px 8px}.tabs{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;text-align:center;font-size:11px}
+.addsale{width:56px;height:56px;margin:-28px auto 0;border-radius:50%;border:4px solid var(--y);background:var(--g);color:#fff;font-size:26px}
+.management{display:none;padding:18px}
+.mgrlayout{display:grid;grid-template-columns:1fr .72fr;gap:16px}
+.card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px}
+.row{display:flex;align-items:center;gap:10px}.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.table{border:1px solid var(--border);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1.4fr .75fr .7fr .7fr;gap:10px;padding:10px 12px;border-top:1px solid var(--border);font-size:13px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.drop{border:2px dashed #bdc9bd;border-radius:14px;padding:22px;text-align:center;background:#fbfcfa}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:20}.modal.open{display:flex}
+.modalbox{width:min(920px,100%);height:min(690px,92vh);background:#fff;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--border)}
+.viewerhead{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border)}.viewerbody{position:relative;flex:1;background:#edf0ec;padding:22px;overflow:auto}
+.page{width:min(680px,100%);min-height:820px;background:#fff;margin:auto;padding:54px;box-shadow:0 4px 18px rgba(0,0,0,.08);position:relative}
+.watermark{position:absolute;inset:0;display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:140px;pointer-events:none;overflow:hidden;opacity:.08;transform:rotate(-24deg);font-size:17px;font-weight:700;color:#111}
+.watermark span{display:flex;align-items:center;justify-content:center;white-space:nowrap}
+@media(max-width:980px){.resourcegrid{grid-template-columns:repeat(2,minmax(0,1fr))}.desktop{grid-template-columns:160px 220px 1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 5</div><div class="h1">Resources / Documents</div></div>
+  <div class="switch">
+    <button class="active" id="deskBtn">Desktop</button>
+    <button id="mobBtn">Mobile</button>
+    <button id="mgrBtn">Management View</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section class="desktop" id="desktop">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Sales Hub</small></div></div>
+    <div class="nav">
+      <button>★ Sales Dashboard</button><button>★ Chat</button><button>📣 Announcements</button><button>✓ Tasks</button><button>▤ Forms</button><button class="active">📁 Resources</button><button>👥 Directory</button>
+    </div>
+  </aside>
+
+  <aside class="folderpane">
+    <div class="foldertitle"><div><b>Resources</b><div class="sub">Folders & favorites</div></div><button class="btn" style="padding:6px 9px">＋</button></div>
+    <div class="folderlist">
+      <button>⭐ Favorites <span style="margin-left:auto;color:var(--muted)">6</span></button>
+      <button class="active">📁 Pricing</button>
+      <button class="indent">📁 2026</button>
+      <button class="indent">📁 Prior Years</button>
+      <button>📁 Sales Scripts</button>
+      <button class="indent">📁 NEPQ</button>
+      <button class="indent">📁 Campaigns</button>
+      <button>📁 Training</button>
+      <button>📁 Policies</button>
+      <button>📁 Quick Links</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">Resource Library</div><h2>Pricing</h2></div>
+      <div><button class="btn">☆ Favorites</button></div>
+    </div>
+
+    <div class="searchrow">
+      <input value="" placeholder="Search files, folders, PDF/XLSX content…">
+      <button class="btn">Filters</button>
+    </div>
+
+    <div class="crumbs">Resources &nbsp;›&nbsp; <b>Pricing</b></div>
+
+    <div class="toolbar">
+      <div class="chips"><button class="chip active">All</button><button class="chip">Files</button><button class="chip">Links</button><button class="chip">Favorites</button></div>
+      <div class="chips"><button class="chip">Sort: Manual</button><button class="chip">▦ Grid</button></div>
+    </div>
+
+    <div class="resourcegrid">
+      <div class="res" onclick="openViewer()">
+        <div class="between"><div class="iconbox">📄</div><span class="badge">PDF</span></div>
+        <h3>2026 Regular Application Pricing</h3>
+        <p>Current regular application pricing reference for 2026.</p>
+        <div class="resfoot"><button class="star">★</button><button class="more">•••</button></div>
+      </div>
+
+      <div class="res">
+        <div class="between"><div class="iconbox">📊</div><span class="badge">XLSX</span></div>
+        <h3>2026 Pricing Schedules</h3>
+        <p>Application, grub control, aeration and overseeding schedules.</p>
+        <div class="resfoot"><button class="star">★</button><button class="more">•••</button></div>
+      </div>
+
+      <div class="res">
+        <div class="between"><div class="iconbox">📁</div><span class="badge">FOLDER</span></div>
+        <h3>Prior Years</h3>
+        <p>Archived pricing resources retained for reference.</p>
+        <div class="resfoot"><button class="star" style="color:#a8aea8">☆</button><button class="more">•••</button></div>
+      </div>
+
+      <div class="res">
+        <div class="between"><div class="iconbox">🔗</div><span class="badge">LINK</span></div>
+        <h3>Employee Portal</h3>
+        <p>Open the Weed Man employee portal inside the PWA when supported.</p>
+        <div class="resfoot"><button class="star">★</button><button class="more">•••</button></div>
+      </div>
+
+      <div class="res">
+        <div class="between"><div class="iconbox">▶</div><span class="badge">VIDEO</span></div>
+        <h3>NEPQ Tonality Training</h3>
+        <p>Training video opens full-screen inside the app.</p>
+        <div class="resfoot"><button class="star" style="color:#a8aea8">☆</button><button class="more">•••</button></div>
+      </div>
+
+      <div class="res">
+        <div class="between"><div class="iconbox">📝</div><span class="badge">DOCX</span></div>
+        <h3>Monthly Autopay Sales Notes</h3>
+        <p>Quick reference for monthly billing and upsell sales-entry notes.</p>
+        <div class="resfoot"><button class="star" style="color:#a8aea8">☆</button><button class="more">•••</button></div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<section class="mobilewrap" id="mobile">
+  <div class="mobilehead">
+    <div class="between"><div><div class="sub">Library</div><div style="font-size:20px;font-weight:700">Resources</div></div><button class="btn">⭐ 6</button></div>
+    <div class="searchrow" style="margin:12px 0 0"><input placeholder="Search resources…"></div>
+  </div>
+  <div class="mobilebody">
+    <div class="crumbs">Resources › <b>Pricing</b></div>
+    <div class="mobile-card" onclick="openViewer()"><div class="iconbox">📄</div><div style="min-width:0;flex:1"><b>2026 Regular Application Pricing</b><div class="sub" style="margin-top:4px">PDF · Current pricing</div></div><div style="color:#d6aa00">★</div></div>
+    <div class="mobile-card"><div class="iconbox">📊</div><div style="min-width:0;flex:1"><b>2026 Pricing Schedules</b><div class="sub" style="margin-top:4px">XLSX · Pricing tables</div></div><div style="color:#d6aa00">★</div></div>
+    <div class="mobile-card"><div class="iconbox">📁</div><div style="min-width:0;flex:1"><b>Prior Years</b><div class="sub" style="margin-top:4px">Folder</div></div><div>›</div></div>
+    <div class="mobile-card"><div class="iconbox">🔗</div><div style="min-width:0;flex:1"><b>Employee Portal</b><div class="sub" style="margin-top:4px">Website link</div></div><div>›</div></div>
+    <div class="mobile-card"><div class="iconbox">▶</div><div style="min-width:0;flex:1"><b>NEPQ Tonality Training</b><div class="sub" style="margin-top:4px">Video link</div></div><div>›</div></div>
+  </div>
+  <div class="mobilebottom"><div class="tabs"><div>Sales</div><div>Chat</div><div><button class="addsale">＋</button></div><div>Tasks</div><div style="color:var(--g);font-weight:700">Menu</div></div></div>
+</section>
+
+<section class="management" id="management">
+  <div class="header">
+    <div><div class="sub">Management</div><h2>Resource Manager</h2></div>
+    <div class="row"><button class="btn">＋ New Folder</button><button class="btn primary">Upload / Add Link</button></div>
+  </div>
+
+  <div class="mgrlayout">
+    <div class="card">
+      <div class="between"><div><b>Pricing / 2026</b><div class="sub">Drag to reorder or move between folders</div></div><button class="btn">Sort: Manual</button></div>
+      <div class="table" style="margin-top:13px">
+        <div class="tr"><span>Name</span><span>Type</span><span>Updated</span><span>Actions</span></div>
+        <div class="tr"><span>2026 Regular Application Pricing</span><span>PDF</span><span>Aug 8</span><span>Replace · ⋯</span></div>
+        <div class="tr"><span>2026 Pricing Schedules</span><span>XLSX</span><span>Aug 8</span><span>Replace · ⋯</span></div>
+        <div class="tr"><span>Employee Portal</span><span>Link</span><span>Jul 30</span><span>Edit · ⋯</span></div>
+        <div class="tr"><span>NEPQ Tonality Training</span><span>Video</span><span>Jul 24</span><span>Edit · ⋯</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div><b>Add Resource</b><div class="sub">Files remain private and require authentication.</div></div>
+      <div class="drop" style="margin-top:13px"><div style="font-size:30px">⬆</div><b>Drop a file here</b><div class="sub" style="margin-top:5px">PDF, XLSX, DOCX, PPTX, images</div><button class="btn" style="margin-top:12px">Choose File</button></div>
+      <div style="text-align:center;color:var(--muted);font-size:12px;margin:12px 0">or</div>
+      <button class="btn" style="width:100%">＋ Add Website / Video Link</button>
+      <div style="margin-top:16px;padding:12px;border-radius:13px;background:#fff6c8;border:1px solid #eadf9e;font-size:12px"><b>Agent protection</b><br>PDF viewing is watermarked and download-disabled. Manager downloads follow the established audit rules.</div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="modal" id="viewer">
+  <div class="modalbox">
+    <div class="viewerhead"><div><b>2026 Regular Application Pricing</b><div class="sub">Secure PDF Viewer · Download disabled</div></div><button class="btn" onclick="closeViewer()">Close</button></div>
+    <div class="viewerbody">
+      <div class="page">
+        <div class="watermark">
+          <span>Jonathan Lindsay · Aug 10, 2026</span><span>Jonathan Lindsay · Aug 10, 2026</span>
+          <span>Jonathan Lindsay · Aug 10, 2026</span><span>Jonathan Lindsay · Aug 10, 2026</span>
+          <span>Jonathan Lindsay · Aug 10, 2026</span><span>Jonathan Lindsay · Aug 10, 2026</span>
+          <span>Jonathan Lindsay · Aug 10, 2026</span><span>Jonathan Lindsay · Aug 10, 2026</span>
+        </div>
+        <div style="position:relative">
+          <div style="font-size:12px;color:var(--g);font-weight:800;letter-spacing:.04em">WEED MAN LAWN CARE</div>
+          <h1 style="font-size:27px;margin:12px 0 6px">2026 Regular Application Pricing</h1>
+          <p style="color:var(--muted)">Internal sales reference</p>
+          <hr style="border:0;border-top:1px solid var(--border);margin:24px 0">
+          <h2 style="font-size:17px">Pricing Reference</h2>
+          <p style="line-height:1.7">This preview demonstrates the secure, full-screen document viewer. Actual resource content would be rendered here, while the logged-in employee watermark repeats lightly across every page.</p>
+          <div style="margin-top:24px;border:1px solid var(--border);border-radius:12px;padding:14px">
+            <b>Viewer behavior</b>
+            <ul style="line-height:1.8">
+              <li>No direct public file URL</li>
+              <li>No agent download control</li>
+              <li>Authenticated access only</li>
+              <li>Watermark follows logged-in identity and date</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const d=document.getElementById('desktop'),m=document.getElementById('mobile'),g=document.getElementById('management');
+const db=document.getElementById('deskBtn'),mb=document.getElementById('mobBtn'),gb=document.getElementById('mgrBtn');
+function show(v){
+  d.style.display='none';m.style.display='none';g.style.display='none';
+  [db,mb,gb].forEach(x=>x.classList.remove('active'));
+  if(v==='d'){d.style.display='grid';db.classList.add('active')}
+  if(v==='m'){m.style.display='block';mb.classList.add('active')}
+  if(v==='g'){g.style.display='block';gb.classList.add('active')}
+}
+db.onclick=()=>show('d');mb.onclick=()=>show('m');gb.onclick=()=>show('g');
+function openViewer(){document.getElementById('viewer').classList.add('open')}
+function closeViewer(){document.getElementById('viewer').classList.remove('open')}
+</script>
+</body>
+</html>

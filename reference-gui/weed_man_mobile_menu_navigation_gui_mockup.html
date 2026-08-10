@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Mobile Menu & Navigation</title>
+<style>
+:root{
+ --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+ --bg:#eef2ed;--p:#fff;--bd:#dde3dc;--t:#20251f;--m:#6f786f;
+ --sg:#e8f2ea;--sy:#fff6c8;--sr:#fdeaea;--sb:#eaf1fb;--chip:#eef2ed;
+}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t)}
+button,input{font:inherit}button{cursor:pointer}
+.top{padding:18px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.sub{font-size:12px;color:var(--m)}.title{font-size:20px;font-weight:760}.switch{display:flex;gap:8px;flex-wrap:wrap}
+.btn,.switch button{border:1px solid var(--bd);background:#fff;padding:9px 12px;border-radius:12px;color:var(--t)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}
+.stage{margin:0 20px 20px;border:1px solid var(--bd);border-radius:20px;min-height:760px;background:#fff;display:flex;justify-content:center;padding:18px;gap:28px;flex-wrap:wrap}
+.phone{width:390px;min-height:720px;border:1px solid var(--bd);border-radius:28px;background:#fff;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.08);position:relative}
+.statusbar{height:24px;background:#fafbfa}.head{padding:15px;border-bottom:1px solid var(--bd)}.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.row{display:flex;align-items:center;gap:10px}.avatar{width:52px;height:52px;border-radius:16px;background:var(--sg);display:flex;align-items:center;justify-content:center;color:var(--g);font-size:18px;font-weight:850;position:relative}.dot{position:absolute;right:-2px;bottom:-2px;width:14px;height:14px;border-radius:50%;background:#2aa75d;border:3px solid #fff}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--m)}.green{background:var(--sg);color:var(--gd)}.yellow{background:var(--sy);color:#665700}.red{background:var(--sr);color:#973030}.blue{background:var(--sb);color:#345f91}
+.body{padding:12px 12px 94px}.search{border:1px solid var(--bd);border-radius:13px;padding:10px 12px;color:var(--m);font-size:13px;background:#fbfcfb}
+.sectiontitle{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--m);margin:16px 5px 7px}
+.favoritegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.fav{border:1px solid var(--bd);background:#fff;border-radius:14px;padding:12px;text-align:left}.fav .ico{font-size:22px}.fav b{display:block;font-size:12px;margin-top:6px}.fav span{display:block;font-size:11px;color:var(--m);margin-top:3px}
+.menuitem{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;padding:10px 5px;border-top:1px solid var(--bd)}.menuitem:first-of-type{border-top:0}.mi{width:38px;height:38px;border-radius:11px;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:18px}.menuitem b{font-size:13px}.menuitem .sub{margin-top:2px}.arrow{color:#a0a8a0}
+.admin{background:#fbfdfb;border:1px solid #d9e8dd;border-radius:15px;padding:8px 10px}
+.bottom{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--bd);padding:9px 8px 10px}.tabs{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;text-align:center;font-size:11px;color:#737b73}.tab{position:relative}.tab.active{color:var(--g);font-weight:800}.tabico{font-size:19px;display:block;margin-bottom:2px}.add{width:58px;height:58px;margin:-31px auto 0;border-radius:50%;border:4px solid var(--y);background:var(--g);color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(37,114,59,.28)}
+.count{position:absolute;top:-6px;right:17px;background:var(--r);color:#fff;border-radius:999px;font-size:9px;padding:2px 5px;border:2px solid white}
+.sheet{position:absolute;inset:0;background:rgba(0,0,0,.36);display:none;align-items:flex-end;z-index:20}.sheet.open{display:flex}.sheetbox{width:100%;background:#fff;border-radius:22px 22px 0 0;padding:17px 14px 22px}.grab{width:44px;height:5px;background:#d8ddd8;border-radius:999px;margin:0 auto 14px}.saletype{display:grid;grid-template-columns:1fr 1fr;gap:10px}.saleopt{border:1px solid var(--bd);border-radius:15px;padding:16px;text-align:center}.saleopt:first-child{background:var(--sg);border-color:#a9ceb3}.saleopt .ico{font-size:28px}.saleopt b{display:block;margin-top:7px}.form{display:none;margin-top:14px}.field{margin:10px 0}.field label{display:block;font-size:11px;color:var(--m);margin-bottom:5px}.field input{width:100%;border:1px solid var(--bd);border-radius:11px;padding:10px}.desktopnote{width:min(520px,100%);align-self:flex-start;border:1px solid var(--bd);border-radius:18px;background:#fff;padding:18px}.desktopnote h2{margin:0;font-size:22px}.rule{padding:10px 0;border-top:1px solid var(--bd);font-size:13px;line-height:1.5}.rule:first-of-type{border-top:0}
+@media(max-width:700px){.desktopnote{display:none}.stage{padding:0;margin:0;border-radius:0;border:0}.phone{width:100%;border-radius:0;border:0;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div><div class="sub">GUI Phase · Screen 24</div><div class="title">Mobile Menu & App Navigation</div></div>
+  <div class="switch">
+    <button class="active" onclick="mode('supervisor',this)">Supervisor Menu</button>
+    <button onclick="mode('agent',this)">Sales Agent Menu</button>
+    <button onclick="openSale()">Raised Add Sale</button>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="phone">
+    <div class="statusbar"></div>
+    <div class="head">
+      <div class="between">
+        <div class="row">
+          <div class="avatar">JL<span class="dot"></span></div>
+          <div><div style="font-size:18px;font-weight:820">Jonathan Lindsay</div><div class="sub">Sales Supervisor · Owensboro</div><div style="margin-top:4px"><span class="badge green">AVAILABLE</span></div></div>
+        </div>
+        <button class="btn" style="padding:7px 9px">⚙</button>
+      </div>
+    </div>
+
+    <div class="body">
+      <div class="search">⌕ Search the app…</div>
+
+      <div class="sectiontitle">Favorites</div>
+      <div class="favoritegrid">
+        <button class="fav"><div class="ico">📁</div><b>2026 Pricing</b><span>Resources</span></button>
+        <button class="fav"><div class="ico">▤</div><b>Email Request</b><span>Form</span></button>
+        <button class="fav"><div class="ico">📣</div><b>Announcements</b><span>Team updates</span></button>
+        <button class="fav"><div class="ico">👥</div><b>Directory</b><span>Employees</span></button>
+      </div>
+
+      <div class="sectiontitle">Team & Work</div>
+      <div class="menuitem"><div class="mi">📣</div><div><b>Announcements</b><div class="sub">Company and team updates</div></div><span class="badge red">2</span></div>
+      <div class="menuitem"><div class="mi">▤</div><div><b>Forms</b><div class="sub">Native forms and Google Forms</div></div><span class="arrow">›</span></div>
+      <div class="menuitem"><div class="mi">📁</div><div><b>Resources</b><div class="sub">Files, links and favorites</div></div><span class="arrow">›</span></div>
+      <div class="menuitem"><div class="mi">👥</div><div><b>Directory</b><div class="sub">People, presence and quick message</div></div><span class="arrow">›</span></div>
+      <div class="menuitem"><div class="mi">🏆</div><div><b>Recognitions</b><div class="sub">Team recognition feed</div></div><span class="arrow">›</span></div>
+      <div class="menuitem"><div class="mi">🕒</div><div><b>My Schedule</b><div class="sub">Shifts, breaks and time off</div></div><span class="badge yellow">1</span></div>
+      <div class="menuitem"><div class="mi">🛠</div><div><b>Support</b><div class="sub">Report a problem and view tickets</div></div><span class="badge blue">1</span></div>
+
+      <div id="managementSection">
+        <div class="sectiontitle">Management</div>
+        <div class="admin">
+          <div class="menuitem"><div class="mi">📊</div><div><b>Management Dashboard</b><div class="sub">Approvals, alerts and health</div></div><span class="badge red">3</span></div>
+          <div class="menuitem"><div class="mi">👤</div><div><b>Employee Records</b><div class="sub">Notes and related history</div></div><span class="arrow">›</span></div>
+          <div class="menuitem"><div class="mi">🕒</div><div><b>Presence & Shifts</b><div class="sub">Live management view</div></div><span class="badge yellow">2</span></div>
+          <div class="menuitem"><div class="mi">🏖</div><div><b>Approvals</b><div class="sub">Time off and corrections</div></div><span class="badge yellow">6</span></div>
+          <div class="menuitem"><div class="mi">🩺</div><div><b>System Health</b><div class="sub">Server, sync and support health</div></div><span class="badge green">OK</span></div>
+        </div>
+      </div>
+
+      <div class="sectiontitle">Account</div>
+      <div class="menuitem"><div class="mi">🔔</div><div><b>Notifications</b><div class="sub">Inbox and preferences</div></div><span class="badge red">7</span></div>
+      <div class="menuitem"><div class="mi">👤</div><div><b>Profile & Settings</b><div class="sub">Theme, status, devices</div></div><span class="arrow">›</span></div>
+    </div>
+
+    <div class="bottom">
+      <div class="tabs">
+        <div class="tab"><span class="tabico">📈</span>Sales</div>
+        <div class="tab"><span class="tabico">💬</span>Chat<span class="count">3</span></div>
+        <div class="tab"><button class="add" onclick="openSale()">＋</button></div>
+        <div class="tab"><span class="tabico">✓</span>Tasks<span class="count">2</span></div>
+        <div class="tab active"><span class="tabico">☰</span>Menu</div>
+      </div>
+    </div>
+
+    <div class="sheet" id="saleSheet">
+      <div class="sheetbox">
+        <div class="grab"></div>
+        <div class="between"><div><div class="sub">Quick Action</div><div style="font-size:20px;font-weight:820">Add Sale</div></div><button class="btn" onclick="closeSale()">Close</button></div>
+        <div class="saletype" style="margin-top:14px">
+          <button class="saleopt" onclick="showForm()"><div class="ico">📋</div><b>Program</b><div class="sub">AS01</div></button>
+          <button class="saleopt" onclick="showForm()"><div class="ico">＋</div><b>Upsell</b><div class="sub">GC01 / AE01 / OS01</div></button>
+        </div>
+        <div class="form" id="saleForm">
+          <div class="field"><label>CID</label><input autofocus placeholder="Numbers only"></div>
+          <div class="field"><label>Amount</label><input placeholder="$0.00"></div>
+          <button class="btn primary" style="width:100%;padding:12px">Submit Sale</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="desktopnote">
+    <div class="sub">Navigation System</div>
+    <h2>Mobile shell rules</h2>
+    <div class="rule"><b>Five persistent tabs:</b> Sales, Chat, raised Add Sale, Tasks, and Menu.</div>
+    <div class="rule"><b>Menu is role-aware:</b> management tools appear only for roles that can use them.</div>
+    <div class="rule"><b>Favorites stay near the top:</b> users can pin frequently used forms, resources, pages, and shortcuts.</div>
+    <div class="rule"><b>Badges surface action:</b> unread chat, tasks, required announcements, approvals, and support updates are visible without opening each section.</div>
+    <div class="rule"><b>Add Sale is always one tap away:</b> the center action opens as a bottom sheet rather than navigating the user away from their current page.</div>
+    <div class="rule"><b>Desktop and mobile are intentionally different:</b> the mobile experience favors large touch targets and shallow navigation instead of shrinking the desktop sidebar.</div>
+  </aside>
+</div>
+
+<script>
+function mode(role,btn){
+ document.querySelectorAll('.switch button').forEach(x=>x.classList.remove('active'));
+ btn.classList.add('active');
+ document.getElementById('managementSection').style.display=role==='agent'?'none':'block';
+}
+function openSale(){document.getElementById('saleSheet').classList.add('open')}
+function closeSale(){document.getElementById('saleSheet').classList.remove('open');document.getElementById('saleForm').style.display='none'}
+function showForm(){document.getElementById('saleForm').style.display='block'}
+</script>
+</body>
+</html>

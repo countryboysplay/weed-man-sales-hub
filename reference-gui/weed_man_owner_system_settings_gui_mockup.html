@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Owner & System Settings</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+  --bg:#f6f7f5;--panel:#fff;--border:#dfe4dd;--text:#20251f;--muted:#6f786f;
+  --chip:#eef2ed;--softg:#e8f2ea;--softy:#fff6c8;--softr:#fdeaea;--softb:#eaf1fb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow,.sub{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:750}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--border);background:#fff;padding:9px 12px;border-radius:12px;color:var(--text)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}
+.btn.danger{background:#fff5f5;border-color:#e7bcbc;color:#9a2f2f}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:#fff;min-height:760px}
+.settings{display:grid;grid-template-columns:205px 280px 1fr;min-height:760px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:12px 10px 5px}
+.nav button{width:100%;display:block;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:700}
+.catpane{border-right:1px solid var(--border);padding:14px;background:#fff}
+.searchbox input{width:100%;border:1px solid var(--border);border-radius:12px;padding:10px 12px}
+.catlist{margin-top:12px}.cat{width:100%;border:0;background:transparent;text-align:left;padding:10px 11px;border-radius:11px;margin-bottom:3px}.cat.active{background:var(--softg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:15px}.header h2{margin:0;font-size:23px}
+.card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px;margin-bottom:12px}.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.row{display:flex;align-items:center;gap:9px}.grow{flex:1;min-width:0}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);white-space:nowrap}.badge.green{background:var(--softg);color:var(--gd)}.badge.yellow{background:var(--softy);color:#665700}.badge.red{background:var(--softr);color:#982f2f}.badge.blue{background:var(--softb);color:#345f91}
+.setting{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;padding:13px 0;border-top:1px solid var(--border);align-items:center}.setting:first-of-type{border-top:0}
+.setting b{font-size:13px}.setting .sub{margin-top:4px;line-height:1.45}
+.toggle{width:42px;height:24px;border-radius:999px;background:var(--g);position:relative;flex:0 0 auto}.toggle:after{content:"";position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;right:2px;top:2px}.toggle.off{background:#c7cdc7}.toggle.off:after{right:20px}
+.select{border:1px solid var(--border);border-radius:10px;padding:8px;background:#fff}
+.featuregrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.feature{border:1px solid var(--border);border-radius:14px;padding:12px}.featurehead{display:flex;justify-content:space-between;gap:10px}.feature p{font-size:11px;color:var(--muted);line-height:1.45;margin:6px 0 0}
+.audit{display:none;padding:18px}.table{border:1px solid var(--border);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1.05fr 1.2fr 1fr .9fr .85fr;gap:8px;padding:10px 12px;border-top:1px solid var(--border);font-size:12px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.maintenance{display:none;padding:18px}.maintgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+.backup{display:none;padding:18px}.backupgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+.emergency{display:none;padding:18px}.emgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.risk{border-left:5px solid var(--r);background:#fffafa}.safe{border-left:5px solid var(--g);background:#f8fcf8}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(640px,100%);background:#fff;border-radius:18px;border:1px solid var(--border);padding:16px;max-height:92vh;overflow:auto}
+.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:11px;padding:10px;background:#fff}
+@media(max-width:1100px){.settings{grid-template-columns:180px 240px 1fr}.featuregrid,.maintgrid,.backupgrid,.emgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 13</div><div class="h1">Owner & System Settings</div></div>
+  <div class="switch">
+    <button id="settingsBtn" class="active">Settings</button>
+    <button id="maintenanceBtn">Maintenance Mode</button>
+    <button id="backupBtn">Backups</button>
+    <button id="emergencyBtn">Emergency Access</button>
+    <button id="auditBtn">Settings Audit</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section class="settings" id="settings">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Owner Console</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">System</div>
+      <button>🩺 System Health</button><button>↻ Sync Health</button><button class="active">⚙ System Settings</button>
+      <div class="navlabel">Owner</div>
+      <button>🚀 Launch Center</button><button>🗄 Backups</button><button>🛡 Emergency Access</button>
+    </div>
+  </aside>
+
+  <aside class="catpane">
+    <div class="searchbox"><input placeholder="Search settings…"></div>
+    <div class="catlist">
+      <button class="cat active">Company & Appearance</button>
+      <button class="cat">Security</button>
+      <button class="cat">Users & Roles</button>
+      <button class="cat">Notifications</button>
+      <button class="cat">Presence Rules</button>
+      <button class="cat">Shifts & Breaks</button>
+      <button class="cat">Time Off</button>
+      <button class="cat">Support</button>
+      <button class="cat">Storage</button>
+      <button class="cat">Backups</button>
+      <button class="cat">Features</button>
+      <button class="cat">Staging</button>
+      <button class="cat">Deployments</button>
+      <button class="cat">Integrations</button>
+      <button class="cat">Advanced</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">Owner Settings</div><h2>Company & Appearance</h2></div>
+      <div style="display:flex;gap:8px"><button class="btn">☆ Favorite Setting</button><button class="btn">Recent Changes</button></div>
+    </div>
+
+    <div class="card">
+      <div class="between"><div><b>Brand & App Identity</b><div class="sub">Company-wide defaults. Personal user themes may override permitted appearance options.</div></div><span class="badge green">ACTIVE</span></div>
+
+      <div class="setting">
+        <div><b>Company Name</b><div class="sub">Displayed throughout the PWA.</div></div>
+        <button class="btn">Weed Man Sales Hub</button>
+      </div>
+
+      <div class="setting">
+        <div><b>Default Theme</b><div class="sub">Weed Man green, yellow, white and charcoal.</div></div>
+        <select class="select"><option>Weed Man Branded</option><option>Dark</option></select>
+      </div>
+
+      <div class="setting">
+        <div><b>Default Desktop Density</b><div class="sub">Users may choose Compact, Comfortable or Spacious.</div></div>
+        <select class="select"><option>Comfortable</option><option>Compact</option><option>Spacious</option></select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="between"><div><b>Feature Controls</b><div class="sub">Company-wide defaults with optional role-based schedules.</div></div><button class="btn">Open Full Feature Controls</button></div>
+      <div class="featuregrid" style="margin-top:12px">
+        <div class="feature"><div class="featurehead"><b>Sales Celebrations</b><span class="toggle"></span></div><p>Enabled company-wide. Users may mute permitted visual/audio effects.</p></div>
+        <div class="feature"><div class="featurehead"><b>Recognitions</b><span class="toggle"></span></div><p>Visible to all active users.</p></div>
+        <div class="feature"><div class="featurehead"><b>External Website Links</b><span class="toggle"></span></div><p>Open inside the PWA where embedding is supported.</p></div>
+        <div class="feature"><div class="featurehead"><b>Natural Language Search</b><span class="toggle"></span></div><p>Available only to management roles.</p></div>
+        <div class="feature"><div class="featurehead"><b>Staging Environment</b><span class="toggle"></span></div><p>Limited to management roles. Agents cannot access staging.</p></div>
+        <div class="feature"><div class="featurehead"><b>Maintenance Mode</b><span class="toggle off"></span></div><p>Currently off. Scheduled or manual activation requires Owner control.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="between"><div><b>Security Defaults</b><div class="sub">Sensitive changes use fresh authentication where configured.</div></div><span class="badge blue">OWNER CONTROLLED</span></div>
+      <div class="setting"><div><b>Fresh authentication window</b><div class="sub">Sensitive archived/recovery/deployment actions.</div></div><select class="select"><option>15 minutes</option></select></div>
+      <div class="setting"><div><b>Master recovery TOTP</b><div class="sub">Required with the write-only master recovery credential.</div></div><span class="badge green">ENABLED</span></div>
+      <div class="setting"><div><b>Owner private communication access</b><div class="sub">Extra authentication and permanent access logging.</div></div><span class="badge green">PROTECTED</span></div>
+    </div>
+  </main>
+</section>
+
+<section class="maintenance" id="maintenance">
+  <div class="header">
+    <div><div class="sub">Owner Control</div><h2>Maintenance Mode</h2></div>
+    <span class="badge green">CURRENTLY OFF</span>
+  </div>
+
+  <div class="maintgrid">
+    <section class="card">
+      <div class="between"><div><b>Schedule Maintenance</b><div class="sub">Role-aware access with configurable warnings.</div></div><span class="badge blue">OWNER ONLY</span></div>
+      <div class="field"><label>Start</label><input value="Aug 12, 2026 · 9:30 PM Central"></div>
+      <div class="field"><label>Expected End</label><input value="Aug 12, 2026 · 10:15 PM Central"></div>
+      <div class="field"><label>Who retains access?</label><select><option>Owners only</option><option>Owners + Sales Managers</option><option>All management roles</option></select></div>
+      <div class="field"><label>Employee message</label><textarea rows="4">Scheduled maintenance is in progress. The app is expected to return by 10:15 PM Central.</textarea></div>
+      <div style="display:flex;gap:8px"><button class="btn">Preview Warnings</button><button class="btn primary" onclick="openSensitive('Schedule Maintenance')">Schedule</button></div>
+    </section>
+
+    <aside>
+      <div class="card safe">
+        <b>Safe shutdown behavior</b>
+        <div class="sub" style="margin-top:6px;line-height:1.55">At start, active users may safely finish current work. New actions are blocked. After the configured grace period, users move to the maintenance screen.</div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <b>Employee Warning Plan</b>
+        <div class="setting"><div><b>30 minutes before</b><div class="sub">Banner + push</div></div><span class="badge green">ON</span></div>
+        <div class="setting"><div><b>10 minutes before</b><div class="sub">Banner + push</div></div><span class="badge green">ON</span></div>
+        <div class="setting"><div><b>At start</b><div class="sub">Block new actions</div></div><span class="badge green">ON</span></div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <b>Live Maintenance Screen</b>
+        <div class="sub" style="margin-top:6px;line-height:1.55">Displays return time, live countdown and Owner-editable message/ETA.</div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="backup" id="backup">
+  <div class="header">
+    <div><div class="sub">Owner Control</div><h2>Backups & Recovery</h2></div>
+    <span class="badge green">LAST BACKUP SUCCESS</span>
+  </div>
+
+  <div class="backupgrid">
+    <section class="card">
+      <div class="between"><div><b>Backup Schedule</b><div class="sub">Daily · 12:30 AM Central · retain 7 days</div></div><span class="badge green">ACTIVE</span></div>
+      <div class="setting"><div><b>Destination</b><div class="sub">Encrypted before upload.</div></div><b>Dropbox</b></div>
+      <div class="setting"><div><b>Included data</b><div class="sub">Database, documents, chat attachments, images, profile photos, assets.</div></div><span class="badge green">FULL SYSTEM</span></div>
+      <div class="setting"><div><b>Encryption key</b><div class="sub">Separate secure server-side backup key.</div></div><span class="badge green">SECURE</span></div>
+      <button class="btn">View Backup History</button>
+    </section>
+
+    <aside class="card risk">
+      <div class="between"><div><b>Restore Latest Backup</b><div class="sub">Most recent available backup only for full-system restore.</div></div><span class="badge red">SENSITIVE</span></div>
+      <div style="margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:12px">
+        <div class="sub">Latest backup</div>
+        <b>Aug 10, 2026 · 12:30 AM Central</b>
+        <div class="sub" style="margin-top:4px">Encrypted · verified · Dropbox</div>
+      </div>
+      <div class="sub" style="margin-top:12px;line-height:1.55">Full-system restore requires authenticated Owner, master recovery credential, TOTP, reason and permanent audit.</div>
+      <button class="btn danger" style="width:100%;margin-top:12px" onclick="openSensitive('Restore Latest Backup')">Restore Latest Backup</button>
+      <button class="btn" style="width:100%;margin-top:8px">Report-Only Recovery</button>
+    </aside>
+  </div>
+</section>
+
+<section class="emergency" id="emergency">
+  <div class="header">
+    <div><div class="sub">Owner Security</div><h2>Emergency Access</h2></div>
+    <span class="badge red">RECOVERY-CRITICAL ONLY</span>
+  </div>
+
+  <div class="emgrid">
+    <section class="card risk">
+      <div class="between"><div><b>Start Emergency Access Session</b><div class="sub">Limited to recovery-critical functions.</div></div><span class="badge red">OWNER ONLY</span></div>
+      <div class="field"><label>Reason</label><textarea rows="4" placeholder="Required reason for emergency access"></textarea></div>
+      <div class="field"><label>Session duration</label><select><option>15 minutes</option><option>30 minutes</option><option>45 minutes</option><option>60 minutes</option></select></div>
+      <div class="sub" style="line-height:1.55">Requires master recovery credential + TOTP. Other Owners are notified when the session starts and ends.</div>
+      <button class="btn danger" style="width:100%;margin-top:12px" onclick="openSensitive('Start Emergency Access')">Authenticate & Start</button>
+    </section>
+
+    <section class="card">
+      <div><b>Emergency Scope</b><div class="sub">Not unrestricted Owner access.</div></div>
+      <div class="setting"><div><b>System Health</b><div class="sub">Recovery diagnostics</div></div><span class="badge green">ALLOWED</span></div>
+      <div class="setting"><div><b>Backups</b><div class="sub">Recovery and restore functions</div></div><span class="badge green">ALLOWED</span></div>
+      <div class="setting"><div><b>User Accounts</b><div class="sub">Recovery-critical controls</div></div><span class="badge green">ALLOWED</span></div>
+      <div class="setting"><div><b>Maintenance Mode</b><div class="sub">Emergency protection</div></div><span class="badge green">ALLOWED</span></div>
+      <div class="setting"><div><b>Private Communications</b><div class="sub">Not part of emergency scope</div></div><span class="badge red">BLOCKED</span></div>
+    </section>
+
+    <section class="card" style="grid-column:1/-1">
+      <div class="between"><div><b>Live Emergency Sessions</b><div class="sub">Other Owners can observe read-only and terminate another Owner’s session.</div></div><span class="badge green">NONE ACTIVE</span></div>
+      <div class="sub" style="margin-top:10px">When active, this area shows Owner name, reason, time remaining, current recovery step, risk alerts, and termination controls.</div>
+    </section>
+  </div>
+</section>
+
+<section class="audit" id="audit">
+  <div class="header">
+    <div><div class="sub">Owner Audit</div><h2>System Settings Change History</h2></div>
+    <div style="display:flex;gap:8px"><button class="btn">Filters</button><button class="btn">Export PDF/CSV</button></div>
+  </div>
+
+  <div class="table">
+    <div class="tr"><span>Setting</span><span>Change</span><span>Owner</span><span>Time</span><span>Category</span></div>
+    <div class="tr"><span>Maintenance warning</span><span>15m → 30m</span><span>Jonathan</span><span>Aug 10 · 9:04 AM</span><span>Maintenance</span></div>
+    <div class="tr"><span>Support auto-priority</span><span>Enabled → Enabled + explanation</span><span>David</span><span>Aug 9 · 4:21 PM</span><span>Support</span></div>
+    <div class="tr"><span>Feature: Recognitions</span><span>Off → On</span><span>Jonathan</span><span>Aug 8 · 2:17 PM</span><span>Features</span></div>
+    <div class="tr"><span>Storage warning</span><span>75% → 80%</span><span>Owner</span><span>Aug 7 · 11:45 AM</span><span>Storage</span></div>
+  </div>
+  <div class="sub" style="margin-top:10px">Central settings change history retains full before/after values for 365 days. Sensitive export activity is audited separately.</div>
+</section>
+
+</div>
+
+<div class="modal" id="sensitiveModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Sensitive Owner Action</div><div id="sensitiveTitle" style="font-size:20px;font-weight:800">Restore Latest Backup</div></div><button class="btn" onclick="closeSensitive()">Close</button></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Required reason"></textarea></div>
+    <div class="field"><label>Owner Password / Fresh Authentication</label><input type="password" placeholder="Password"></div>
+    <div class="field"><label>Master Recovery Credential</label><input type="password" placeholder="Write-only recovery credential"></div>
+    <div class="field"><label>TOTP Code</label><input placeholder="6-digit code"></div>
+    <button class="btn danger" style="width:100%;padding:12px" onclick="confirmSensitive()">Confirm Sensitive Action</button>
+    <div id="sensitiveMsg" class="sub" style="text-align:center;margin-top:8px"></div>
+  </div>
+</div>
+
+<script>
+const settings=document.getElementById('settings'),maintenance=document.getElementById('maintenance'),backup=document.getElementById('backup'),emergency=document.getElementById('emergency'),audit=document.getElementById('audit');
+const sb=document.getElementById('settingsBtn'),mb=document.getElementById('maintenanceBtn'),bb=document.getElementById('backupBtn'),eb=document.getElementById('emergencyBtn'),ab=document.getElementById('auditBtn');
+
+function show(v){
+  settings.style.display='none';maintenance.style.display='none';backup.style.display='none';emergency.style.display='none';audit.style.display='none';
+  [sb,mb,bb,eb,ab].forEach(x=>x.classList.remove('active'));
+  if(v==='s'){settings.style.display='grid';sb.classList.add('active')}
+  if(v==='m'){maintenance.style.display='block';mb.classList.add('active')}
+  if(v==='b'){backup.style.display='block';bb.classList.add('active')}
+  if(v==='e'){emergency.style.display='block';eb.classList.add('active')}
+  if(v==='a'){audit.style.display='block';ab.classList.add('active')}
+}
+sb.onclick=()=>show('s');mb.onclick=()=>show('m');bb.onclick=()=>show('b');eb.onclick=()=>show('e');ab.onclick=()=>show('a');
+
+function openSensitive(title){
+  document.getElementById('sensitiveTitle').textContent=title;
+  document.getElementById('sensitiveMsg').textContent='';
+  document.getElementById('sensitiveModal').classList.add('open');
+}
+function closeSensitive(){document.getElementById('sensitiveModal').classList.remove('open')}
+function confirmSensitive(){document.getElementById('sensitiveMsg').textContent='Mockup only: authentication passed and action added to Owner audit.'}
+</script>
+</body>
+</html>

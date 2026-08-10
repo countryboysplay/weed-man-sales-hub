@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Launch Center</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+  --bg:#f6f7f5;--panel:#fff;--border:#dfe4dd;--text:#20251f;--muted:#6f786f;
+  --chip:#eef2ed;--softg:#e8f2ea;--softy:#fff6c8;--softr:#fdeaea;--softb:#eaf1fb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow,.sub{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:750}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--border);background:#fff;padding:9px 12px;border-radius:12px;color:var(--text)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}
+.btn.danger{background:#fff5f5;border-color:#e7bcbc;color:#9a2f2f}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:#fff;min-height:760px}
+.desktop{display:grid;grid-template-columns:205px 1fr;min-height:760px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:12px 10px 5px}
+.nav button{width:100%;display:block;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:15px}.header h2{margin:0;font-size:23px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--border);border-radius:14px;padding:12px}.num{font-size:28px;font-weight:800}
+.grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
+.card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px}.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.row{display:flex;align-items:center;gap:9px}.grow{flex:1;min-width:0}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);white-space:nowrap}.badge.green{background:var(--softg);color:var(--gd)}.badge.yellow{background:var(--softy);color:#665700}.badge.red{background:var(--softr);color:#982f2f}.badge.blue{background:var(--softb);color:#345f91}
+.progress{height:9px;background:#e7ebe5;border-radius:999px;overflow:hidden}.progress span{display:block;height:100%;background:var(--g)}
+.check{display:grid;grid-template-columns:28px 1fr auto;gap:9px;padding:10px 0;border-top:1px solid var(--border);align-items:center;font-size:12px}.check:first-of-type{border-top:0}.checkicon{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--softg);color:var(--gd);font-weight:800}.checkicon.warn{background:var(--softy);color:#665700}.checkicon.fail{background:var(--softr);color:#982f2f}
+.timeline{margin-top:8px}.event{display:grid;grid-template-columns:30px 1fr;gap:9px;padding:9px 0}.line{position:relative}.line:before{content:"";position:absolute;left:14px;top:24px;bottom:-12px;width:2px;background:var(--border)}.event:last-child .line:before{display:none}.edot{width:30px;height:30px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:12px}.edot.green{background:var(--softg)}.edot.yellow{background:var(--softy)}.edot.red{background:var(--softr)}
+.eventcontent{font-size:12px}.eventcontent b{display:block;margin-bottom:3px}
+.history{display:none;padding:18px}.rollbacks{display:none;padding:18px}.drafts{display:none;padding:18px}
+.table{border:1px solid var(--border);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1fr .8fr .85fr .8fr .8fr .8fr;gap:8px;padding:10px 12px;border-top:1px solid var(--border);font-size:12px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.rollbackgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.draftgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+.safe{border-left:5px solid var(--g);background:#f8fcf8}.warnbox{border-left:5px solid var(--y);background:#fffdf3}.risk{border-left:5px solid var(--r);background:#fffafa}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(680px,100%);background:#fff;border-radius:18px;border:1px solid var(--border);padding:16px;max-height:92vh;overflow:auto}
+.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:11px;padding:10px;background:#fff}
+.summarybox{border:1px solid var(--border);border-radius:14px;padding:12px;margin-top:12px;background:#fbfcfa}
+@media(max-width:1050px){.c4,.c5,.c6,.c7,.c8{grid-column:span 12}.desktop{grid-template-columns:175px 1fr}.rollbackgrid,.draftgrid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 14</div><div class="h1">Launch Center / Deployment Governance</div></div>
+  <div class="switch">
+    <button id="launchBtn" class="active">Launch Center</button>
+    <button id="historyBtn">Launch History</button>
+    <button id="rollbackBtn">Rollbacks</button>
+    <button id="draftBtn">Draft Launches</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section class="desktop" id="launch">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Owner Console</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">System</div>
+      <button>🩺 System Health</button><button>⚙ System Settings</button>
+      <div class="navlabel">Deployment</div>
+      <button class="active">🚀 Launch Center</button><button>🧪 Staging</button><button>↩ Rollbacks</button><button>📚 Launch History</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">Production Candidate · v1.8.5</div><h2>Launch Center</h2></div>
+      <div style="display:flex;gap:8px"><button class="btn">Save Draft</button><button class="btn primary" onclick="openDeploy()">Review & Deploy</button></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="sub">Readiness</div><div class="num" style="color:var(--g)">92%</div><div class="sub">11 pass · 1 warning</div></div>
+      <div class="stat"><div class="sub">Deployment Type</div><div class="num">Major</div><div class="sub">Full validation rules</div></div>
+      <div class="stat"><div class="sub">Rollback Target</div><div class="num">v1.8.4</div><div class="sub">Known Good</div></div>
+      <div class="stat"><div class="sub">Maintenance</div><div class="num">15m</div><div class="sub">Planned window</div></div>
+    </div>
+
+    <div class="grid12">
+      <section class="card c7">
+        <div class="between"><div><b>System Ready Checklist</b><div class="sub">Automated checks + Owner signoff</div></div><span class="badge yellow">1 WARNING</span></div>
+
+        <div class="check"><div class="checkicon">✓</div><div><b>HTTPS & Domain</b><div class="sub">Production certificate valid</div></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="checkicon">✓</div><div><b>Database Connectivity</b><div class="sub">Healthy · migrations validated</div></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="checkicon">✓</div><div><b>Latest Backup</b><div class="sub">Verified Aug 10 · 12:30 AM Central</div></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="checkicon">✓</div><div><b>Push Notifications</b><div class="sub">Production push test successful</div></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="checkicon">✓</div><div><b>Storage Capacity</b><div class="sub">61% used · below 80% threshold</div></div><span class="badge green">PASS</span></div>
+        <div class="check"><div class="checkicon warn">!</div><div><b>Staging Validation</b><div class="sub">1 minor UI issue acknowledged in Resources mobile spacing</div></div><span class="badge yellow">WARNING</span></div>
+        <div class="check"><div class="checkicon">✓</div><div><b>Rollback Readiness</b><div class="sub">v1.8.4 marked Known Good and eligible</div></div><span class="badge green">PASS</span></div>
+
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:12px"><span>Readiness completion</span><b>92%</b></div>
+        <div class="progress" style="margin-top:7px"><span style="width:92%"></span></div>
+      </section>
+
+      <aside class="card c5 warnbox">
+        <div class="between"><div><b>Readiness Warning</b><div class="sub">Staging · Minor UI issue</div></div><span class="badge yellow">OVERRIDABLE</span></div>
+        <div class="sub" style="margin-top:9px;line-height:1.55">Mobile Resources cards have slightly tighter spacing than the approved design. No workflow or security impact detected.</div>
+        <div style="margin-top:12px">
+          <div class="sub">Rule treatment</div>
+          <b>Warning · Owner override permitted</b>
+        </div>
+        <button class="btn" style="width:100%;margin-top:12px">Review Warning</button>
+        <button class="btn" style="width:100%;margin-top:8px">Override with Reason</button>
+      </aside>
+
+      <section class="card c6 safe">
+        <div class="between"><div><b>Deployment Plan</b><div class="sub">Major production release</div></div><span class="badge green">READY</span></div>
+        <div class="check"><div class="checkicon">1</div><div><b>Pre-deploy countdown</b><div class="sub">5 minutes</div></div><span class="badge">CONFIGURED</span></div>
+        <div class="check"><div class="checkicon">2</div><div><b>Maintenance behavior</b><div class="sub">Warn users, finish current work, block new actions</div></div><span class="badge">15 MIN</span></div>
+        <div class="check"><div class="checkicon">3</div><div><b>Atomic production switch</b><div class="sub">Deploy to staging directory then switch only on success</div></div><span class="badge green">SAFE</span></div>
+        <div class="check"><div class="checkicon">4</div><div><b>Rollback target</b><div class="sub">Automatic previous Known Good: v1.8.4</div></div><span class="badge green">READY</span></div>
+      </section>
+
+      <section class="card c6">
+        <div class="between"><div><b>Post-Deploy Validation</b><div class="sub">Pending after production switch</div></div><span class="badge blue">FULL VALIDATION</span></div>
+        <div class="check"><div class="checkicon">A</div><div><b>Automated smoke tests</b><div class="sub">Login, sales entry, chat, resources, forms, push</div></div><span class="badge">REQUIRED</span></div>
+        <div class="check"><div class="checkicon">M</div><div><b>Manual critical verification</b><div class="sub">Owner reviews key production workflows</div></div><span class="badge">REQUIRED</span></div>
+        <div class="check"><div class="checkicon">✓</div><div><b>Completion rule</b><div class="sub">Deployment remains Pending Validation until all required checks finish</div></div><span class="badge blue">GATED</span></div>
+      </section>
+
+      <section class="card c12">
+        <div class="between"><div><b>Launch Timeline Preview</b><div class="sub">What will happen after Deploy</div></div><span class="badge">PROD-2026-00107 RESERVED ON LAUNCH</span></div>
+        <div class="timeline">
+          <div class="event"><div class="line"><div class="edot green">1</div></div><div class="eventcontent"><b>Owner final confirmation</b>Review version, type, readiness, maintenance, rollback, notifications and overrides.</div></div>
+          <div class="event"><div class="line"><div class="edot">2</div></div><div class="eventcontent"><b>Pre-deploy countdown</b>5-minute countdown. Cancel returns launch to Draft with all settings preserved.</div></div>
+          <div class="event"><div class="line"><div class="edot yellow">3</div></div><div class="eventcontent"><b>Maintenance transition</b>Users finish current work safely, then production enters the configured maintenance state.</div></div>
+          <div class="event"><div class="line"><div class="edot green">4</div></div><div class="eventcontent"><b>Deploy and switch</b>New code stages separately and atomically becomes production only after successful deployment.</div></div>
+          <div class="event"><div class="line"><div class="edot">5</div></div><div class="eventcontent"><b>Smoke tests and manual verification</b>Severity rules determine continue, Maintenance Mode, or automatic rollback.</div></div>
+          <div class="event"><div class="line"><div class="edot green">6</div></div><div class="eventcontent"><b>Production complete</b>Launch record becomes permanent with checklist, warnings, Owners, timestamps, version and outcome.</div></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</section>
+
+<section class="history" id="history">
+  <div class="header">
+    <div><div class="sub">Owner Launch History</div><h2>Production & Staging Launch Records</h2></div>
+    <div style="display:flex;gap:8px"><button class="btn">Filters</button><button class="btn">Export PDF/CSV</button></div>
+  </div>
+
+  <div class="table">
+    <div class="tr"><span>Launch ID</span><span>Environment</span><span>Version</span><span>Type</span><span>Outcome</span><span>Date</span></div>
+    <div class="tr"><span>PROD-2026-00106</span><span>Production</span><span>v1.8.4</span><span>Routine</span><span><span class="badge green">SUCCESS</span></span><span>Aug 9</span></div>
+    <div class="tr"><span>STAGE-2026-00141</span><span>Staging</span><span>v1.8.5-rc1</span><span>Major</span><span><span class="badge yellow">WARNING</span></span><span>Aug 10</span></div>
+    <div class="tr"><span>PROD-2026-00105</span><span>Production</span><span>v1.8.3</span><span>Major</span><span><span class="badge green">SUCCESS</span></span><span>Aug 5</span></div>
+    <div class="tr"><span>PROD-2026-00104</span><span>Production</span><span>v1.8.2</span><span>Routine</span><span><span class="badge red">ROLLED BACK</span></span><span>Aug 2</span></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="between"><div><b>PROD-2026-00104</b><div class="sub">v1.8.2 · Routine · Aug 2</div></div><span class="badge red">ROLLED BACK</span></div>
+    <div class="timeline">
+      <div class="event"><div class="line"><div class="edot green">✓</div></div><div class="eventcontent"><b>Readiness passed</b>All required checks completed.</div></div>
+      <div class="event"><div class="line"><div class="edot green">↑</div></div><div class="eventcontent"><b>Deployment completed</b>Production switched to v1.8.2.</div></div>
+      <div class="event"><div class="line"><div class="edot red">!</div></div><div class="eventcontent"><b>Critical smoke test failure</b>Add Sale submission failed in production.</div></div>
+      <div class="event"><div class="line"><div class="edot red">↩</div></div><div class="eventcontent"><b>Automatic rollback</b>ROLL-2026-00018 restored Known Good v1.8.1.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="rollbacks" id="rollbacks">
+  <div class="header">
+    <div><div class="sub">Owner Recovery</div><h2>Rollback Center</h2></div>
+    <button class="btn">Search Rollback History</button>
+  </div>
+
+  <div class="rollbackgrid">
+    <section class="card">
+      <div class="between"><div><b>Rollback Eligibility</b><div class="sub">Current production: v1.8.4</div></div><span class="badge green">KNOWN GOOD</span></div>
+
+      <div class="check"><div class="checkicon">✓</div><div><b>v1.8.4</b><div class="sub">Current production · Known Good</div></div><span class="badge green">CURRENT</span></div>
+      <div class="check"><div class="checkicon">✓</div><div><b>v1.8.3</b><div class="sub">Prior production · Known Good</div></div><button class="btn" style="padding:6px 8px" onclick="openRollback('v1.8.3')">Select</button></div>
+      <div class="check"><div class="checkicon fail">×</div><div><b>v1.8.2</b><div class="sub">Marked Do Not Roll Back To · critical sales-entry defect</div></div><span class="badge red">BLOCKED</span></div>
+      <div class="check"><div class="checkicon">✓</div><div><b>v1.8.1</b><div class="sub">Older Known Good</div></div><button class="btn" style="padding:6px 8px" onclick="openRollback('v1.8.1')">Select</button></div>
+    </section>
+
+    <aside class="card risk">
+      <div class="between"><div><b>Manual Rollback</b><div class="sub">Owner sensitive action</div></div><span class="badge red">FRESH AUTH</span></div>
+      <div class="sub" style="margin-top:8px;line-height:1.55">Manual rollback creates a permanent ROLL-YYYY-##### record linked to the production launch, versions, trigger, build, notifications, outcome and timestamps.</div>
+      <button class="btn danger" style="width:100%;margin-top:12px" onclick="openRollback('v1.8.3')">Start Manual Rollback</button>
+    </aside>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="between"><div><b>Recent Rollbacks</b><div class="sub">Production and staging share one rollback ID sequence</div></div><button class="btn">Export</button></div>
+    <div class="table" style="margin-top:12px">
+      <div class="tr"><span>Rollback ID</span><span>Environment</span><span>From</span><span>To</span><span>Outcome</span><span>Date</span></div>
+      <div class="tr"><span>ROLL-2026-00018</span><span>Production</span><span>v1.8.2</span><span>v1.8.1</span><span><span class="badge green">RESTORED</span></span><span>Aug 2</span></div>
+      <div class="tr"><span>ROLL-2026-00017</span><span>Staging</span><span>v1.8.1-rc2</span><span>v1.8.1-rc1</span><span><span class="badge green">RESTORED</span></span><span>Jul 31</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="drafts" id="drafts">
+  <div class="header">
+    <div><div class="sub">Owner Launch Preparation</div><h2>Draft Launches</h2></div>
+    <button class="btn primary">＋ New Launch Draft</button>
+  </div>
+
+  <div class="draftgrid">
+    <section class="card">
+      <div class="between"><div><b>v1.8.5 · Major Production Launch</b><div class="sub">Last edited today at 11:48 AM by Jonathan</div></div><span class="badge yellow">DRAFT</span></div>
+      <div class="check"><div class="checkicon">✓</div><div><b>Readiness settings preserved</b><div class="sub">Warnings, validation rules and deployment type saved</div></div><span class="badge green">SAVED</span></div>
+      <div class="check"><div class="checkicon">✓</div><div><b>Maintenance plan preserved</b><div class="sub">15-minute window</div></div><span class="badge green">SAVED</span></div>
+      <div class="check"><div class="checkicon">✓</div><div><b>Rollback target preserved</b><div class="sub">v1.8.4</div></div><span class="badge green">SAVED</span></div>
+      <div style="display:flex;gap:8px;margin-top:12px"><button class="btn primary">Reopen Draft</button><button class="btn">Archive</button></div>
+    </section>
+
+    <aside class="card warnbox">
+      <b>Draft Reopen Rule</b>
+      <div class="sub" style="margin-top:6px;line-height:1.55">Archived drafts may be reopened, but readiness checks rerun. Reopen is audited with Owner, draft, time, archive duration and a permanent link to any eventual deployment.</div>
+    </aside>
+  </div>
+</section>
+
+</div>
+
+<div class="modal" id="deployModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Final Production Confirmation</div><div style="font-size:21px;font-weight:800">Deploy v1.8.5</div></div><button class="btn" onclick="closeDeploy()">Close</button></div>
+
+    <div class="summarybox">
+      <div class="check"><div class="checkicon">V</div><div><b>Version</b><div class="sub">v1.8.5</div></div><span class="badge">PRODUCTION</span></div>
+      <div class="check"><div class="checkicon">T</div><div><b>Deployment Type</b><div class="sub">Major</div></div><span class="badge blue">FULL VALIDATION</span></div>
+      <div class="check"><div class="checkicon warn">!</div><div><b>Readiness</b><div class="sub">11 pass · 1 warning</div></div><span class="badge yellow">92%</span></div>
+      <div class="check"><div class="checkicon">M</div><div><b>Maintenance</b><div class="sub">15 minutes · users safely finish active work</div></div><span class="badge">PLANNED</span></div>
+      <div class="check"><div class="checkicon">↩</div><div><b>Rollback Target</b><div class="sub">v1.8.4 · Known Good</div></div><span class="badge green">READY</span></div>
+    </div>
+
+    <div class="field"><label>Owner Password / Fresh Authentication</label><input type="password" placeholder="Password"></div>
+    <div class="field"><label>Optional launch note</label><textarea rows="3" placeholder="Optional note for the permanent launch record"></textarea></div>
+
+    <button class="btn primary" style="width:100%;padding:12px" onclick="startCountdown()">Deploy Production</button>
+    <div id="deployMsg" class="sub" style="text-align:center;margin-top:9px"></div>
+  </div>
+</div>
+
+<div class="modal" id="rollbackModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Sensitive Owner Action</div><div style="font-size:21px;font-weight:800">Manual Rollback</div></div><button class="btn" onclick="closeRollback()">Close</button></div>
+    <div class="summarybox"><div class="sub">Target version</div><b id="rollbackTarget">v1.8.3</b></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Required rollback reason"></textarea></div>
+    <div class="field"><label>Fresh Authentication</label><input type="password" placeholder="Owner password / configured 2FA"></div>
+    <button class="btn danger" style="width:100%;padding:12px" onclick="confirmRollback()">Confirm Rollback</button>
+    <div id="rollbackMsg" class="sub" style="text-align:center;margin-top:9px"></div>
+  </div>
+</div>
+
+<script>
+const launch=document.getElementById('launch'),history=document.getElementById('history'),rollbacks=document.getElementById('rollbacks'),drafts=document.getElementById('drafts');
+const lb=document.getElementById('launchBtn'),hb=document.getElementById('historyBtn'),rb=document.getElementById('rollbackBtn'),db=document.getElementById('draftBtn');
+function show(v){
+  launch.style.display='none';history.style.display='none';rollbacks.style.display='none';drafts.style.display='none';
+  [lb,hb,rb,db].forEach(x=>x.classList.remove('active'));
+  if(v==='l'){launch.style.display='grid';lb.classList.add('active')}
+  if(v==='h'){history.style.display='block';hb.classList.add('active')}
+  if(v==='r'){rollbacks.style.display='block';rb.classList.add('active')}
+  if(v==='d'){drafts.style.display='block';db.classList.add('active')}
+}
+lb.onclick=()=>show('l');hb.onclick=()=>show('h');rb.onclick=()=>show('r');db.onclick=()=>show('d');
+
+function openDeploy(){document.getElementById('deployModal').classList.add('open');document.getElementById('deployMsg').textContent=''}
+function closeDeploy(){document.getElementById('deployModal').classList.remove('open')}
+function startCountdown(){document.getElementById('deployMsg').textContent='Mockup: 5-minute pre-deploy countdown started. Cancel would return this launch to Draft.'}
+
+function openRollback(target){document.getElementById('rollbackTarget').textContent=target;document.getElementById('rollbackMsg').textContent='';document.getElementById('rollbackModal').classList.add('open')}
+function closeRollback(){document.getElementById('rollbackModal').classList.remove('open')}
+function confirmRollback(){document.getElementById('rollbackMsg').textContent='Mockup: rollback authorized and permanent ROLL-2026-##### record would be created.'}
+</script>
+</body>
+</html>

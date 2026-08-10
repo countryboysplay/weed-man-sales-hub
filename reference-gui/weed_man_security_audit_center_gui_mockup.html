@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Security & Audit Center</title>
+<style>
+:root{--g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;--bg:#f6f7f5;--p:#fff;--bd:#dde3dc;--t:#20251f;--m:#6f786f;--sg:#e8f2ea;--sy:#fff6c8;--sr:#fdeaea;--sb:#eaf1fb;--chip:#eef2ed}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.top{padding:18px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.sub{font-size:12px;color:var(--m)}.title{font-size:20px;font-weight:760}.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--bd);background:#fff;padding:9px 12px;border-radius:12px;color:var(--t)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}.btn.danger{background:#fff5f5;color:#9b3030;border-color:#e5bcbc}
+.shell{margin:0 20px 20px;border:1px solid var(--bd);border-radius:18px;overflow:hidden;background:#fff;min-height:760px}.desktop{display:grid;grid-template-columns:205px 1fr;min-height:760px}
+.side{border-right:1px solid var(--bd);background:#fbfcfa;padding:14px}.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
+.brand small{display:block;color:var(--m)}.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--m);padding:12px 10px 5px}.nav button{width:100%;border:0;background:transparent;text-align:left;padding:10px 12px;border-radius:11px;margin-bottom:3px}.nav button.active{background:var(--sg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.head h2{font-size:23px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--bd);border-radius:14px;padding:12px}.num{font-size:28px;font-weight:800}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.card{border:1px solid var(--bd);border-radius:16px;background:#fff;padding:14px}.between{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.grow{flex:1}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--m)}.green{background:var(--sg);color:var(--gd)}.yellow{background:var(--sy);color:#665700}.red{background:var(--sr);color:#973030}.blue{background:var(--sb);color:#345f91}
+.alert{border-left:5px solid var(--y);background:#fffdf4}.risk{border-left:5px solid var(--r);background:#fffafa}.safe{border-left:5px solid var(--g);background:#f8fcf8}
+.table{border:1px solid var(--bd);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1fr 1fr .95fr 1.1fr .9fr .85fr;gap:8px;padding:10px 12px;border-top:1px solid var(--bd);font-size:12px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:9px 0;border-top:1px solid var(--bd);font-size:12px;align-items:center}.item:first-of-type{border-top:0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.filters input,.filters select{border:1px solid var(--bd);border-radius:11px;padding:9px 10px;background:#fff}.filters input{flex:1;min-width:220px}
+.privateview,.emergencyview,.exportview,.accountview{display:none;padding:18px}
+.timeline{margin-top:8px}.event{display:grid;grid-template-columns:30px 1fr auto;gap:9px;padding:9px 0}.line{position:relative}.line:before{content:"";position:absolute;left:14px;top:24px;bottom:-12px;width:2px;background:var(--bd)}.event:last-child .line:before{display:none}.edot{width:30px;height:30px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:12px}.edot.red{background:var(--sr)}.edot.blue{background:var(--sb)}.edot.green{background:var(--sg)}.edot.yellow{background:var(--sy)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(680px,100%);max-height:92vh;overflow:auto;background:#fff;border:1px solid var(--bd);border-radius:18px;padding:16px}.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--m);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--bd);border-radius:11px;padding:10px;background:#fff}
+@media(max-width:1050px){.desktop{grid-template-columns:175px 1fr}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.tr{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div><div class="sub">GUI Phase · Screen 23</div><div class="title">Security & Audit Center</div></div>
+  <div class="switch">
+    <button id="overviewBtn" class="active">Security Overview</button>
+    <button id="privateBtn">Private Communication Access</button>
+    <button id="emergencyBtn">Emergency Access Audit</button>
+    <button id="exportBtn">Sensitive Exports</button>
+    <button id="accountBtn">Account Security</button>
+  </div>
+</div>
+
+<div class="shell">
+<section id="overview" class="desktop">
+  <aside class="side">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Owner Console</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">Security</div>
+      <button class="active">🛡 Security & Audit</button><button>🔐 Owner Controls</button><button>🗄 Archive Access</button>
+      <div class="navlabel">System</div><button>🩺 System Health</button><button>⚙ Settings</button><button>🚀 Launch Center</button>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="head">
+      <div><div class="sub">Owner Security</div><h2>Security & Audit Center</h2></div>
+      <div class="row"><button class="btn">Filters</button><button class="btn">Export Audit</button></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="sub">Sensitive Actions · 30d</div><div class="num">24</div></div>
+      <div class="stat"><div class="sub">Private Comms Access</div><div class="num">3</div><div class="sub">permanent audit</div></div>
+      <div class="stat"><div class="sub">Emergency Sessions</div><div class="num">1</div></div>
+      <div class="stat"><div class="sub">Open Risk Alerts</div><div class="num" style="color:var(--r)">0</div></div>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <div class="between"><div><b>Recent Sensitive Actions</b><div class="sub">Cross-system security events</div></div><span class="badge blue">OWNER VIEW</span></div>
+        <div class="timeline">
+          <div class="event"><div class="line"><div class="edot blue">E</div></div><div><b>EXP-2026-00311 · Sensitive employee-history export</b><div class="sub">Jonathan · Aug 7 · Tiffany Nelson · PDF</div></div><span class="badge blue">EXPORT</span></div>
+          <div class="event"><div class="line"><div class="edot red">C</div></div><div><b>Private communication history accessed</b><div class="sub">Owner · Aug 6 · reason recorded · fresh auth passed</div></div><span class="badge red">PRIVATE</span></div>
+          <div class="event"><div class="line"><div class="edot yellow">M</div></div><div><b>Maintenance Mode scheduled</b><div class="sub">Jonathan · Aug 5 · 9:30 PM Central</div></div><span class="badge yellow">SYSTEM</span></div>
+          <div class="event"><div class="line"><div class="edot green">B</div></div><div><b>Backup restore authentication verified</b><div class="sub">Owner · Aug 3 · no restore executed</div></div><span class="badge green">RECOVERY</span></div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card safe">
+          <div class="between"><div><b>Security Posture</b><div class="sub">Protected controls</div></div><span class="badge green">HEALTHY</span></div>
+          <div class="item"><span>Master recovery TOTP</span><span class="badge green">ON</span></div>
+          <div class="item"><span>Fresh-auth window</span><span>15 minutes</span></div>
+          <div class="item"><span>Private comm access log</span><span>Permanent</span></div>
+          <div class="item"><span>Sensitive export audit</span><span>7 years</span></div>
+        </div>
+
+        <div class="card risk" style="margin-top:12px">
+          <b>Protected Owner Actions</b>
+          <div class="sub" style="margin-top:6px;line-height:1.55">Owner creation/removal, emergency access, backup restore, staging refresh and other recovery-critical actions require stronger authentication and durable audit records.</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</section>
+
+<section id="privateView" class="privateview">
+  <div class="head">
+    <div><div class="sub">Owner-Only Protected Audit</div><h2>Private Communication Access</h2></div>
+    <button class="btn primary" onclick="openPrivate()">Request Access</button>
+  </div>
+
+  <div class="card risk">
+    <div class="between"><div><b>Access is exceptional, not routine.</b><div class="sub">Owner can inspect current direct/group communication history even when not a participant.</div></div><span class="badge red">EXTRA AUTH</span></div>
+    <div class="sub" style="margin-top:8px;line-height:1.55">Every access requires reason, fresh authentication, and creates a permanent access record. Deleted messages are not reconstructed; the communication log reflects current retained state only.</div>
+  </div>
+
+  <div class="filters" style="margin-top:14px">
+    <input placeholder="Search Owner, employee, group, reason…">
+    <select><option>Last 365 Days</option><option>All Time</option></select>
+    <select><option>All Access Types</option><option>Direct Message</option><option>Group Chat</option></select>
+  </div>
+
+  <div class="table">
+    <div class="tr"><span>Owner</span><span>Scope</span><span>Target</span><span>Reason</span><span>Time</span><span>Result</span></div>
+    <div class="tr"><span>Owner</span><span>Direct Message</span><span>Tiffany ↔ Jonathan</span><span>Investigate complaint</span><span>Aug 6 · 3:17 PM</span><span><span class="badge green">AUTHORIZED</span></span></div>
+    <div class="tr"><span>Jonathan</span><span>Group Chat</span><span>Sales Management</span><span>Security review</span><span>Jul 18 · 11:02 AM</span><span><span class="badge green">AUTHORIZED</span></span></div>
+  </div>
+</section>
+
+<section id="emergencyView" class="emergencyview">
+  <div class="head">
+    <div><div class="sub">Permanent Owner Audit</div><h2>Emergency Access Sessions</h2></div>
+    <span class="badge red">RECOVERY-CRITICAL</span>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="between"><div><b>Recent Emergency Session</b><div class="sub">EMR-2026-00004</div></div><span class="badge green">CLOSED</span></div>
+      <div class="item"><span>Owner</span><span>Jonathan</span></div>
+      <div class="item"><span>Started</span><span>Jul 22 · 8:41 PM CT</span></div>
+      <div class="item"><span>Ended</span><span>Jul 22 · 9:02 PM CT</span></div>
+      <div class="item"><span>Reason</span><span>Production recovery</span></div>
+      <div class="item"><span>Scope used</span><span>System Health + Backups</span></div>
+      <button class="btn" style="margin-top:10px">Open Permanent Record</button>
+    </section>
+
+    <aside class="card safe">
+      <b>Session Controls</b>
+      <div class="item"><span>Max duration</span><span>60 minutes</span></div>
+      <div class="item"><span>Other Owners notified</span><span class="badge green">YES</span></div>
+      <div class="item"><span>Other Owner termination</span><span class="badge green">YES</span></div>
+      <div class="item"><span>Safe completion on expiry</span><span class="badge green">YES</span></div>
+    </aside>
+  </div>
+</section>
+
+<section id="exportView" class="exportview">
+  <div class="head">
+    <div><div class="sub">Sensitive Export Governance</div><h2>Export Audit</h2></div>
+    <button class="btn">Filters</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="sub">Exports · 30d</div><div class="num">11</div></div>
+    <div class="stat"><div class="sub">PDF</div><div class="num">8</div></div>
+    <div class="stat"><div class="sub">CSV</div><div class="num">3</div></div>
+    <div class="stat"><div class="sub">Active Export Records</div><div class="num">11</div></div>
+  </div>
+
+  <div class="table">
+    <div class="tr"><span>Export ID</span><span>Creator</span><span>Scope</span><span>Reason</span><span>Created</span><span>Status</span></div>
+    <div class="tr"><span>EXP-2026-00311</span><span>Jonathan</span><span>Tiffany · 90-day history</span><span>Management review</span><span>Aug 7 · 2:18 PM</span><span><span class="badge green">AVAILABLE</span></span></div>
+    <div class="tr"><span>EXP-2026-00306</span><span>David</span><span>Presence flags · 30d</span><span>Attendance analysis</span><span>Aug 3 · 11:44 AM</span><span><span class="badge blue">ARCHIVED</span></span></div>
+  </div>
+
+  <div class="card alert" style="margin-top:14px">
+    <b>Re-download behavior</b>
+    <div class="sub" style="margin-top:6px;line-height:1.55">Re-downloading a sensitive export uses the same EXP record but creates a child access audit entry with manager, time, device and reason where required.</div>
+  </div>
+</section>
+
+<section id="accountView" class="accountview">
+  <div class="head">
+    <div><div class="sub">Account Security Audit</div><h2>Security Events</h2></div>
+    <div class="row"><button class="btn">Search</button><button class="btn">Last 365 Days</button></div>
+  </div>
+
+  <div class="filters">
+    <input placeholder="Search employee, event, actor…">
+    <select><option>All Event Types</option><option>Password Reset</option><option>Force Logout</option><option>Role Change</option><option>Deactivate</option><option>Owner Change</option></select>
+  </div>
+
+  <div class="table">
+    <div class="tr"><span>User</span><span>Event</span><span>Actor</span><span>Details</span><span>Time</span><span>Retention</span></div>
+    <div class="tr"><span>Tiffany Nelson</span><span>Password Reset</span><span>David</span><span>Management-assigned reset</span><span>Jul 29 · 10:03 AM</span><span>Life of account</span></div>
+    <div class="tr"><span>Tiffany Nelson</span><span>Force Logout</span><span>David</span><span>All devices</span><span>Jul 29 · 10:04 AM</span><span>Life of account</span></div>
+    <div class="tr"><span>Owner Account</span><span>Owner Role Change</span><span>Jonathan</span><span>Protected change · master recovery used</span><span>Jul 10 · 1:22 PM</span><span>Permanent</span></div>
+  </div>
+</section>
+</div>
+
+<div class="modal" id="privateModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Protected Owner Access</div><div style="font-size:20px;font-weight:800">Request Private Communication Access</div></div><button class="btn" onclick="closePrivate()">Close</button></div>
+    <div class="field"><label>Scope</label><select><option>Direct Message</option><option>Group Chat</option></select></div>
+    <div class="field"><label>Target</label><input value="Tiffany Nelson ↔ Jonathan Lindsay"></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Required reason">Investigate employee complaint</textarea></div>
+    <div class="field"><label>Fresh Authentication</label><input type="password" placeholder="Owner password"></div>
+    <div class="field"><label>Additional Security Verification</label><input type="password" placeholder="Configured protected-access verification"></div>
+    <button class="btn danger" style="width:100%;padding:12px">Authorize Access & Create Permanent Audit</button>
+  </div>
+</div>
+
+<script>
+const views={overview:document.getElementById('overview'),private:document.getElementById('privateView'),emergency:document.getElementById('emergencyView'),export:document.getElementById('exportView'),account:document.getElementById('accountView')};
+const btns={overview:document.getElementById('overviewBtn'),private:document.getElementById('privateBtn'),emergency:document.getElementById('emergencyBtn'),export:document.getElementById('exportBtn'),account:document.getElementById('accountBtn')};
+function show(key){Object.values(views).forEach(v=>v.style.display='none');Object.values(btns).forEach(b=>b.classList.remove('active'));views[key].style.display=key==='overview'?'grid':'block';btns[key].classList.add('active')}
+Object.keys(btns).forEach(k=>btns[k].onclick=()=>show(k));
+function openPrivate(){document.getElementById('privateModal').classList.add('open')}function closePrivate(){document.getElementById('privateModal').classList.remove('open')}
+</script>
+</body>
+</html>

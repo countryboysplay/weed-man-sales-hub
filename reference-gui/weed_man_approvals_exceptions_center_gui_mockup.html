@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Approvals & Exceptions Center</title>
+<style>
+:root{
+ --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+ --bg:#f5f7f4;--p:#fff;--bd:#dde3dc;--t:#20251f;--m:#6f786f;
+ --sg:#e8f2ea;--sy:#fff6c8;--sr:#fdeaea;--sb:#eaf1fb;--chip:#eef2ed;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{padding:18px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.sub{font-size:12px;color:var(--m)}.title{font-size:20px;font-weight:760}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.btn,.switch button{border:1px solid var(--bd);background:#fff;padding:9px 12px;border-radius:12px;color:var(--t)}
+.btn.primary,.switch button.active{background:var(--g);border-color:var(--g);color:#fff}.btn.danger{background:#fff5f5;color:#9b3030;border-color:#e5bcbc}
+.shell{margin:0 20px 20px;border:1px solid var(--bd);border-radius:18px;overflow:hidden;background:#fff;min-height:780px}
+.desktop{display:grid;grid-template-columns:205px 1fr;min-height:780px}
+.side{border-right:1px solid var(--bd);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}.brand small{display:block;color:var(--m)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--m);padding:12px 10px 5px}
+.nav button{width:100%;border:0;background:transparent;text-align:left;padding:10px 12px;border-radius:11px;margin-bottom:3px}.nav button.active{background:var(--sg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.head h2{font-size:23px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--bd);border-radius:14px;padding:12px}.num{font-size:28px;font-weight:800}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.card{border:1px solid var(--bd);border-radius:16px;background:#fff;padding:14px}
+.between{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--m)}.green{background:var(--sg);color:var(--gd)}.yellow{background:var(--sy);color:#665700}.red{background:var(--sr);color:#973030}.blue{background:var(--sb);color:#345f91}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.filters input,.filters select{border:1px solid var(--bd);border-radius:11px;padding:9px 10px;background:#fff}.filters input{flex:1;min-width:220px}
+.queue{border:1px solid var(--bd);border-radius:15px;overflow:hidden}.q{display:grid;grid-template-columns:44px 1.2fr .8fr .8fr .8fr .8fr;gap:9px;padding:11px 12px;border-top:1px solid var(--bd);align-items:center;font-size:12px}.q:first-child{border-top:0;background:var(--chip);font-weight:700}
+.icon{width:38px;height:38px;border-radius:11px;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:18px}.icon.warn{background:var(--sy)}.icon.red{background:var(--sr)}.icon.blue{background:var(--sb)}.icon.green{background:var(--sg)}
+.item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-top:1px solid var(--bd);font-size:12px;align-items:center}.item:first-of-type{border-top:0}
+.safe{border-left:5px solid var(--g);background:#f8fcf8}.warnbox{border-left:5px solid var(--y);background:#fffdf3}.risk{border-left:5px solid var(--r);background:#fffafa}
+.history,.calendar,.settings{display:none;padding:18px}
+.timeline{margin-top:8px}.event{display:grid;grid-template-columns:30px 1fr auto;gap:9px;padding:9px 0}.line{position:relative}.line:before{content:"";position:absolute;left:14px;top:24px;bottom:-12px;width:2px;background:var(--bd)}.event:last-child .line:before{display:none}.edot{width:30px;height:30px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:12px}.edot.green{background:var(--sg)}.edot.red{background:var(--sr)}.edot.yellow{background:var(--sy)}.edot.blue{background:var(--sb)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.day{min-height:92px;border:1px solid var(--bd);border-radius:12px;padding:8px;font-size:11px;background:#fff}.day b{font-size:12px}.eventchip{margin-top:6px;border-radius:8px;padding:5px;background:var(--sg);color:var(--gd)}.eventchip.pending{background:var(--sy);color:#665700}.eventchip.block{background:var(--sr);color:#973030}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(720px,100%);background:#fff;border:1px solid var(--bd);border-radius:18px;padding:16px;max-height:92vh;overflow:auto}.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--m);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--bd);border-radius:11px;padding:10px;background:#fff}
+.decision{display:grid;grid-template-columns:1fr 1fr;gap:10px}.decision button{padding:12px}
+@media(max-width:1050px){.desktop{grid-template-columns:175px 1fr}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.q{grid-template-columns:42px 1fr 1fr}.cal{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div><div class="sub">GUI Phase · Screen 28</div><div class="title">Approvals & Exceptions Center</div></div>
+  <div class="switch">
+    <button id="queueBtn" class="active">Approval Queue</button>
+    <button id="calendarBtn">Coverage Calendar</button>
+    <button id="historyBtn">Decision History</button>
+    <button id="settingsBtn">Rules & Thresholds</button>
+  </div>
+</div>
+
+<div class="shell">
+<section id="queueView" class="desktop">
+  <aside class="side">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Management</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">People</div>
+      <button>👤 Employee Records</button><button>🕒 Presence & Shifts</button>
+      <button class="active">✅ Approvals & Exceptions</button>
+      <div class="navlabel">Operations</div>
+      <button>🛠 Support</button><button>📊 Reports</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="head">
+      <div><div class="sub">Realtime Management Queue</div><h2>Approvals & Exceptions</h2></div>
+      <div class="row"><button class="btn">My Assigned</button><button class="btn">Refresh</button></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="sub">Pending</div><div class="num">8</div><div class="sub">across all request types</div></div>
+      <div class="stat"><div class="sub">High Priority</div><div class="num" style="color:var(--r)">2</div><div class="sub">same-day / serious</div></div>
+      <div class="stat"><div class="sub">Coverage Warnings</div><div class="num" style="color:#a18600">2</div></div>
+      <div class="stat"><div class="sub">Approved Today</div><div class="num">11</div></div>
+    </div>
+
+    <div class="filters">
+      <input placeholder="Search employee, request type, record ID…">
+      <select><option>All Request Types</option><option>Time Off</option><option>Break Correction</option><option>Technical Grace</option><option>Schedule Exception</option><option>Acknowledgment</option></select>
+      <select><option>All Priorities</option><option>High Priority</option><option>Normal</option></select>
+      <select><option>All Branches</option><option>Owensboro</option><option>Evansville</option><option>Bowling Green</option><option>Paducah</option></select>
+    </div>
+
+    <div class="grid">
+      <section>
+        <div class="queue">
+          <div class="q"><span></span><span>Request</span><span>Employee</span><span>When</span><span>Risk</span><span>Action</span></div>
+
+          <div class="q">
+            <div class="icon red">🏖</div>
+            <div><b>TO-2026-00073 · Same-day partial time off</b><div class="sub">2:30 PM–7:30 PM · Personal</div></div>
+            <span>Tiffany Nelson</span><span>Today</span><span><span class="badge red">HIGH</span></span><button class="btn" style="padding:6px 8px" onclick="openRequest('timeoff')">Review</button>
+          </div>
+
+          <div class="q">
+            <div class="icon warn">🕒</div>
+            <div><b>BRK-2026-00031 · Break correction</b><div class="sub">End time 2:08 PM → 1:48 PM</div></div>
+            <span>Ashley Boggess</span><span>Today</span><span><span class="badge yellow">RECALC</span></span><button class="btn" style="padding:6px 8px" onclick="openRequest('break')">Review</button>
+          </div>
+
+          <div class="q">
+            <div class="icon blue">🛠</div>
+            <div><b>TECH-2026-00112 · Technical grace</b><div class="sub">Browser/PWA issue · 1:12–1:47 PM</div></div>
+            <span>Courtney Wathen</span><span>Today</span><span><span class="badge blue">TECHNICAL</span></span><button class="btn" style="padding:6px 8px" onclick="openRequest('tech')">Review</button>
+          </div>
+
+          <div class="q">
+            <div class="icon green">📅</div>
+            <div><b>SCH-2026-00044 · Temporary shift exception</b><div class="sub">Wednesday · 12:00 PM–7:30 PM</div></div>
+            <span>Charles Elliott</span><span>Aug 12</span><span><span class="badge green">NORMAL</span></span><button class="btn" style="padding:6px 8px" onclick="openRequest('schedule')">Review</button>
+          </div>
+
+          <div class="q">
+            <div class="icon red">📣</div>
+            <div><b>Required schedule acknowledgment overdue</b><div class="sub">Same-day shift change · acknowledgment due 10:15 AM</div></div>
+            <span>Whitney</span><span>Today</span><span><span class="badge red">OVERDUE</span></span><button class="btn" style="padding:6px 8px" onclick="openRequest('ack')">Review</button>
+          </div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card warnbox">
+          <div class="between"><div><b>Coverage Warning</b><div class="sub">Owensboro · Today 3:00–6:00 PM</div></div><span class="badge yellow">THRESHOLD</span></div>
+          <div class="item"><span>Required staffing</span><b>4 Sales Agents</b></div>
+          <div class="item"><span>Projected after approvals</span><b>3 Sales Agents</b></div>
+          <div class="item"><span>Requests contributing</span><b>2</b></div>
+          <div class="row" style="margin-top:10px"><button class="btn">View Coverage</button><button class="btn">Review Requests</button></div>
+        </div>
+
+        <div class="card safe" style="margin-top:12px">
+          <b>Decision Rules</b>
+          <div class="item"><span>Approval by</span><span>Any management user</span></div>
+          <div class="item"><span>Denial reason</span><span class="badge green">REQUIRED</span></div>
+          <div class="item"><span>Approval note</span><span>Optional</span></div>
+          <div class="item"><span>Employee notification</span><span class="badge green">PUSH + IN APP</span></div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <b>Exception Types in One Queue</b>
+          <div class="sub" style="margin-top:7px;line-height:1.55">Time off, approved cancellation requests, break corrections, missed-break additions, technical grace, manual schedule exceptions, same-day schedule acknowledgments and other configured management exceptions share this queue.</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</section>
+
+<section id="calendarView" class="calendar">
+  <div class="head">
+    <div><div class="sub">Management Coverage View</div><h2>Coverage Calendar</h2></div>
+    <div class="row"><button class="btn">Previous Week</button><button class="btn primary">Aug 10–16</button><button class="btn">Next Week</button></div>
+  </div>
+
+  <div class="card">
+    <div class="between"><div><b>Sales Coverage · All Branches</b><div class="sub">Approved and pending exceptions are shown separately</div></div><select class="btn"><option>All Branches</option><option>Owensboro</option><option>Evansville</option></select></div>
+    <div class="cal" style="margin-top:14px">
+      <div class="day"><b>Mon 10</b><div class="eventchip">Approved: 2</div><div class="eventchip pending">Pending: 2</div><div class="eventchip block">3–6 PM below threshold</div></div>
+      <div class="day"><b>Tue 11</b><div class="eventchip">Approved: 1</div></div>
+      <div class="day"><b>Wed 12</b><div class="eventchip">Approved: 1</div><div class="eventchip pending">Pending shift: 1</div></div>
+      <div class="day"><b>Thu 13</b><div class="sub" style="margin-top:7px">No exceptions</div></div>
+      <div class="day"><b>Fri 14</b><div class="eventchip">Approved: 3</div><div class="eventchip pending">Pending: 1</div></div>
+      <div class="day"><b>Sat 15</b><div class="sub" style="margin-top:7px">No assigned sales shift</div></div>
+      <div class="day"><b>Sun 16</b><div class="sub" style="margin-top:7px">No assigned sales shift</div></div>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top:14px">
+    <section class="card warnbox">
+      <b>Coverage Confirmation Behavior</b>
+      <div class="sub" style="margin-top:7px;line-height:1.55">Rules can warn, require an additional confirmation, or block an approval when staffing would fall below the configured role/shift threshold.</div>
+    </section>
+    <aside class="card">
+      <b>Calendar Privacy</b>
+      <div class="sub" style="margin-top:7px;line-height:1.55">Management sees approved and pending requests across the team. Employees see only their own requests and schedule exceptions.</div>
+    </aside>
+  </div>
+</section>
+
+<section id="historyView" class="history">
+  <div class="head">
+    <div><div class="sub">Management Audit</div><h2>Decision History</h2></div>
+    <button class="btn">Last 90 Days</button>
+  </div>
+
+  <div class="filters">
+    <input placeholder="Search employee, approver, record ID, reason…">
+    <select><option>All Decisions</option><option>Approved</option><option>Denied</option><option>Canceled</option><option>Reopened</option></select>
+    <select><option>All Types</option><option>Time Off</option><option>Break Correction</option><option>Technical Grace</option><option>Schedule Exception</option></select>
+  </div>
+
+  <div class="timeline card">
+    <div class="event"><div class="line"><div class="edot green">✓</div></div><div><b>BRK-2026-00028 approved</b><div class="sub">Tiffany Nelson · approved by Jonathan · Aug 5 · presence recalculated</div></div><span class="badge green">APPROVED</span></div>
+    <div class="event"><div class="line"><div class="edot red">×</div></div><div><b>TO-2026-00064 denied</b><div class="sub">Ashley Boggess · denied by David · Aug 4 · “Coverage below minimum staffing”</div></div><span class="badge red">DENIED</span></div>
+    <div class="event"><div class="line"><div class="edot blue">T</div></div><div><b>TECH-2026-00106 grace approved</b><div class="sub">Tiffany Nelson · Jonathan · Aug 7 · 1:18–1:51 PM</div></div><span class="badge blue">TECHNICAL</span></div>
+    <div class="event"><div class="line"><div class="edot yellow">↻</div></div><div><b>TO-2026-00060 approved cancellation request</b><div class="sub">Employee requested cancellation after prior approval · handled by David</div></div><span class="badge yellow">CANCELED</span></div>
+  </div>
+</section>
+
+<section id="settingsView" class="settings">
+  <div class="head">
+    <div><div class="sub">Management Configuration</div><h2>Approval Rules & Thresholds</h2></div>
+    <button class="btn primary">Save Changes</button>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="between"><div><b>Coverage Rules</b><div class="sub">Per role / shift</div></div><span class="badge blue">CONFIGURABLE</span></div>
+      <div class="item"><span>Sales Agents · weekday minimum</span><button class="btn" style="padding:6px 8px">4 agents</button></div>
+      <div class="item"><span>Below minimum behavior</span><button class="btn" style="padding:6px 8px">Warn + Confirm</button></div>
+      <div class="item"><span>Same-day time off</span><button class="btn" style="padding:6px 8px">High Priority</button></div>
+      <div class="item"><span>Same-day schedule change</span><button class="btn" style="padding:6px 8px">Ack Required</button></div>
+    </section>
+
+    <aside class="card">
+      <div class="between"><div><b>Break & Technical Rules</b><div class="sub">Approval workflow behavior</div></div></div>
+      <div class="item"><span>Same-day break correction cutoff</span><span>Midnight CT</span></div>
+      <div class="item"><span>After-midnight correction</span><span>Manager edit + reason</span></div>
+      <div class="item"><span>Technical grace approval</span><span>Any management user</span></div>
+      <div class="item"><span>Original record audit</span><span class="badge green">PRESERVED</span></div>
+    </aside>
+  </div>
+</section>
+</div>
+
+<div class="modal" id="requestModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Management Decision</div><div id="modalTitle" style="font-size:20px;font-weight:800">Review Request</div></div><button class="btn" onclick="closeRequest()">Close</button></div>
+
+    <div id="requestSummary" class="card warnbox" style="margin-top:12px">
+      <b>TO-2026-00073 · Tiffany Nelson</b>
+      <div class="sub" style="margin-top:6px;line-height:1.55">Same-day partial time off · 2:30 PM–7:30 PM · reason: Personal</div>
+    </div>
+
+    <div class="field"><label>Coverage impact</label><input value="Owensboro falls from 4 to 3 Sales Agents between 3:00 PM and 6:00 PM" disabled></div>
+    <div class="field"><label>Approval note (optional)</label><textarea rows="3" placeholder="Optional note shown in the employee decision"></textarea></div>
+    <div class="field"><label>Denial reason</label><textarea rows="3" placeholder="Required only if denying"></textarea></div>
+
+    <div class="decision">
+      <button class="btn danger" onclick="decision('Denied')">Deny Request</button>
+      <button class="btn primary" onclick="decision('Approved')">Approve Request</button>
+    </div>
+    <div id="decisionMsg" class="sub" style="text-align:center;margin-top:9px"></div>
+  </div>
+</div>
+
+<script>
+const views={queue:document.getElementById('queueView'),calendar:document.getElementById('calendarView'),history:document.getElementById('historyView'),settings:document.getElementById('settingsView')};
+const btns={queue:document.getElementById('queueBtn'),calendar:document.getElementById('calendarBtn'),history:document.getElementById('historyBtn'),settings:document.getElementById('settingsBtn')};
+
+function show(k){
+ Object.values(views).forEach(v=>v.style.display='none');
+ Object.values(btns).forEach(b=>b.classList.remove('active'));
+ views[k].style.display=k==='queue'?'grid':'block';
+ btns[k].classList.add('active');
+}
+Object.keys(btns).forEach(k=>btns[k].onclick=()=>show(k));
+
+const data={
+ timeoff:['Time Off Request','TO-2026-00073 · Tiffany Nelson','Same-day partial time off · 2:30 PM–7:30 PM · reason: Personal'],
+ break:['Break Correction','BRK-2026-00031 · Ashley Boggess','Requested end-time correction from 2:08 PM to 1:48 PM. Approval will recalculate affected presence flags while preserving the original audit.'],
+ tech:['Technical Grace','TECH-2026-00112 · Courtney Wathen','Browser/PWA issue · requested technical grace from 1:12 PM–1:47 PM. Existing flags remain linked to the technical record.'],
+ schedule:['Schedule Exception','SCH-2026-00044 · Charles Elliott','Temporary Wednesday shift requested: 12:00 PM–7:30 PM. Employee notification and optional acknowledgment apply after approval.'],
+ ack:['Acknowledgment Exception','Required schedule acknowledgment · Whitney','Same-day schedule change remains unacknowledged after the configured deadline. Management can resend, extend the deadline, or resolve the exception.']
+};
+function openRequest(type){
+ const d=data[type];
+ document.getElementById('modalTitle').textContent=d[0];
+ document.getElementById('requestSummary').innerHTML='<b>'+d[1]+'</b><div class="sub" style="margin-top:6px;line-height:1.55">'+d[2]+'</div>';
+ document.getElementById('decisionMsg').textContent='';
+ document.getElementById('requestModal').classList.add('open');
+}
+function closeRequest(){document.getElementById('requestModal').classList.remove('open')}
+function decision(v){document.getElementById('decisionMsg').textContent='Mockup: '+v+' decision saved, audited, and employee notification sent.'}
+</script>
+</body>
+</html>

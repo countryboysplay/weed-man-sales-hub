@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weed Man Sales Hub - Reports & Archive Center</title>
+<style>
+:root{
+ --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--b:#3b6ea8;
+ --bg:#f6f7f5;--panel:#fff;--border:#dde3dc;--text:#20251f;--muted:#6f786f;
+ --softg:#e8f2ea;--softy:#fff6c8;--softr:#fdeaea;--softb:#eaf1fb;--chip:#eef2ed;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow,.sub{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:760}
+.switch{display:flex;gap:8px;flex-wrap:wrap}.switch button,.btn{border:1px solid var(--border);background:#fff;padding:9px 12px;border-radius:12px;color:var(--text)}
+.switch button.active,.btn.primary{background:var(--g);color:#fff;border-color:var(--g)}.btn.danger{background:#fff5f5;border-color:#e7bcbc;color:#9b3030}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:#fff;min-height:760px}
+.desktop{display:grid;grid-template-columns:205px 1fr;min-height:760px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:12px 10px 5px}
+.nav button{width:100%;display:block;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:15px}.header h2{margin:0;font-size:23px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--border);border-radius:14px;padding:12px}.num{font-size:28px;font-weight:800}
+.card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px}.between{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.grow{flex:1}.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted)}.badge.green{background:var(--softg);color:var(--gd)}.badge.yellow{background:var(--softy);color:#675900}.badge.red{background:var(--softr);color:#963131}.badge.blue{background:var(--softb);color:#365f90}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.filters input,.filters select{border:1px solid var(--border);border-radius:11px;padding:9px 10px;background:#fff}
+.table{border:1px solid var(--border);border-radius:14px;overflow:hidden}.tr{display:grid;grid-template-columns:1.2fr .9fr .85fr .8fr .9fr .8fr;gap:8px;padding:10px 12px;border-top:1px solid var(--border);font-size:12px;align-items:center}.tr:first-child{border-top:0;background:var(--chip);font-weight:700}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+.report{border:1px solid var(--border);border-radius:14px;padding:12px;margin-top:10px}.report:first-of-type{margin-top:0}.report.warn{border-left:5px solid var(--y);background:#fffdf4}.report.fail{border-left:5px solid var(--r);background:#fffafa}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:9px 0;border-top:1px solid var(--border);font-size:12px;align-items:center}.item:first-of-type{border-top:0}
+.archiveview,.recoveryview,.failuresview{display:none;padding:18px}
+.archivegrid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.folder{border:1px solid var(--border);border-radius:14px;padding:12px;background:#fff}.foldergrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.foldericon{font-size:27px}.folder b{display:block;margin-top:7px}.favorite{color:#d0a900}
+.safe{border-left:5px solid var(--g);background:#f8fcf8}.warnbox{border-left:5px solid var(--y);background:#fffdf3}.risk{border-left:5px solid var(--r);background:#fffafa}
+.timeline{margin-top:8px}.event{display:grid;grid-template-columns:30px 1fr auto;gap:9px;padding:9px 0}.line{position:relative}.line:before{content:"";position:absolute;left:14px;top:24px;bottom:-12px;width:2px;background:var(--border)}.event:last-child .line:before{display:none}.edot{width:30px;height:30px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:12px}.edot.green{background:var(--softg)}.edot.red{background:var(--softr)}.edot.yellow{background:var(--softy)}.edot.blue{background:var(--softb)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:20px;z-index:30}.modal.open{display:flex}.modalbox{width:min(680px,100%);background:#fff;border:1px solid var(--border);border-radius:18px;padding:16px;max-height:92vh;overflow:auto}.field{margin:11px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:11px;padding:10px;background:#fff}
+@media(max-width:1050px){.desktop{grid-template-columns:175px 1fr}.stats{grid-template-columns:repeat(2,1fr)}.grid,.archivegrid{grid-template-columns:1fr}.foldergrid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 20</div><div class="h1">Reports & Archive Center</div></div>
+  <div class="switch">
+    <button id="reportsBtn" class="active">Scheduled Reports</button>
+    <button id="archiveBtn">Archive</button>
+    <button id="recoveryBtn">Recovery</button>
+    <button id="failuresBtn">Failures</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<section id="reports" class="desktop">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Management</small></div></div>
+    <div class="nav">
+      <button>★ Management Dashboard</button>
+      <div class="navlabel">Reporting</div>
+      <button class="active">📊 Scheduled Reports</button>
+      <button>🗄 Archive Center</button>
+      <button>↺ Recovery</button>
+      <button>⚠ Report Failures</button>
+      <div class="navlabel">System</div>
+      <button>🩺 System Health</button>
+      <button>⚙ Settings</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div><div class="sub">Management Reporting</div><h2>Scheduled Reports</h2></div>
+      <button class="btn primary" onclick="openSchedule()">＋ Schedule Report</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="sub">Active Schedules</div><div class="num">7</div></div>
+      <div class="stat"><div class="sub">Reports This Month</div><div class="num">18</div></div>
+      <div class="stat"><div class="sub">Archived</div><div class="num">42</div></div>
+      <div class="stat"><div class="sub">Open Failures</div><div class="num" style="color:var(--r)">1</div></div>
+    </div>
+
+    <div class="filters">
+      <input style="flex:1;min-width:240px" placeholder="Search schedules or reports…">
+      <select><option>All Statuses</option><option>Active</option><option>Paused</option><option>Failed</option></select>
+      <select><option>All Owners</option><option>Jonathan</option><option>David</option></select>
+      <select><option>All Retention Rules</option><option>Delete</option><option>Archive</option><option>Warn</option></select>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <div class="between"><div><b>Report Schedules</b><div class="sub">Creator owns the schedule; recipients receive generated reports in-app.</div></div><span class="badge green">7 ACTIVE</span></div>
+
+        <div class="report">
+          <div class="between"><div><b>Monthly Presence & Attendance Summary</b><div class="sub">Creator: Jonathan · Monthly</div></div><span class="badge green">ACTIVE</span></div>
+          <div class="item"><span>Next run</span><span>Sep 1 · 8:00 AM CT</span></div>
+          <div class="item"><span>Recipients</span><span>Jonathan + David</span></div>
+          <div class="item"><span>Retention</span><span>90 days → Archive</span></div>
+          <div class="row" style="margin-top:10px"><button class="btn">Edit</button><button class="btn">Pause</button><button class="btn">Run Now</button><button class="btn">History</button></div>
+        </div>
+
+        <div class="report">
+          <div class="between"><div><b>Weekly Support Trends</b><div class="sub">Creator: David · Every Monday</div></div><span class="badge green">ACTIVE</span></div>
+          <div class="item"><span>Next run</span><span>Aug 17 · 8:30 AM CT</span></div>
+          <div class="item"><span>Recipients</span><span>All Managers</span></div>
+          <div class="item"><span>Retention</span><span>30 days → Delete</span></div>
+          <div class="row" style="margin-top:10px"><button class="btn">Edit</button><button class="btn">Pause</button><button class="btn">Run Now</button><button class="btn">History</button></div>
+        </div>
+
+        <div class="report warn">
+          <div class="between"><div><b>Quarterly Sensitive History Export</b><div class="sub">Creator: Jonathan · Quarterly</div></div><span class="badge yellow">PAUSED</span></div>
+          <div class="item"><span>Paused until</span><span>Aug 24</span></div>
+          <div class="item"><span>Auto-resume</span><span>Yes</span></div>
+          <div class="item"><span>Retention</span><span>365 days → Archive</span></div>
+          <div class="row" style="margin-top:10px"><button class="btn">Resume Now</button><button class="btn">Edit</button></div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card safe">
+          <div class="between"><div><b>Latest Generated Reports</b><div class="sub">In-app delivery</div></div><button class="btn">View All</button></div>
+          <div class="item"><div><b>Presence & Attendance · Aug</b><div class="sub">Generated today · PDF</div></div><span class="badge green">READY</span></div>
+          <div class="item"><div><b>Support Trends · Week 32</b><div class="sub">Generated today · PDF</div></div><span class="badge green">READY</span></div>
+          <div class="item"><div><b>Employee History · Tiffany</b><div class="sub">EXP-2026-00311 · PDF</div></div><span class="badge blue">SENSITIVE</span></div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <b>Schedule Behavior</b>
+          <div class="item"><span>End date supported</span><span class="badge green">YES</span></div>
+          <div class="item"><span>Max runs supported</span><span class="badge green">YES</span></div>
+          <div class="item"><span>Pause + auto-resume</span><span class="badge green">YES</span></div>
+          <div class="item"><span>Smart retry on failure</span><span class="badge green">YES</span></div>
+        </div>
+
+        <div class="card warnbox" style="margin-top:12px">
+          <b>Retention Enforcement</b>
+          <div class="sub" style="margin-top:6px;line-height:1.55">Each schedule chooses what happens when reports reach their retention threshold: auto-delete, encrypted archive, or warning for manual review.</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</section>
+
+<section id="archive" class="archiveview">
+  <div class="header">
+    <div><div class="sub">Encrypted Report Storage</div><h2>Archive Center</h2></div>
+    <div class="row"><button class="btn">☆ Favorites</button><button class="btn">Filters</button><button class="btn primary" onclick="openArchiveAuth()">Open Archive Session</button></div>
+  </div>
+
+  <div class="archivegrid">
+    <section class="card">
+      <div class="between"><div><b>Archived Reports</b><div class="sub">Encrypted archive · separate key · secure Dropbox storage</div></div><span class="badge blue">FRESH AUTH REQUIRED</span></div>
+      <div class="filters" style="margin-top:12px">
+        <input style="flex:1" placeholder="Fuzzy search report title, employee, ID, date…">
+        <select><option>All Types</option><option>Presence</option><option>Employee History</option><option>Support</option></select>
+        <select><option>Newest First</option><option>Oldest First</option></select>
+      </div>
+
+      <div class="foldergrid">
+        <div class="folder"><div class="between"><span class="foldericon">📁</span><span class="favorite">★</span></div><b>Employee History</b><div class="sub">18 archived reports</div></div>
+        <div class="folder"><div class="between"><span class="foldericon">📁</span><span>☆</span></div><b>Presence & Attendance</b><div class="sub">11 archived reports</div></div>
+        <div class="folder"><div class="between"><span class="foldericon">📁</span><span>☆</span></div><b>Support Trends</b><div class="sub">7 archived reports</div></div>
+        <div class="folder"><div class="between"><span class="foldericon">📁</span><span>☆</span></div><b>Quarterly Exports</b><div class="sub">6 archived reports</div></div>
+      </div>
+
+      <div class="table" style="margin-top:14px">
+        <div class="tr"><span>Report</span><span>ID</span><span>Type</span><span>Archived</span><span>Favorite</span><span>Action</span></div>
+        <div class="tr"><span>Tiffany 90-Day History</span><span>EXP-2026-00311</span><span>Employee History</span><span>Aug 7</span><span>★</span><span><button class="btn" style="padding:6px 8px">Open</button></span></div>
+        <div class="tr"><span>Presence Summary · July</span><span>RPT-2026-00284</span><span>Presence</span><span>Aug 1</span><span>☆</span><span><button class="btn" style="padding:6px 8px">Open</button></span></div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card risk">
+        <div class="between"><div><b>Archive Security</b><div class="sub">Owner-protected archived data</div></div><span class="badge red">SENSITIVE</span></div>
+        <div class="item"><span>Fresh-auth window</span><span>15 minutes</span></div>
+        <div class="item"><span>Reason required</span><span class="badge green">YES</span></div>
+        <div class="item"><span>Access audit</span><span>Life of employee</span></div>
+        <div class="item"><span>Archive key</span><span>Separate secure key</span></div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <b>Personal Archive Favorites</b>
+        <div class="sub" style="margin-top:6px;line-height:1.55">Managers and Owners can star frequently used reports or folders. Favorites are personal and do not change the archive for other users.</div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="recovery" class="recoveryview">
+  <div class="header">
+    <div><div class="sub">Owner Recovery</div><h2>Report Recovery</h2></div>
+    <span class="badge red">OWNER ONLY</span>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="between"><div><b>Recover Reports From Backup</b><div class="sub">Preview-first recovery without full system restore</div></div><span class="badge blue">REPORT ONLY</span></div>
+      <div class="item"><span>Available backup window</span><span>Last 7 daily backups</span></div>
+      <div class="item"><span>Recovery mode</span><span>Original stays untouched</span></div>
+      <div class="item"><span>Recovered label</span><span class="badge blue">RECOVERED</span></div>
+      <div class="item"><span>Permanent recovery ID</span><span>REC-YYYY-#####</span></div>
+      <button class="btn primary" style="margin-top:12px" onclick="openRecovery()">Start Recovery</button>
+    </section>
+
+    <aside class="card safe">
+      <b>Recovered Report Behavior</b>
+      <div class="sub" style="margin-top:6px;line-height:1.55">Recovered reports are visibly marked with recovery time and Owner, retain a permanent recovery record, and can follow a new retention rule without replacing the original report.</div>
+    </aside>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="between"><div><b>Recent Recoveries</b><div class="sub">Permanent Owner recovery audit</div></div><button class="btn">Search</button></div>
+    <div class="timeline">
+      <div class="event"><div class="line"><div class="edot green">R</div></div><div><b>REC-2026-00017 · Employee History Report</b><div class="sub">Recovered Aug 4 by Owner · Source backup Aug 3 · Original preserved</div></div><span class="badge green">SUCCESS</span></div>
+      <div class="event"><div class="line"><div class="edot green">R</div></div><div><b>REC-2026-00016 · Support Trends</b><div class="sub">Recovered Jul 28 by Jonathan · Source backup Jul 27</div></div><span class="badge green">SUCCESS</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="failures" class="failuresview">
+  <div class="header">
+    <div><div class="sub">Report Health</div><h2>Report Failures</h2></div>
+    <button class="btn">Last 90 Days</button>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="report fail">
+        <div class="between"><div><b>Weekly Support Trends</b><div class="sub">Failed today at 8:30 AM Central</div></div><span class="badge red">OPEN FAILURE</span></div>
+        <div class="item"><span>Failure stage</span><span>Archive upload</span></div>
+        <div class="item"><span>Automatic retries</span><span>3 exhausted</span></div>
+        <div class="item"><span>Generated report</span><span>Preserved in-app</span></div>
+        <div class="item"><span>Owner alert</span><span>Sent</span></div>
+        <div class="row" style="margin-top:10px"><button class="btn primary">Retry Now</button><button class="btn">Open Details</button><button class="btn">Add Note</button></div>
+      </div>
+    </section>
+
+    <aside class="card warnbox">
+      <b>Failure Retention</b>
+      <div class="sub" style="margin-top:6px;line-height:1.55">Schedule owners see their failure history for 90 days. Owners can see all failures. Detailed failure records are retained for 365 days and support append-only notes plus resolve/reopen workflows.</div>
+    </aside>
+  </div>
+
+  <div class="table" style="margin-top:14px">
+    <div class="tr"><span>Schedule</span><span>Owner</span><span>Failure</span><span>Retries</span><span>Status</span><span>Action</span></div>
+    <div class="tr"><span>Weekly Support Trends</span><span>David</span><span>Archive upload</span><span>3/3</span><span><span class="badge red">OPEN</span></span><span><button class="btn" style="padding:6px 8px">Open</button></span></div>
+    <div class="tr"><span>Monthly Presence</span><span>Jonathan</span><span>Temporary DB timeout</span><span>1/3</span><span><span class="badge green">RECOVERED</span></span><span><button class="btn" style="padding:6px 8px">View</button></span></div>
+  </div>
+</section>
+
+</div>
+
+<div class="modal" id="scheduleModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Management Reporting</div><div style="font-size:20px;font-weight:800">Schedule Report</div></div><button class="btn" onclick="closeModal('scheduleModal')">Close</button></div>
+    <div class="field"><label>Report Type</label><select><option>Presence & Attendance Summary</option><option>Employee History</option><option>Support Trends</option><option>Custom Management Report</option></select></div>
+    <div class="field"><label>Recipients</label><input value="Jonathan, David"></div>
+    <div class="field"><label>Cadence</label><select><option>Monthly</option><option>Weekly</option><option>Quarterly</option><option>Custom</option></select></div>
+    <div class="field"><label>End Condition</label><select><option>No end date</option><option>End date</option><option>Maximum runs</option></select></div>
+    <div class="field"><label>Retention Action</label><select><option>Archive after 90 days</option><option>Delete after 30 days</option><option>Warn before action</option></select></div>
+    <button class="btn primary" style="width:100%;padding:12px">Create Schedule</button>
+  </div>
+</div>
+
+<div class="modal" id="archiveModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Sensitive Archive Access</div><div style="font-size:20px;font-weight:800">Open Archive Session</div></div><button class="btn" onclick="closeModal('archiveModal')">Close</button></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Required reason for archive access"></textarea></div>
+    <div class="field"><label>Fresh Authentication</label><input type="password" placeholder="Password / configured second factor"></div>
+    <button class="btn primary" style="width:100%;padding:12px">Open 15-Minute Archive Session</button>
+  </div>
+</div>
+
+<div class="modal" id="recoveryModal">
+  <div class="modalbox">
+    <div class="between"><div><div class="sub">Owner Recovery</div><div style="font-size:20px;font-weight:800">Recover Archived Report</div></div><button class="btn" onclick="closeModal('recoveryModal')">Close</button></div>
+    <div class="field"><label>Backup</label><select><option>Aug 9 · 12:30 AM Central</option><option>Aug 8 · 12:30 AM Central</option><option>Aug 7 · 12:30 AM Central</option></select></div>
+    <div class="field"><label>Report / Search</label><input value="Tiffany 90-Day History"></div>
+    <div class="field"><label>Reason</label><textarea rows="3" placeholder="Required recovery reason"></textarea></div>
+    <div class="field"><label>Retention for recovered report</label><select><option>Keep original retention</option><option>90 days then archive</option><option>365 days then delete</option></select></div>
+    <button class="btn primary" style="width:100%;padding:12px">Preview Recovery</button>
+  </div>
+</div>
+
+<script>
+const reports=document.getElementById('reports'),archive=document.getElementById('archive'),recovery=document.getElementById('recovery'),failures=document.getElementById('failures');
+const rb=document.getElementById('reportsBtn'),ab=document.getElementById('archiveBtn'),recb=document.getElementById('recoveryBtn'),fb=document.getElementById('failuresBtn');
+
+function show(v){
+  reports.style.display='none';archive.style.display='none';recovery.style.display='none';failures.style.display='none';
+  [rb,ab,recb,fb].forEach(x=>x.classList.remove('active'));
+  if(v==='r'){reports.style.display='grid';rb.classList.add('active')}
+  if(v==='a'){archive.style.display='block';ab.classList.add('active')}
+  if(v==='c'){recovery.style.display='block';recb.classList.add('active')}
+  if(v==='f'){failures.style.display='block';fb.classList.add('active')}
+}
+rb.onclick=()=>show('r');ab.onclick=()=>show('a');recb.onclick=()=>show('c');fb.onclick=()=>show('f');
+function openSchedule(){document.getElementById('scheduleModal').classList.add('open')}
+function openArchiveAuth(){document.getElementById('archiveModal').classList.add('open')}
+function openRecovery(){document.getElementById('recoveryModal').classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+</script>
+</body>
+</html>

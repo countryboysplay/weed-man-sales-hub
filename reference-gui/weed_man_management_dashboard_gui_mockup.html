@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Weed Man Sales Hub - Management Dashboard Mockup</title>
+<style>
+:root{
+  --g:#25723b;--gd:#18532a;--y:#f2cd3b;--r:#c94a4a;--o:#d88a25;
+  --bg:#f6f7f5;--panel:#ffffff;--card:#ffffff;--border:#dfe4dd;
+  --text:#20251f;--muted:#6f786f;--chip:#eef2ed;--softg:#e8f2ea;--softy:#fff6c8;--softr:#fdeaea;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}
+.topbar{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow{font-size:12px;color:var(--muted)}.h1{font-size:20px;font-weight:700}
+.switch{display:flex;gap:8px}.switch button,.btn{border:1px solid var(--border);background:var(--panel);padding:9px 12px;border-radius:12px;color:var(--text)}
+.switch button.active,.btn.primary{background:var(--g);color:white;border-color:var(--g)}
+.shell{margin:0 20px 20px;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--panel);min-height:760px}
+.desktop{display:grid;grid-template-columns:205px 1fr;min-height:760px}
+.sidebar{border-right:1px solid var(--border);background:#fbfcfa;padding:14px}
+.brand{display:flex;gap:10px;align-items:center;margin:4px 4px 20px}.logo{width:38px;height:38px;border-radius:12px;background:var(--g);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:12px 10px 5px}
+.nav button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:11px;margin-bottom:3px;color:var(--text)}
+.nav button.active{background:var(--softg);color:var(--g);font-weight:700}
+.main{padding:18px;min-width:0}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}.header h2{margin:0;font-size:23px}.sub{color:var(--muted);font-size:13px}
+.statusrow{display:flex;gap:8px;flex-wrap:wrap}.status{border:1px solid var(--border);border-radius:999px;padding:6px 9px;font-size:11px;background:#fff}.status.good{background:var(--softg);color:var(--gd)}.status.warn{background:var(--softy);color:#665700}
+.dashboard{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;align-items:start}
+.card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:14px;min-width:0}
+.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
+.cardhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:11px}.cardhead h3{margin:0;font-size:15px}.drag{color:#a5ada5}
+.metricgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.metric{border:1px solid var(--border);border-radius:13px;padding:12px;background:#fff}.metric .num{font-size:27px;font-weight:800}.metric .label{font-size:11px;color:var(--muted)}
+.listitem{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--border);font-size:12px}.listitem:first-of-type{border-top:0}
+.avatar{width:34px;height:34px;border-radius:10px;background:var(--softg);display:flex;align-items:center;justify-content:center;color:var(--g);font-weight:800;font-size:11px;position:relative;flex:0 0 auto}
+.dot{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;border:2px solid white;background:#2aa75d}.dot.away{background:#e1b522}.dot.off{background:#a7aea7}.dot.busy{background:#d85555}
+.grow{flex:1;min-width:0}.right{text-align:right}
+.badge{font-size:10px;border-radius:999px;padding:4px 7px;background:var(--chip);color:var(--muted);font-weight:800;white-space:nowrap}.badge.red{background:var(--softr);color:#9b2e2e}.badge.yellow{background:var(--softy);color:#6a5a00}.badge.green{background:var(--softg);color:var(--gd)}
+.progress{height:9px;background:#e7ebe5;border-radius:999px;overflow:hidden}.progress span{display:block;height:100%;background:var(--g)}
+.healthgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.health{border:1px solid var(--border);border-radius:12px;padding:10px}.health b{font-size:12px}.health .sub{margin-top:4px}
+.alert{border-left:5px solid var(--r);background:#fffafa}.warnbox{border-left:5px solid var(--y);background:#fffdf2}
+.quickgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.quick{border:1px solid var(--border);border-radius:13px;padding:12px;background:#fff;text-align:left}.quick .ico{font-size:20px}.quick b{display:block;margin-top:6px;font-size:12px}.quick span{display:block;margin-top:3px;font-size:11px;color:var(--muted)}
+.customize{display:none;padding:18px}
+.widgetlist{display:grid;grid-template-columns:1fr 1fr;gap:10px}.widgetopt{border:1px solid var(--border);border-radius:14px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}.toggle{width:40px;height:23px;border-radius:999px;background:var(--g);position:relative}.toggle:after{content:"";position:absolute;width:19px;height:19px;background:white;border-radius:50%;right:2px;top:2px}.toggle.off{background:#c8cec8}.toggle.off:after{right:19px}
+@media(max-width:1050px){.c4,.c5,.c6,.c7,.c8{grid-column:span 12}.desktop{grid-template-columns:175px 1fr}.metricgrid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="eyebrow">GUI Phase · Screen 9</div><div class="h1">Management Dashboard</div></div>
+  <div class="switch">
+    <button class="active" id="dashBtn">Dashboard</button>
+    <button id="customBtn">Customize Widgets</button>
+  </div>
+</div>
+
+<div class="shell">
+<section class="desktop" id="dashboard">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">WM</div><div><b>Weed Man</b><small>Management</small></div></div>
+    <div class="nav">
+      <div class="navlabel">Favorites</div>
+      <button class="active">★ Management Dashboard</button>
+      <button>★ Sales Dashboard</button>
+      <button>★ Support Queue</button>
+      <div class="navlabel">Operations</div>
+      <button>👥 Employees</button>
+      <button>🕒 Presence & Shifts</button>
+      <button>🏖 Time Off</button>
+      <button>✓ Tasks</button>
+      <button>📣 Announcements</button>
+      <button>▤ Forms</button>
+      <button>📁 Resources</button>
+      <div class="navlabel">System</div>
+      <button>🛠 Support</button>
+      <button>↻ Sync Health</button>
+      <button>⚙ Settings</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div>
+        <div class="sub">Monday, August 10 · 11:38 AM Central</div>
+        <h2>Management Dashboard</h2>
+        <div class="statusrow" style="margin-top:7px">
+          <span class="status good">● Production Healthy</span>
+          <span class="status good">● Push Healthy</span>
+          <span class="status warn">2 Items Need Attention</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn">⌕ Global Search</button>
+        <button class="btn">🔔 7</button>
+        <button class="btn">Customize</button>
+      </div>
+    </div>
+
+    <div class="metricgrid" style="margin-bottom:12px">
+      <div class="metric"><div class="label">Team Sales Today</div><div class="num">$12,840</div><div class="sub">38 sales</div></div>
+      <div class="metric"><div class="label">Employees Online</div><div class="num">14</div><div class="sub">of 18 active users</div></div>
+      <div class="metric"><div class="label">Pending Approvals</div><div class="num">6</div><div class="sub">Time off, breaks & schedule</div></div>
+      <div class="metric"><div class="label">Critical / High Items</div><div class="num" style="color:var(--r)">3</div><div class="sub">Needs management attention</div></div>
+    </div>
+
+    <div class="dashboard">
+
+      <section class="card c7">
+        <div class="cardhead"><div><h3>Presence Overview</h3><div class="sub">Live team status and meaningful exceptions</div></div><span class="drag">⋮⋮</span></div>
+        <div class="listitem"><div class="avatar">AB<span class="dot"></span></div><div class="grow"><b>Ashley Boggess</b><div class="sub">Available · Shift 10:30 AM–7:30 PM</div></div><span class="badge green">ON TIME</span></div>
+        <div class="listitem"><div class="avatar">TN<span class="dot away"></span></div><div class="grow"><b>Tiffany Nelson</b><div class="sub">Away · 8 minutes · within grace</div></div><span class="badge">AWAY</span></div>
+        <div class="listitem"><div class="avatar">CW<span class="dot busy"></span></div><div class="grow"><b>Courtney Wathen</b><div class="sub">Busy · custom status “Customer call”</div></div><span class="badge">BUSY</span></div>
+        <div class="listitem"><div class="avatar">SC<span class="dot off"></span></div><div class="grow"><b>Sharon Coleman</b><div class="sub">PWA closed · last sync 18 minutes ago</div></div><span class="badge yellow">CHECK</span></div>
+        <button class="btn" style="margin-top:10px">Open Presence Overview</button>
+      </section>
+
+      <section class="card c5">
+        <div class="cardhead"><div><h3>Pending Approvals</h3><div class="sub">Actionable requests only</div></div><span class="badge yellow">6</span></div>
+        <div class="listitem"><div class="grow"><b>Time Off Request</b><div class="sub">Tiffany Nelson · Aug 14 · Full day</div></div><button class="btn" style="padding:6px 8px">Review</button></div>
+        <div class="listitem"><div class="grow"><b>Break Correction</b><div class="sub">Ashley Boggess · Lunch end time</div></div><button class="btn" style="padding:6px 8px">Review</button></div>
+        <div class="listitem"><div class="grow"><b>Schedule Exception</b><div class="sub">Courtney Wathen · Aug 12 · Late start</div></div><button class="btn" style="padding:6px 8px">Review</button></div>
+        <button class="btn" style="margin-top:10px;width:100%">View All Pending</button>
+      </section>
+
+      <section class="card c4 alert">
+        <div class="cardhead"><div><h3>Serious Presence Alert</h3><div class="sub">11:26 AM Central</div></div><span class="badge red">SERIOUS</span></div>
+        <b>Sharon Coleman</b>
+        <div class="sub" style="margin-top:5px;line-height:1.55">PWA closed and device has not synced for 18 minutes during assigned shift.</div>
+        <div style="display:flex;gap:7px;margin-top:12px"><button class="btn primary">Review</button><button class="btn">Message</button></div>
+      </section>
+
+      <section class="card c4 warnbox">
+        <div class="cardhead"><div><h3>Support Queue</h3><div class="sub">Employee-reported issues</div></div><span class="badge yellow">4 OPEN</span></div>
+        <div class="listitem"><div class="grow"><b>SUP-2026-00142</b><div class="sub">Browser/PWA · Tiffany Nelson</div></div><span class="badge red">HIGH</span></div>
+        <div class="listitem"><div class="grow"><b>SUP-2026-00141</b><div class="sub">Computer · Ashley Boggess</div></div><span class="badge">NORMAL</span></div>
+        <button class="btn" style="margin-top:8px">Open Support Queue</button>
+      </section>
+
+      <section class="card c4">
+        <div class="cardhead"><div><h3>Announcement Status</h3><div class="sub">August Sales Policy Update</div></div><span class="badge yellow">HIGH</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px"><span>14 of 18 acknowledged</span><b>78%</b></div>
+        <div class="progress" style="margin-top:7px"><span style="width:78%"></span></div>
+        <div class="listitem"><div class="grow">Viewed</div><b>17 / 18</b></div>
+        <div class="listitem"><div class="grow">Not acknowledged</div><b>4</b></div>
+        <button class="btn" style="margin-top:8px">Send Reminder</button>
+      </section>
+
+      <section class="card c6">
+        <div class="cardhead"><div><h3>System Health</h3><div class="sub">Visible to all management roles</div></div><span class="badge green">HEALTHY</span></div>
+        <div class="healthgrid">
+          <div class="health"><b>Server</b><div class="sub">Online · 18% CPU</div></div>
+          <div class="health"><b>Database</b><div class="sub">Healthy · 22 ms</div></div>
+          <div class="health"><b>Push</b><div class="sub">Healthy</div></div>
+          <div class="health"><b>Backup</b><div class="sub">12:30 AM · Success</div></div>
+          <div class="health"><b>Production</b><div class="sub">v1.8.4</div></div>
+          <div class="health"><b>Storage</b><div class="sub">61% used</div></div>
+        </div>
+        <button class="btn" style="margin-top:12px">Open Full System Health</button>
+      </section>
+
+      <section class="card c6">
+        <div class="cardhead"><div><h3>Sync Health</h3><div class="sub">Users and devices needing attention</div></div><span class="badge yellow">2 ISSUES</span></div>
+        <div class="listitem"><div class="grow"><b>Sharon Coleman · Chrome</b><div class="sub">Last success 18m ago · 2 pending actions</div></div><button class="btn" style="padding:6px 8px">Resync</button></div>
+        <div class="listitem"><div class="grow"><b>Tiffany Nelson · Edge</b><div class="sub">Repeated PWA cache mismatch</div></div><button class="btn" style="padding:6px 8px">Refresh</button></div>
+        <button class="btn" style="margin-top:8px">Open Sync Health</button>
+      </section>
+
+      <section class="card c12">
+        <div class="cardhead"><div><h3>My Shortcuts</h3><div class="sub">Personal management shortcuts</div></div><button class="btn" style="padding:6px 8px">Edit</button></div>
+        <div class="quickgrid">
+          <button class="quick"><div class="ico">▤</div><b>Email Request Form</b><span>Open form queue</span></button>
+          <button class="quick"><div class="ico">📁</div><b>2026 Pricing</b><span>Resources → Pricing</span></button>
+          <button class="quick"><div class="ico">📣</div><b>New Announcement</b><span>Create company update</span></button>
+          <button class="quick"><div class="ico">✓</div><b>Create Task</b><span>Assign work</span></button>
+          <button class="quick"><div class="ico">👥</div><b>User Management</b><span>Add or manage users</span></button>
+          <button class="quick"><div class="ico">🔗</div><b>Employee Portal</b><span>Open external site</span></button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</section>
+
+<section class="customize" id="customize">
+  <div class="header">
+    <div><div class="sub">Personal Layout</div><h2>Customize Management Dashboard</h2></div>
+    <div style="display:flex;gap:8px"><button class="btn">Reset Default</button><button class="btn primary" onclick="showDash()">Done</button></div>
+  </div>
+
+  <div class="card">
+    <div class="cardhead"><div><h3>Visible Widgets</h3><div class="sub">Drag enabled widgets on the dashboard to reorder and resize them.</div></div></div>
+    <div class="widgetlist">
+      <div class="widgetopt"><div><b>Presence Overview</b><div class="sub">Live status and exceptions</div></div><span class="toggle"></span></div>
+      <div class="widgetopt"><div><b>Pending Approvals</b><div class="sub">Time off, breaks, schedule</div></div><span class="toggle"></span></div>
+      <div class="widgetopt"><div><b>Serious Presence Alerts</b><div class="sub">High severity exceptions</div></div><span class="toggle"></span></div>
+      <div class="widgetopt"><div><b>Support Queue</b><div class="sub">Open employee tickets</div></div><span class="toggle"></span></div>
+      <div class="widgetopt"><div><b>Announcement Status</b><div class="sub">View and acknowledgment progress</div></div><span class="toggle"></span></div>
+      <div class="widgetopt"><div><b>System Health</b><div class="sub">Server, DB, backup, storage</div></div><span class="toggle"></span></div>
+      <div class="widgetopt"><div><b>Sync Health</b><div class="sub">Device and browser sync problems</div></div><span class="toggle"></span></div>
+      <div class="widgetopt"><div><b>Task Progress</b><div class="sub">Assigned task completion</div></div><span class="toggle off"></span></div>
+      <div class="widgetopt"><div><b>Forms Queue</b><div class="sub">Open native form workflows</div></div><span class="toggle off"></span></div>
+      <div class="widgetopt"><div><b>My Shortcuts</b><div class="sub">Personal quick links</div></div><span class="toggle"></span></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+const dash=document.getElementById('dashboard'),custom=document.getElementById('customize');
+const db=document.getElementById('dashBtn'),cb=document.getElementById('customBtn');
+function showDash(){dash.style.display='grid';custom.style.display='none';db.classList.add('active');cb.classList.remove('active')}
+function showCustom(){dash.style.display='none';custom.style.display='block';db.classList.remove('active');cb.classList.add('active')}
+db.onclick=showDash;cb.onclick=showCustom;
+</script>
+</body>
+</html>
