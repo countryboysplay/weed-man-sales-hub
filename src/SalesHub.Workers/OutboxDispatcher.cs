@@ -134,10 +134,15 @@ public sealed class OutboxDispatcher(
             message.CorrelationId,
             payload.RootElement.Clone());
 
-        // Routing (docs/03): events carrying a userId go to that user's group;
-        // everything else goes to management. Later waves extend this map
-        // (conversation:, role:, branch: targets) alongside their modules.
-        if (payload.RootElement.TryGetProperty("userId", out var userIdProperty)
+        // Routing (docs/03): sales events broadcast to everyone (team totals
+        // and celebrations are company-wide); events carrying a userId go to
+        // that user's group; everything else goes to management. Later waves
+        // extend this map (conversation:, branch: targets) with their modules.
+        if (message.EventType.StartsWith("sales.", StringComparison.Ordinal))
+        {
+            await publisher.PublishToGroupAsync("all", envelope, ct);
+        }
+        else if (payload.RootElement.TryGetProperty("userId", out var userIdProperty)
             && userIdProperty.TryGetGuid(out var userId))
         {
             await publisher.PublishToUserAsync(userId, envelope, ct);

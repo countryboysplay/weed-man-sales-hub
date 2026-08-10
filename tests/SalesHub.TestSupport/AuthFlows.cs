@@ -40,6 +40,29 @@ public static class AuthFlows
         return await client.SendAsync(request);
     }
 
+    /// <summary>Completes the Idle Detection handshake so a monitored role
+    /// (Sales Agent) can enter the working app.</summary>
+    public static async Task VerifyIdleCapabilityAsync(HttpClient client)
+    {
+        var response = await PostWithCsrfAsync(client, "/api/v1/auth/idle-capability/verify",
+            new { supported = true, permission = "granted", detectorStarted = true, thresholdSeconds = 60 });
+        response.EnsureSuccessStatusCode();
+    }
+
+    /// <summary>Logs in a fresh client and, for monitored roles, verifies idle capability.</summary>
+    public static async Task<HttpClient> WorkingClientAsync(
+        SalesHubApiFactory factory, string username, string password, bool monitored = true)
+    {
+        var client = factory.CreateCookieClient();
+        await LoginAsync(client, username, password);
+        if (monitored)
+        {
+            await VerifyIdleCapabilityAsync(client);
+        }
+
+        return client;
+    }
+
     public static async Task<HttpResponseMessage> PatchWithCsrfAsync<T>(
         HttpClient client, string url, T payload)
     {

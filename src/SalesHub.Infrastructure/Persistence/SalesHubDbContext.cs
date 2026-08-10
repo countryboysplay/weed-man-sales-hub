@@ -23,6 +23,9 @@ public class SalesHubDbContext(DbContextOptions<SalesHubDbContext> options)
     public DbSet<ScheduledJobRun> ScheduledJobRuns => Set<ScheduledJobRun>();
     public DbSet<FileBlob> FileBlobs => Set<FileBlob>();
     public DbSet<IdempotencyKey> IdempotencyKeys => Set<IdempotencyKey>();
+    public DbSet<Sale> Sales => Set<Sale>();
+    public DbSet<SaleCorrection> SaleCorrections => Set<SaleCorrection>();
+    public DbSet<SaleDuplicateOverride> SaleDuplicateOverrides => Set<SaleDuplicateOverride>();
     public DbSet<Branch> Branches => Set<Branch>();
     public DbSet<PasswordResetRequest> PasswordResetRequests => Set<PasswordResetRequest>();
     public DbSet<Notification> Notifications => Set<Notification>();

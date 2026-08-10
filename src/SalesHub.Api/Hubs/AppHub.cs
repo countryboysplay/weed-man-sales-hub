@@ -24,6 +24,10 @@ public sealed class AppHub : Hub
             await Groups.AddToGroupAsync(Context.ConnectionId, $"user:{userId}");
         }
 
+        // Whole-company broadcasts: team sales totals and celebrations reach
+        // every signed-in user (docs/03, sales-celebrations mockup).
+        await Groups.AddToGroupAsync(Context.ConnectionId, "all");
+
         if (role is not null && Roles.IsValid(role))
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, $"role:{role}");

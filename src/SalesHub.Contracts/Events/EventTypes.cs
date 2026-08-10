@@ -9,5 +9,9 @@ public static class EventTypes
     public const string UserReactivated = "users.userReactivated.v1";
     public const string NotificationCreated = "notifications.notificationCreated.v1";
     public const string PasswordResetRequested = "auth.passwordResetRequested.v1";
+    public const string SaleCreated = "sales.saleCreated.v1";
+    public const string SaleUpdated = "sales.saleUpdated.v1";
+    public const string SaleDeleted = "sales.saleDeleted.v1";
+    public const string SaleCorrected = "sales.saleCorrected.v1";
     public const string SystemPing = "system.ping.v1";
 }

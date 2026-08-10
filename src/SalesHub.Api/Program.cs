@@ -157,6 +157,7 @@ api.MapUserLifecycleEndpoints();
 api.MapProfileEndpoints();
 api.MapPasswordResetEndpoints();
 api.MapNotificationEndpoints();
+api.MapSalesEndpoints();
 api.MapGet("/auth/csrf", (IAntiforgery antiforgery, HttpContext http) =>
 {
     var tokens = antiforgery.GetAndStoreTokens(http);

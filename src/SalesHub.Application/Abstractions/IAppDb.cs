@@ -18,6 +18,9 @@ public interface IAppDb
     DbSet<ScheduledJobRun> ScheduledJobRuns { get; }
     DbSet<FileBlob> FileBlobs { get; }
     DbSet<IdempotencyKey> IdempotencyKeys { get; }
+    DbSet<Sale> Sales { get; }
+    DbSet<SaleCorrection> SaleCorrections { get; }
+    DbSet<SaleDuplicateOverride> SaleDuplicateOverrides { get; }
     DbSet<Branch> Branches { get; }
     DbSet<PasswordResetRequest> PasswordResetRequests { get; }
     DbSet<Notification> Notifications { get; }

@@ -79,6 +79,9 @@ public static class DependencyInjection
         services.AddScoped<UserLifecycleService>();
         services.AddScoped<PasswordResetService>();
         services.AddScoped<Application.Notifications.NotificationService>();
+        services.AddScoped<Application.Sales.SalesService>();
+        services.AddScoped<Application.Sales.IdempotencyService>();
+        services.AddSingleton<IResaleConfirmationTokens, DataProtectionResaleTokens>();
 
         return services;
     }
