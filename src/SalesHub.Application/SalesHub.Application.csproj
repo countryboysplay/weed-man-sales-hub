@@ -6,9 +6,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Abstractions only: DI + logging interfaces, no concrete infrastructure -->
+    <!-- EF Core abstractions for the IAppDb port; the provider lives in Infrastructure -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.*" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.*" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.*" />
   </ItemGroup>
 
 </Project>
