@@ -62,7 +62,7 @@ public sealed class ScheduledJobRunner(
         }
     }
 
-    internal async Task<int> RunDueJobsAsync(CancellationToken ct)
+    public async Task<int> RunDueJobsAsync(CancellationToken ct)
     {
         using var scope = scopeFactory.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<SalesHubDbContext>();

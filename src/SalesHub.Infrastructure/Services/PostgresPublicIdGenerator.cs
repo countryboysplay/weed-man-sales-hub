@@ -21,7 +21,9 @@ public sealed class PostgresPublicIdGenerator(
         var normalized = prefix.ToUpperInvariant();
         var year = businessTime.CurrentBusinessYear;
 
-        var value = await db.Database
+        // ToListAsync, not SingleAsync: INSERT..RETURNING is non-composable
+        // SQL and must not be wrapped in a subquery.
+        var values = await db.Database
             .SqlQuery<int>($"""
                 INSERT INTO public_id_sequences (prefix, year, last_value, updated_at_utc)
                 VALUES ({normalized}, {year}, 1, now())
@@ -30,8 +32,8 @@ public sealed class PostgresPublicIdGenerator(
                               updated_at_utc = now()
                 RETURNING last_value AS "Value"
                 """)
-            .SingleAsync(cancellationToken);
+            .ToListAsync(cancellationToken);
 
-        return PublicRecordId.Format(normalized, year, value);
+        return PublicRecordId.Format(normalized, year, values.Single());
     }
 }

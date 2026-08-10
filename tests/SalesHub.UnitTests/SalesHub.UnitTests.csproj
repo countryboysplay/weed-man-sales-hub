@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\SalesHub.Domain\SalesHub.Domain.csproj" />
     <ProjectReference Include="..\..\src\SalesHub.Application\SalesHub.Application.csproj" />
+    <ProjectReference Include="..\..\src\SalesHub.Workers\SalesHub.Workers.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,13 +18,22 @@ public static class DependencyInjection
     public static IServiceCollection AddSalesHubInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Default")
-            ?? throw new InvalidOperationException(
-                "ConnectionStrings:Default is required (PostgreSQL).");
+        // Resolved lazily so late configuration overrides (test hosts, key
+        // vaults, environment) are honored — registration-time reads capture
+        // a stale value under minimal hosting.
+        services.AddDbContext<SalesHubDbContext>((provider, options) =>
+        {
+            var connectionString = provider.GetRequiredService<IConfiguration>()
+                .GetConnectionString("Default");
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new InvalidOperationException(
+                    "ConnectionStrings:Default is required (PostgreSQL).");
+            }
 
-        services.AddDbContext<SalesHubDbContext>(options =>
             options.UseNpgsql(connectionString, npgsql => npgsql.EnableRetryOnFailure())
-                   .UseSnakeCaseNamingConvention());
+                   .UseSnakeCaseNamingConvention();
+        });
         services.AddScoped<IAppDb>(sp => sp.GetRequiredService<SalesHubDbContext>());
 
         services

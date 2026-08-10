@@ -11,6 +11,7 @@
     <Project Path="tests/SalesHub.AuthorizationTests/SalesHub.AuthorizationTests.csproj" />
     <Project Path="tests/SalesHub.EndToEndContractTests/SalesHub.EndToEndContractTests.csproj" />
     <Project Path="tests/SalesHub.IntegrationTests/SalesHub.IntegrationTests.csproj" />
+    <Project Path="tests/SalesHub.TestSupport/SalesHub.TestSupport.csproj" />
     <Project Path="tests/SalesHub.UnitTests/SalesHub.UnitTests.csproj" />
   </Folder>
 </Solution>

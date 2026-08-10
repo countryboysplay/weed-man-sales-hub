@@ -44,9 +44,9 @@ builder.Services
         options.Cookie.Name = AuthConstants.CookieName;
         options.Cookie.HttpOnly = true;
         options.Cookie.SameSite = SameSiteMode.Lax;
-        options.Cookie.SecurePolicy = builder.Environment.IsDevelopment()
-            ? CookieSecurePolicy.SameAsRequest
-            : CookieSecurePolicy.Always;
+        options.Cookie.SecurePolicy = builder.Environment.IsProduction()
+            ? CookieSecurePolicy.Always
+            : CookieSecurePolicy.SameAsRequest;
         options.SlidingExpiration = true;
         options.ExpireTimeSpan = TimeSpan.FromDays(14);
         // API, not a website: never redirect to a login page.
@@ -102,10 +102,16 @@ builder.Services.AddProblemDetails(options =>
 // ── Realtime + workers ───────────────────────────────────────────────────────
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IRealtimePublisher, SignalRRealtimePublisher>();
-builder.Services.AddHostedService<OutboxDispatcher>();
-builder.Services.AddHostedService<ScheduledJobRunner>();
 builder.Services.AddSingleton<IScheduledJobHandler, IdleCapabilityStaleScanJob>();
 builder.Services.AddSingleton<IScheduledJobHandler, IdempotencyKeyCleanupJob>();
+builder.Services.AddSingleton<OutboxDispatcher>();
+builder.Services.AddSingleton<ScheduledJobRunner>();
+if (builder.Configuration.GetValue("Workers:Enabled", true))
+{
+    // Tests disable the background loops and drive dispatch deterministically.
+    builder.Services.AddHostedService(sp => sp.GetRequiredService<OutboxDispatcher>());
+    builder.Services.AddHostedService(sp => sp.GetRequiredService<ScheduledJobRunner>());
+}
 
 // ── Health (docs/08): anonymous liveness; management readiness ───────────────
 builder.Services.AddHealthChecks()
@@ -127,7 +133,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 app.UseExceptionHandler();
 app.UseStatusCodePages();
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsProduction())
 {
     app.UseHsts();
     app.UseHttpsRedirection();
@@ -150,6 +156,13 @@ api.MapGet("/auth/csrf", (IAntiforgery antiforgery, HttpContext http) =>
     var tokens = antiforgery.GetAndStoreTokens(http);
     return Results.Ok(new { token = tokens.RequestToken });
 }).AllowAnonymous();
+
+// Gate probes: the PWA checks these to route between the working app and the
+// remediation/fresh-auth screens; the authorization test matrix drives them.
+api.MapGet("/diagnostics/monitored-ping", () => Results.Ok(new { ok = true }))
+    .RequireAuthorization(Policies.Employee, Policies.MonitoredWorkSession);
+api.MapPost("/diagnostics/fresh-auth-ping", () => Results.Ok(new { ok = true }))
+    .RequireAuthorization(Policies.Management, Policies.FreshAuthRequired);
 
 app.MapHub<AppHub>("/hubs/app");
 

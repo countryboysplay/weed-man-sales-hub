@@ -49,7 +49,7 @@ public sealed class OutboxDispatcher(
         }
     }
 
-    internal async Task<int> DispatchBatchAsync(CancellationToken ct)
+    public async Task<int> DispatchBatchAsync(CancellationToken ct)
     {
         using var scope = scopeFactory.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<SalesHubDbContext>();
@@ -68,9 +68,7 @@ public sealed class OutboxDispatcher(
                     ORDER BY available_at_utc
                     LIMIT {BatchSize}
                     FOR UPDATE SKIP LOCKED)
-                RETURNING id AS "Id", event_type AS "EventType", payload_json AS "PayloadJson",
-                          occurred_at_utc AS "OccurredAtUtc", correlation_id AS "CorrelationId",
-                          attempts AS "Attempts"
+                RETURNING id, event_type, payload_json, occurred_at_utc, correlation_id, attempts
                 """)
             .ToListAsync(ct);
 
@@ -133,7 +131,7 @@ public sealed class OutboxDispatcher(
         }
     }
 
-    internal sealed record ClaimedMessage(
+    public sealed record ClaimedMessage(
         Guid Id,
         string EventType,
         string PayloadJson,

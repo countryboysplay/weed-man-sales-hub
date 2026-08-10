@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\SalesHub.Api\SalesHub.Api.csproj" />
+    <ProjectReference Include="..\SalesHub.TestSupport\SalesHub.TestSupport.csproj" />
   </ItemGroup>
 
 </Project>
