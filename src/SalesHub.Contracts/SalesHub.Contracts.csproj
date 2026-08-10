@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Request/response/event DTOs shared with the frontend client. No logic. -->
+
+</Project>

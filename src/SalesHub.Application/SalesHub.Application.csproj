@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\SalesHub.Domain\SalesHub.Domain.csproj" />
+    <ProjectReference Include="..\SalesHub.Contracts\SalesHub.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Abstractions only: DI + logging interfaces, no concrete infrastructure -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.*" />
+  </ItemGroup>
+
+</Project>

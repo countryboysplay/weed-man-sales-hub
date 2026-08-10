@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Pure domain: no EF, no ASP.NET, no I/O. Keep it that way. -->
+
+</Project>

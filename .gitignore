@@ -1,0 +1,29 @@
+# .NET build output
+bin/
+obj/
+artifacts/
+*.user
+*.binlog
+
+# IDE
+.vs/
+.idea/
+*.swp
+
+# Test results
+TestResults/
+coverage*/
+
+# Local secrets and environment — never commit
+appsettings.Local.json
+*.secrets.json
+.env
+.env.*
+
+# Data Protection keys, certs, uploads (dev)
+dataprotection-keys/
+data/
+uploads/
+*.pfx
+*.key
+*.crt

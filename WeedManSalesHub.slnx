@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SalesHub.Api/SalesHub.Api.csproj" />
+    <Project Path="src/SalesHub.Application/SalesHub.Application.csproj" />
+    <Project Path="src/SalesHub.Contracts/SalesHub.Contracts.csproj" />
+    <Project Path="src/SalesHub.Domain/SalesHub.Domain.csproj" />
+    <Project Path="src/SalesHub.Infrastructure/SalesHub.Infrastructure.csproj" />
+    <Project Path="src/SalesHub.Workers/SalesHub.Workers.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SalesHub.AuthorizationTests/SalesHub.AuthorizationTests.csproj" />
+    <Project Path="tests/SalesHub.EndToEndContractTests/SalesHub.EndToEndContractTests.csproj" />
+    <Project Path="tests/SalesHub.IntegrationTests/SalesHub.IntegrationTests.csproj" />
+    <Project Path="tests/SalesHub.UnitTests/SalesHub.UnitTests.csproj" />
+  </Folder>
+</Solution>
