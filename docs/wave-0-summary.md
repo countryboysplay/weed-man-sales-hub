@@ -117,8 +117,9 @@ freshly-migrated PostgreSQL database (no in-memory substitute, per docs/09).
 
 ## 13. Decisions wanted before Wave 1
 
-1. **iPhone/Safari vs mandatory Idle Detection** (assessment §9.1) — are
-   monitored roles desktop/Chromium-only, or is there an exception path?
+1. ~~**iPhone/Safari vs mandatory Idle Detection**~~ — **RESOLVED
+   2026-08-10**: the application is desktop-only for all roles; mobile
+   support is cut. See `ADR-002-desktop-only.md`.
 2. **Password-reset request visibility** — mockup copy says Supervisors and
    Managers receive requests; should Owners see them too? (Assumed yes.)
 3. **Monitored roles configuration** — Wave 0 defaults to `SalesAgent`
