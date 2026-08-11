@@ -43,7 +43,12 @@ public static class StartupSeeder
         await EnsureJobAsync(db, IdempotencyKeyCleanupJob.Type, "0 * * * *");
         await EnsureJobAsync(db, ScheduledReactivationJob.Type, "* * * * *");
         await EnsureJobAsync(db, AnnouncementMaintenanceJob.Type, "* * * * *");
+        await EnsureJobAsync(db, WorkMaintenanceJob.Type, "*/15 * * * *");
         await db.SaveChangesAsync();
+
+        var recognitionService = scope.ServiceProvider
+            .GetRequiredService<SalesHub.Application.Recognitions.RecognitionService>();
+        await recognitionService.EnsureBuiltInBadgesAsync();
 
         var seedUsername = configuration["Seed:Owner:Username"];
         var seedPassword = configuration["Seed:Owner:Password"];

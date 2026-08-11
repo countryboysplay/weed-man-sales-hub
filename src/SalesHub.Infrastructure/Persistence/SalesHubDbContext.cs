@@ -23,6 +23,14 @@ public class SalesHubDbContext(DbContextOptions<SalesHubDbContext> options)
     public DbSet<ScheduledJobRun> ScheduledJobRuns => Set<ScheduledJobRun>();
     public DbSet<FileBlob> FileBlobs => Set<FileBlob>();
     public DbSet<IdempotencyKey> IdempotencyKeys => Set<IdempotencyKey>();
+    public DbSet<TaskDefinition> TaskDefinitions => Set<TaskDefinition>();
+    public DbSet<TaskInstance> TaskInstances => Set<TaskInstance>();
+    public DbSet<TaskComment> TaskComments => Set<TaskComment>();
+    public DbSet<TaskAttachment> TaskAttachments => Set<TaskAttachment>();
+    public DbSet<RecognitionBadge> RecognitionBadges => Set<RecognitionBadge>();
+    public DbSet<Recognition> Recognitions => Set<Recognition>();
+    public DbSet<RecognitionReaction> RecognitionReactions => Set<RecognitionReaction>();
+    public DbSet<RecognitionComment> RecognitionComments => Set<RecognitionComment>();
     public DbSet<Announcement> Announcements => Set<Announcement>();
     public DbSet<AnnouncementTarget> AnnouncementTargets => Set<AnnouncementTarget>();
     public DbSet<Conversation> Conversations => Set<Conversation>();

@@ -18,6 +18,14 @@ public interface IAppDb
     DbSet<ScheduledJobRun> ScheduledJobRuns { get; }
     DbSet<FileBlob> FileBlobs { get; }
     DbSet<IdempotencyKey> IdempotencyKeys { get; }
+    DbSet<TaskDefinition> TaskDefinitions { get; }
+    DbSet<TaskInstance> TaskInstances { get; }
+    DbSet<TaskComment> TaskComments { get; }
+    DbSet<TaskAttachment> TaskAttachments { get; }
+    DbSet<RecognitionBadge> RecognitionBadges { get; }
+    DbSet<Recognition> Recognitions { get; }
+    DbSet<RecognitionReaction> RecognitionReactions { get; }
+    DbSet<RecognitionComment> RecognitionComments { get; }
     DbSet<Announcement> Announcements { get; }
     DbSet<AnnouncementTarget> AnnouncementTargets { get; }
     DbSet<Conversation> Conversations { get; }

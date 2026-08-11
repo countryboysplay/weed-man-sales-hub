@@ -81,6 +81,8 @@ public static class DependencyInjection
         services.AddScoped<Application.Notifications.NotificationService>();
         services.AddScoped<Application.Chat.ChatService>();
         services.AddScoped<Application.Announcements.AnnouncementService>();
+        services.AddScoped<Application.Tasks.TaskService>();
+        services.AddScoped<Application.Recognitions.RecognitionService>();
         services.AddScoped<Application.Sales.SalesService>();
         services.AddScoped<Application.Sales.IdempotencyService>();
         services.AddSingleton<IResaleConfirmationTokens, DataProtectionResaleTokens>();

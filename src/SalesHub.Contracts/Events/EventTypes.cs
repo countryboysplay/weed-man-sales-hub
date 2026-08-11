@@ -21,5 +21,8 @@ public static class EventTypes
     public const string ConversationChanged = "chat.conversationChanged.v1";
     public const string AnnouncementPublished = "announcements.published.v1";
     public const string AnnouncementProgressChanged = "announcements.progressChanged.v1";
+    public const string TaskAssigned = "tasks.taskAssigned.v1";
+    public const string TaskCompleted = "tasks.taskCompleted.v1";
+    public const string RecognitionPublished = "recognitions.published.v1";
     public const string SystemPing = "system.ping.v1";
 }
