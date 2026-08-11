@@ -142,6 +142,18 @@ public sealed class OutboxDispatcher(
         {
             await publisher.PublishToGroupAsync("all", envelope, ct);
         }
+        else if (payload.RootElement.TryGetProperty("memberUserIds", out var membersProperty)
+            && membersProperty.ValueKind == JsonValueKind.Array)
+        {
+            // Membership-scoped events (chat): fan out to each member's group.
+            foreach (var element in membersProperty.EnumerateArray())
+            {
+                if (element.TryGetGuid(out var memberId))
+                {
+                    await publisher.PublishToUserAsync(memberId, envelope, ct);
+                }
+            }
+        }
         else if (payload.RootElement.TryGetProperty("userId", out var userIdProperty)
             && userIdProperty.TryGetGuid(out var userId))
         {

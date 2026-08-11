@@ -105,6 +105,7 @@ builder.Services.AddSingleton<IRealtimePublisher, SignalRRealtimePublisher>();
 builder.Services.AddSingleton<IScheduledJobHandler, IdleCapabilityStaleScanJob>();
 builder.Services.AddSingleton<IScheduledJobHandler, IdempotencyKeyCleanupJob>();
 builder.Services.AddSingleton<IScheduledJobHandler, ScheduledReactivationJob>();
+builder.Services.AddSingleton<IScheduledJobHandler, AnnouncementMaintenanceJob>();
 builder.Services.AddSingleton<IOutboxSideEffect, NotificationWebPushSideEffect>();
 builder.Services.AddSingleton<OutboxDispatcher>();
 builder.Services.AddSingleton<ScheduledJobRunner>();
@@ -158,6 +159,8 @@ api.MapProfileEndpoints();
 api.MapPasswordResetEndpoints();
 api.MapNotificationEndpoints();
 api.MapSalesEndpoints();
+api.MapChatEndpoints();
+api.MapAnnouncementEndpoints();
 api.MapGet("/auth/csrf", (IAntiforgery antiforgery, HttpContext http) =>
 {
     var tokens = antiforgery.GetAndStoreTokens(http);
@@ -172,6 +175,7 @@ api.MapPost("/diagnostics/fresh-auth-ping", () => Results.Ok(new { ok = true }))
     .RequireAuthorization(Policies.Management, Policies.FreshAuthRequired);
 
 app.MapHub<AppHub>("/hubs/app");
+app.MapHub<SalesHub.Api.Hubs.ChatHub>("/hubs/chat");
 
 // Liveness: anonymous and dependency-free (docs/08).
 app.MapHealthChecks("/health/live", new()
