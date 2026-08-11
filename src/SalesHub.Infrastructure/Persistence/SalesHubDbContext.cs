@@ -23,6 +23,14 @@ public class SalesHubDbContext(DbContextOptions<SalesHubDbContext> options)
     public DbSet<ScheduledJobRun> ScheduledJobRuns => Set<ScheduledJobRun>();
     public DbSet<FileBlob> FileBlobs => Set<FileBlob>();
     public DbSet<IdempotencyKey> IdempotencyKeys => Set<IdempotencyKey>();
+    public DbSet<Form> Forms => Set<Form>();
+    public DbSet<FormVersion> FormVersions => Set<FormVersion>();
+    public DbSet<FormSubmission> FormSubmissions => Set<FormSubmission>();
+    public DbSet<EmailRequest> EmailRequests => Set<EmailRequest>();
+    public DbSet<ResourceFolder> ResourceFolders => Set<ResourceFolder>();
+    public DbSet<Resource> Resources => Set<Resource>();
+    public DbSet<ResourceFavorite> ResourceFavorites => Set<ResourceFavorite>();
+    public DbSet<ResourceDownloadAudit> ResourceDownloadAudits => Set<ResourceDownloadAudit>();
     public DbSet<TaskDefinition> TaskDefinitions => Set<TaskDefinition>();
     public DbSet<TaskInstance> TaskInstances => Set<TaskInstance>();
     public DbSet<TaskComment> TaskComments => Set<TaskComment>();

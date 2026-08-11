@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SalesHub.Application.Recognitions;
@@ -22,6 +23,12 @@ public sealed class WorkMaintenanceJob(
         using var scope = scopeFactory.CreateScope();
         var tasks = scope.ServiceProvider.GetRequiredService<TaskService>();
         var recognitions = scope.ServiceProvider.GetRequiredService<RecognitionService>();
+
+        var db = scope.ServiceProvider
+            .GetRequiredService<SalesHub.Infrastructure.Persistence.SalesHubDbContext>();
+        _ = await db.ResourceDownloadAudits
+            .Where(a => a.OccurredAtUtc < DateTimeOffset.UtcNow.AddDays(-365))
+            .ExecuteDeleteAsync(cancellationToken);
 
         var generated = await tasks.GenerateRecurringAsync(cancellationToken);
         var reminded = await tasks.SendOverdueRemindersAsync(cancellationToken);

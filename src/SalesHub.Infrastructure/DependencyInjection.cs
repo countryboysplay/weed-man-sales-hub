@@ -83,6 +83,8 @@ public static class DependencyInjection
         services.AddScoped<Application.Announcements.AnnouncementService>();
         services.AddScoped<Application.Tasks.TaskService>();
         services.AddScoped<Application.Recognitions.RecognitionService>();
+        services.AddScoped<Application.Forms.FormService>();
+        services.AddSingleton<IPdfWatermarker, PdfSharpWatermarker>();
         services.AddScoped<Application.Sales.SalesService>();
         services.AddScoped<Application.Sales.IdempotencyService>();
         services.AddSingleton<IResaleConfirmationTokens, DataProtectionResaleTokens>();
