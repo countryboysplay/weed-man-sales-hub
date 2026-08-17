@@ -57,6 +57,35 @@ public static class StartupSeeder
             });
         }
 
+        // Workforce catalogs (Wave 4). MinimumAgents 0 means the coverage
+        // check passes until management configures a real floor.
+        if (!await db.TimeOffTypes.AnyAsync())
+        {
+            db.TimeOffTypes.AddRange(
+                new TimeOffType { Id = Guid.CreateVersion7(), Label = "Vacation", SortOrder = 1, Paid = true },
+                new TimeOffType { Id = Guid.CreateVersion7(), Label = "Personal", SortOrder = 2, Paid = true },
+                new TimeOffType { Id = Guid.CreateVersion7(), Label = "Unpaid", SortOrder = 3, Paid = false });
+        }
+
+        if (!await db.BreakTypes.AnyAsync())
+        {
+            db.BreakTypes.AddRange(
+                new BreakType { Id = Guid.CreateVersion7(), Label = "Break", LimitMinutes = 15 },
+                new BreakType { Id = Guid.CreateVersion7(), Label = "Lunch", LimitMinutes = 30 },
+                new BreakType { Id = Guid.CreateVersion7(), Label = "Other", LimitMinutes = 60 });
+        }
+
+        if (!await db.CoverageRules.AnyAsync(r => r.Role == Roles.SalesAgent))
+        {
+            db.CoverageRules.Add(new CoverageRule
+            {
+                Id = Guid.CreateVersion7(),
+                Role = Roles.SalesAgent,
+                MinimumAgents = 0,
+                Behavior = CoverageBehavior.WarnAndConfirm,
+            });
+        }
+
         await db.SaveChangesAsync();
 
         var recognitionService = scope.ServiceProvider

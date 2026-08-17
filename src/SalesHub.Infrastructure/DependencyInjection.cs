@@ -81,6 +81,9 @@ public static class DependencyInjection
         services.AddScoped<Application.Notifications.NotificationService>();
         services.AddScoped<Application.Presence.PresenceService>();
         services.AddScoped<Application.Presence.PresenceEvaluator>();
+        services.AddScoped<Application.Workforce.TimeOffService>();
+        services.AddScoped<Application.Workforce.BreakService>();
+        services.AddScoped<Application.Workforce.TechnicalReportService>();
         services.AddScoped<Application.Chat.ChatService>();
         services.AddScoped<Application.Announcements.AnnouncementService>();
         services.AddScoped<Application.Tasks.TaskService>();

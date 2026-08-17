@@ -169,6 +169,7 @@ api.MapFormEndpoints();
 api.MapResourceEndpoints();
 api.MapPresenceEndpoints();
 api.MapScheduleEndpoints();
+api.MapWorkforceEndpoints();
 api.MapGet("/auth/csrf", (IAntiforgery antiforgery, HttpContext http) =>
 {
     var tokens = antiforgery.GetAndStoreTokens(http);
