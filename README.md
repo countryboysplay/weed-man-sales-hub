@@ -25,4 +25,4 @@ dotnet test                              # 82 tests; needs local PostgreSQL
 Integration tests create and drop their own databases; point them at another
 server with `SALESHUB_TEST_PG="Host=...;Username=...;Password=..."`.
 
-Wave status: **Waves 0–3 complete** — see the `docs/wave-*-summary.md` files.
+Wave status: **Waves 0–6 complete** (full backend) — see the `docs/wave-*-summary.md` files.
