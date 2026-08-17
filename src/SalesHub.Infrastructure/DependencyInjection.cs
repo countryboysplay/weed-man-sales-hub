@@ -85,6 +85,12 @@ public static class DependencyInjection
         services.AddScoped<Application.Support.SupportService>();
         services.AddScoped<Application.Search.SearchService>();
         services.AddScoped<Application.Reporting.ReportService>();
+        services.AddSingleton<IMasterCredentialHasher, IdentityMasterCredentialHasher>();
+        services.AddSingleton<IProtectedSecrets, DataProtectionOwnerSecrets>();
+        services.AddScoped<Application.OwnerSecurity.OwnerSecurityService>();
+        services.AddScoped<Application.OwnerSecurity.OwnerGovernanceService>();
+        services.AddScoped<Application.OwnerSecurity.SensitiveExportService>();
+        services.AddSingleton<IPdfComposer, PdfSharpComposer>();
         services.AddScoped<Application.Workforce.TimeOffService>();
         services.AddScoped<Application.Workforce.BreakService>();
         services.AddScoped<Application.Workforce.TechnicalReportService>();

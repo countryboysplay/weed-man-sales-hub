@@ -49,6 +49,20 @@ public interface IAppDb
     DbSet<ReportSchedule> ReportSchedules { get; }
     DbSet<ReportRun> ReportRuns { get; }
     DbSet<ArchiveEntry> ArchiveEntries { get; }
+    DbSet<OwnerSecurityConfig> OwnerSecurityConfigs { get; }
+    DbSet<OwnerRecoverySecurityEvent> OwnerRecoverySecurityEvents { get; }
+    DbSet<PrivateCommunicationAccess> PrivateCommunicationAccesses { get; }
+    DbSet<EmergencyAccessSession> EmergencyAccessSessions { get; }
+    DbSet<SensitiveExport> SensitiveExports { get; }
+    DbSet<SensitiveExportAccess> SensitiveExportAccesses { get; }
+    DbSet<SettingEntry> Settings { get; }
+    DbSet<DeploymentRecord> DeploymentRecords { get; }
+    DbSet<StagingRecord> StagingRecords { get; }
+    DbSet<RollbackRecord> RollbackRecords { get; }
+    DbSet<RecoveryRecord> RecoveryRecords { get; }
+    DbSet<KnownGoodVersion> KnownGoodVersions { get; }
+    DbSet<BlockedRollbackVersion> BlockedRollbackVersions { get; }
+    DbSet<MaintenanceWindow> MaintenanceWindows { get; }
     DbSet<Form> Forms { get; }
     DbSet<FormVersion> FormVersions { get; }
     DbSet<FormSubmission> FormSubmissions { get; }

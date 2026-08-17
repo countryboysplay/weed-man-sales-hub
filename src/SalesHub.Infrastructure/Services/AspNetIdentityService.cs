@@ -297,6 +297,33 @@ public sealed class AspNetIdentityService(
         await SaveAsync(user);
     }
 
+    public async Task SetRoleProtectedAsync(
+        Guid userId, string role, CancellationToken cancellationToken = default)
+    {
+        if (!Roles.IsValid(role))
+        {
+            throw new IdentityOperationException($"Unknown role '{role}'.");
+        }
+
+        var user = await RequireAsync(userId);
+        if (user.Role == role)
+        {
+            return;
+        }
+
+        _ = await userManager.RemoveFromRoleAsync(user, user.Role);
+        var added = await userManager.AddToRoleAsync(user, role);
+        if (!added.Succeeded)
+        {
+            throw new IdentityOperationException(
+                string.Join(" ", added.Errors.Select(e => e.Description)));
+        }
+
+        user.Role = role;
+        await SaveAsync(user);
+        _ = await userManager.UpdateSecurityStampAsync(user);
+    }
+
     public async Task<UserPresenceInfo?> GetPresenceAsync(
         Guid userId, CancellationToken cancellationToken = default)
     {

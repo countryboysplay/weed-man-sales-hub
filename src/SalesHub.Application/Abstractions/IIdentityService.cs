@@ -48,6 +48,11 @@ public interface IIdentityService
     Task ScheduleReactivationAsync(
         Guid userId, DateTimeOffset? reactivateAtUtc, CancellationToken cancellationToken = default);
 
+    /// <summary>Role change that MAY involve Owner. Reserved for the Wave 6
+    /// protected Owner flow — every other caller uses UpdateUserAsync, which
+    /// refuses Owner transitions. Bumps the security stamp.</summary>
+    Task SetRoleProtectedAsync(Guid userId, string role, CancellationToken cancellationToken = default);
+
     // ── Wave 4 presence (docs/01 users; presence mockups) ────────────────────
 
     Task<UserPresenceInfo?> GetPresenceAsync(Guid userId, CancellationToken cancellationToken = default);
