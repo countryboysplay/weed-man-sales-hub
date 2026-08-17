@@ -70,8 +70,9 @@ authorization, 5 end-to-end contract).
 
 ## Decisions and notes
 
-- Actual backup execution (daily 12:30 AM CT pg_dump + encrypted Dropbox
-  push) and the full-restore orchestration are Windows-deployment
+- Actual backup execution (daily 12:30 AM CT pg_dump, encrypted, pushed
+  to the on-prem backup share per ADR-003 — originally Dropbox in the
+  spec) and the full-restore orchestration are Windows-deployment
   automation — Wave 7/deployment scope. Wave 6 delivers the governance and
   audit records those scripts write to (REC/PROD/STAGE/ROLL, maintenance
   windows), per docs/10's "launch/deployment records" framing.

@@ -20,8 +20,10 @@ through GitHub Actions.
       employees' browsers, or Idle Detection and the PWA will not work).
 - [ ] A drive with room for the app + database + uploads + 7 daily backups.
       The runbook assumes `D:`; substitute if yours differs.
-- [ ] A Dropbox account for off-server encrypted backups (Wave 7 scripts
-      will use it; creating the app folder now saves a step later).
+- [ ] Admin access to your **existing company server** — it hosts the
+      encrypted backup share (ADR-003; this replaced the spec's Dropbox
+      destination). Ideally it's reachable from the production box over
+      SMB on the LAN.
 - [ ] Admin access to the `countryboysplay/weed-man-sales-hub` GitHub repo
       (to register the self-hosted runner).
 
@@ -307,9 +309,9 @@ New-NetFirewallRule -DisplayName 'SalesHub HTTPS' -Direction Inbound -Protocol T
 - Do **not** open 5000/5001 (Kestrel is only reached through IIS).
 - Public port forwarding beyond 443 for this app is explicitly out of
   scope (CLAUDE.md).
-- Outbound stays open enough for: Windows Update, GitHub (runner),
-  Dropbox (backups), and the browser push services (FCM/Mozilla/WNS
-  endpoints — Web Push needs outbound HTTPS only).
+- Outbound stays open enough for: Windows Update, GitHub (runner), SMB
+  (445) to the backup server only, and the browser push services
+  (FCM/Mozilla/WNS endpoints — Web Push needs outbound HTTPS only).
 
 **Check:** from another machine, `Test-NetConnection <server> -Port 5432`
 fails; `-Port 443` succeeds.
@@ -342,18 +344,44 @@ survives a reboot (service start type Automatic).
 
 ---
 
-## 9. Backup destination prep (Dropbox)
+## 9. Backup destination prep (existing company server — ADR-003)
 
-The Wave 7 backup job (daily 12:30 AM America/Chicago, keep 7, encrypted,
-DB + uploads consistent snapshot) will need:
+Backups go to a share on your **existing server** instead of Dropbox
+(ADR-003). The Wave 7 backup job (daily 12:30 AM America/Chicago, keep 7,
+encrypted before leaving this box, DB + uploads consistent snapshot) needs
+the destination ready:
 
-1. A Dropbox **app folder**: <https://www.dropbox.com/developers/apps> →
-   Create app → Scoped access → App folder → name it e.g.
-   `weedman-saleshub-backups`. Generate a refresh-token credential and
-   store it in the password manager (it will move into secured server
-   config in Wave 7, never into Git).
-2. A **backup encryption key** that is NOT stored on this server (CLAUDE.md
-   §20: "separate server recovery/encryption key"). Generate one now:
+1. **On the existing server**, create the backup folder and share:
+
+   ```powershell
+   New-Item -ItemType Directory -Force -Path 'E:\SalesHubBackups' | Out-Null
+   New-SmbShare -Name 'SalesHubBackups$' -Path 'E:\SalesHubBackups' `
+       -FullAccess 'Administrators' -Description 'Encrypted SalesHub backups'
+   ```
+
+   (The trailing `$` hides the share from casual browsing; adjust the
+   drive letter to wherever the free space is.)
+2. **A dedicated backup account**, e.g. local user `svc-saleshub-backup`
+   on the existing server (or a domain account if both boxes are joined).
+   Grant it access shaped to blunt ransomware on the production box:
+
+   ```powershell
+   # Share-level: change (write) but not full control
+   Grant-SmbShareAccess -Name 'SalesHubBackups$' -AccountName 'svc-saleshub-backup' `
+       -AccessRight Change -Force
+   # NTFS: allow create/write, deny delete of existing content
+   icacls 'E:\SalesHubBackups' /grant 'svc-saleshub-backup:(OI)(CI)(W,RD,X,RA)'
+   icacls 'E:\SalesHubBackups' /deny  'svc-saleshub-backup:(OI)(CI)(DE,DC)'
+   ```
+
+   Pruning to the 7-day retention then runs as a scheduled task **on the
+   backup server itself** (Wave 7 ships it), so a compromised production
+   box can add backups but never destroy them. Store the account
+   credential in the password manager; on the production box it will be
+   saved for the backup task with `cmdkey /add:<backupserver>` at Wave 7.
+3. **A backup encryption key** that is NOT stored on either server
+   (CLAUDE.md §20: separate recovery/encryption key — this is what makes
+   the plaintext-free share safe). Generate one now:
 
    ```powershell
    $bytes = New-Object byte[] 32
@@ -362,12 +390,19 @@ DB + uploads consistent snapshot) will need:
    ```
 
    Print it / store it in the password manager and a second secure
-   location. If the server dies, this key + Dropbox is your recovery path.
-3. Confirm `pg_dump.exe` exists (it ships with PostgreSQL 17,
+   location. If the production box dies, this key + the share is your
+   recovery path.
+4. Confirm `pg_dump.exe` exists (it ships with PostgreSQL 17,
    `D:\PostgreSQL\17\bin` — add that to the system `PATH`).
+5. **Site-risk reminder** (ADR-003): both machines share a building and a
+   network. Put a quarterly reminder in your calendar to copy the latest
+   verified backup to an offline/offsite medium — that replaces the
+   geographic separation the original Dropbox plan provided.
 
-**Check:** the Dropbox app folder exists and the key is stored in two
-places, neither of which is this server.
+**Check:** from the production box,
+`Test-Path '\\<backupserver>\SalesHubBackups$'` is true when run as the
+backup credential; writing a test file succeeds; deleting it is refused;
+and the encryption key is stored in two places, neither of them a server.
 
 ---
 
@@ -401,7 +436,7 @@ places, neither of which is this server.
 | 6 | `icacls` on data/keys/config | only the intended identities |
 | 7 | GitHub runner page | Idle, service auto-start |
 | 8 | Port scan from LAN | only 80/443 (and your RDP rule) open |
-| 9 | Dropbox app folder + offline encryption key | exist, stored safely |
+| 9 | Backup share write-not-delete test + offline encryption key | write ok, delete refused, key stored safely |
 
 When every row passes, the box is deploy-ready: the deployment wave only
 adds the GitHub Actions workflow, the first release folder, VAPID keys,
