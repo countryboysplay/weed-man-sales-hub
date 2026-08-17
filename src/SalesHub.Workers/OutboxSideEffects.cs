@@ -27,7 +27,9 @@ public interface IOutboxSideEffect
 /// Web Push fan-out for notifications.notificationCreated.v1 (docs/03):
 /// minimal, lock-screen-safe payload to each active subscription of the
 /// target user; delivery rows record the outcome; dead subscriptions are
-/// deactivated. DND suppression joins in Wave 4 with the presence module.
+/// deactivated. A recipient on Do Not Disturb gets no push — the durable
+/// notification row still lands and the DND-exit catch-up summarizes it
+/// (CLAUDE.md §12).
 /// </summary>
 public sealed class NotificationWebPushSideEffect(ILogger<NotificationWebPushSideEffect> logger)
     : IOutboxSideEffect
@@ -47,6 +49,18 @@ public sealed class NotificationWebPushSideEffect(ILogger<NotificationWebPushSid
         var payload = envelope.Payload;
         var userId = payload.GetProperty("userId").GetGuid();
         var notificationId = payload.GetProperty("notificationId").GetGuid();
+
+        var recipientOnDnd = await db.Users
+            .Where(u => u.Id == userId)
+            .Select(u => u.PresenceStatus == PresenceStatus.Dnd)
+            .FirstOrDefaultAsync(ct);
+        if (recipientOnDnd)
+        {
+            logger.LogDebug(
+                "Web Push suppressed for notification {NotificationId}: recipient is on DND",
+                notificationId);
+            return;
+        }
 
         var subscriptions = await db.PushSubscriptions
             .Where(s => s.UserId == userId && s.Active)

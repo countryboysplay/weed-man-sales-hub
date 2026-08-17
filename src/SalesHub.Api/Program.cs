@@ -107,6 +107,7 @@ builder.Services.AddSingleton<IScheduledJobHandler, IdempotencyKeyCleanupJob>();
 builder.Services.AddSingleton<IScheduledJobHandler, ScheduledReactivationJob>();
 builder.Services.AddSingleton<IScheduledJobHandler, AnnouncementMaintenanceJob>();
 builder.Services.AddSingleton<IScheduledJobHandler, WorkMaintenanceJob>();
+builder.Services.AddSingleton<IScheduledJobHandler, PresenceEvaluationJob>();
 builder.Services.AddSingleton<IOutboxSideEffect, NotificationWebPushSideEffect>();
 builder.Services.AddSingleton<OutboxDispatcher>();
 builder.Services.AddSingleton<ScheduledJobRunner>();
@@ -166,6 +167,8 @@ api.MapTaskEndpoints();
 api.MapRecognitionEndpoints();
 api.MapFormEndpoints();
 api.MapResourceEndpoints();
+api.MapPresenceEndpoints();
+api.MapScheduleEndpoints();
 api.MapGet("/auth/csrf", (IAntiforgery antiforgery, HttpContext http) =>
 {
     var tokens = antiforgery.GetAndStoreTokens(http);

@@ -297,6 +297,35 @@ public sealed class AspNetIdentityService(
         await SaveAsync(user);
     }
 
+    public async Task<UserPresenceInfo?> GetPresenceAsync(
+        Guid userId, CancellationToken cancellationToken = default)
+    {
+        var user = await userManager.Users.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+        return user is null ? null : ToPresence(user);
+    }
+
+    public async Task<IReadOnlyList<UserPresenceInfo>> ListPresenceAsync(
+        CancellationToken cancellationToken = default)
+    {
+        var users = await userManager.Users.AsNoTracking()
+            .Where(u => u.IsActive)
+            .OrderBy(u => u.DisplayName)
+            .ToListAsync(cancellationToken);
+        return users.Select(ToPresence).ToList();
+    }
+
+    public async Task SetPresenceStatusAsync(
+        Guid userId, Domain.Entities.PresenceStatus status, string? customMessage,
+        CancellationToken cancellationToken = default)
+    {
+        var user = await RequireAsync(userId);
+        user.PresenceStatus = status;
+        user.CustomStatusMessage = customMessage;
+        user.PresenceStatusChangedAtUtc = businessTime.UtcNow;
+        await SaveAsync(user);
+    }
+
     private async Task<ApplicationUser> RequireAsync(Guid userId) =>
         await userManager.FindByIdAsync(userId.ToString())
             ?? throw new IdentityOperationException("User not found.");
@@ -317,6 +346,14 @@ public sealed class AspNetIdentityService(
         user.DisplayName,
         user.Role,
         user.IsActive);
+
+    private static UserPresenceInfo ToPresence(ApplicationUser user) => new(
+        user.Id,
+        user.DisplayName,
+        user.Role,
+        user.PresenceStatus,
+        user.CustomStatusMessage,
+        user.PresenceStatusChangedAtUtc);
 
     private static UserDetails ToDetails(ApplicationUser user) => new(
         user.Id,

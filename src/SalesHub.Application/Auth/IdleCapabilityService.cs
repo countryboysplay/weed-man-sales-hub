@@ -116,10 +116,11 @@ public sealed class IdleCapabilityService(
             await db.SaveChangesAsync(ct);
         }
 
-        // Detector state transitions feed the presence evaluator from Wave 4;
-        // storing coarse transitions only, never raw input events (docs/05).
-        _ = userState;
-        _ = screenState;
+        // Coarse transitions only, never raw input events (docs/05); the
+        // presence evaluator derives Away/locked handling from these.
+        session.LastIdleUserState = userState?.ToLowerInvariant();
+        session.LastIdleScreenState = screenState?.ToLowerInvariant();
+        await db.SaveChangesAsync(ct);
 
         return Status(session);
     }

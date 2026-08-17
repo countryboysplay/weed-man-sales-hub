@@ -24,5 +24,9 @@ public static class EventTypes
     public const string TaskAssigned = "tasks.taskAssigned.v1";
     public const string TaskCompleted = "tasks.taskCompleted.v1";
     public const string RecognitionPublished = "recognitions.published.v1";
+    public const string PresenceStatusChanged = "presence.statusChanged.v1";
+    public const string PresenceFlagRaised = "presence.flagRaised.v1";
+    public const string TimeOffDecided = "timeoff.decided.v1";
+    public const string ApprovalsChanged = "approvals.queueChanged.v1";
     public const string SystemPing = "system.ping.v1";
 }

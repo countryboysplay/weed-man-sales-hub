@@ -17,6 +17,8 @@ public sealed class UserSessionConfiguration : IEntityTypeConfiguration<UserSess
         builder.Property(s => s.AppVersion).HasMaxLength(64);
         builder.Property(s => s.IpHash).HasMaxLength(64);
         builder.Property(s => s.IdleCapabilityState).HasConversion<string>().HasMaxLength(32);
+        builder.Property(s => s.LastIdleUserState).HasMaxLength(16);
+        builder.Property(s => s.LastIdleScreenState).HasMaxLength(16);
         builder.Property(s => s.RevokeReason).HasConversion<string>().HasMaxLength(64);
         builder.HasIndex(s => new { s.UserId, s.RevokedAtUtc });
         builder.HasIndex(s => s.LastSeenAtUtc);

@@ -44,6 +44,19 @@ public static class StartupSeeder
         await EnsureJobAsync(db, ScheduledReactivationJob.Type, "* * * * *");
         await EnsureJobAsync(db, AnnouncementMaintenanceJob.Type, "* * * * *");
         await EnsureJobAsync(db, WorkMaintenanceJob.Type, "*/15 * * * *");
+        await EnsureJobAsync(db, PresenceEvaluationJob.Type, "* * * * *");
+
+        // Default presence thresholds for the monitored role (docs/01); the
+        // Owner tunes these later from settings.
+        if (!await db.PresenceRuleSets.AnyAsync(r => r.Role == Roles.SalesAgent))
+        {
+            db.PresenceRuleSets.Add(new PresenceRuleSet
+            {
+                Id = Guid.CreateVersion7(),
+                Role = Roles.SalesAgent,
+            });
+        }
+
         await db.SaveChangesAsync();
 
         var recognitionService = scope.ServiceProvider

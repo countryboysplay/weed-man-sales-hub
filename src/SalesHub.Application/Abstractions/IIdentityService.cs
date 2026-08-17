@@ -47,7 +47,28 @@ public interface IIdentityService
 
     Task ScheduleReactivationAsync(
         Guid userId, DateTimeOffset? reactivateAtUtc, CancellationToken cancellationToken = default);
+
+    // ── Wave 4 presence (docs/01 users; presence mockups) ────────────────────
+
+    Task<UserPresenceInfo?> GetPresenceAsync(Guid userId, CancellationToken cancellationToken = default);
+
+    /// <summary>Manual presence for every active user (the directory's base data).</summary>
+    Task<IReadOnlyList<UserPresenceInfo>> ListPresenceAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>Persists the user's manual status. Length validation happens
+    /// upstream in PresenceService; this is storage only.</summary>
+    Task SetPresenceStatusAsync(
+        Guid userId, Domain.Entities.PresenceStatus status, string? customMessage,
+        CancellationToken cancellationToken = default);
 }
+
+public sealed record UserPresenceInfo(
+    Guid UserId,
+    string DisplayName,
+    string Role,
+    Domain.Entities.PresenceStatus Status,
+    string? CustomStatusMessage,
+    DateTimeOffset? ChangedAtUtc);
 
 public sealed record UserQuery(
     string? Role = null,

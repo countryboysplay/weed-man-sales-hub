@@ -18,6 +18,21 @@ public interface IAppDb
     DbSet<ScheduledJobRun> ScheduledJobRuns { get; }
     DbSet<FileBlob> FileBlobs { get; }
     DbSet<IdempotencyKey> IdempotencyKeys { get; }
+    DbSet<ShiftTemplate> ShiftTemplates { get; }
+    DbSet<UserShiftAssignment> UserShiftAssignments { get; }
+    DbSet<ScheduleException> ScheduleExceptions { get; }
+    DbSet<PresenceSegment> PresenceSegments { get; }
+    DbSet<PresenceFlag> PresenceFlags { get; }
+    DbSet<PresenceRuleSet> PresenceRuleSets { get; }
+    DbSet<TimeOffType> TimeOffTypes { get; }
+    DbSet<TimeOffRequest> TimeOffRequests { get; }
+    DbSet<TimeOffCancellationRequest> TimeOffCancellationRequests { get; }
+    DbSet<CoverageRule> CoverageRules { get; }
+    DbSet<BreakType> BreakTypes { get; }
+    DbSet<BreakSession> BreakSessions { get; }
+    DbSet<BreakCorrectionRequest> BreakCorrectionRequests { get; }
+    DbSet<TechnicalReport> TechnicalReports { get; }
+    DbSet<TechnicalGrant> TechnicalGrants { get; }
     DbSet<Form> Forms { get; }
     DbSet<FormVersion> FormVersions { get; }
     DbSet<FormSubmission> FormSubmissions { get; }

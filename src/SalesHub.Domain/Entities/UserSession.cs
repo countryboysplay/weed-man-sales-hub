@@ -40,5 +40,10 @@ public class UserSession
     public DateTimeOffset? LastIdleHeartbeatAtUtc { get; set; }
     public DateTimeOffset? IdleCapabilityLeaseUntilUtc { get; set; }
 
+    /// <summary>Latest coarse IdleDetector states ("active"/"idle",
+    /// "locked"/"unlocked") — transitions only, never raw input (docs/05).</summary>
+    public string? LastIdleUserState { get; set; }
+    public string? LastIdleScreenState { get; set; }
+
     public bool IsActive => RevokedAtUtc is null;
 }

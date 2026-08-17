@@ -31,6 +31,13 @@ public class ApplicationUser : IdentityUser<Guid>
 
     /// <summary>Marker so the one-hour advance reactivation notice fires once.</summary>
     public DateTimeOffset? ReactivationNoticeSentAtUtc { get; set; }
+
+    // Wave 4 presence: manual status is user-set and persistent (CLAUDE.md
+    // §12); DND stays until the user changes it. Custom status ≤ 35 chars.
+    public Domain.Entities.PresenceStatus PresenceStatus { get; set; }
+        = Domain.Entities.PresenceStatus.Available;
+    public string? CustomStatusMessage { get; set; }
+    public DateTimeOffset? PresenceStatusChangedAtUtc { get; set; }
 }
 
 public class ApplicationRole : IdentityRole<Guid>

@@ -138,8 +138,10 @@ public sealed class OutboxDispatcher(
         // and celebrations are company-wide); events carrying a userId go to
         // that user's group; everything else goes to management. Later waves
         // extend this map (conversation:, branch: targets) with their modules.
+        // Presence status changes feed the directory every employee sees.
         if (message.EventType.StartsWith("sales.", StringComparison.Ordinal)
-            || message.EventType.StartsWith("recognitions.", StringComparison.Ordinal))
+            || message.EventType.StartsWith("recognitions.", StringComparison.Ordinal)
+            || message.EventType == EventTypes.PresenceStatusChanged)
         {
             await publisher.PublishToGroupAsync("all", envelope, ct);
         }
