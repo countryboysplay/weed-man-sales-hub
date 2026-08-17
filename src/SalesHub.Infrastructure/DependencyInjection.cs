@@ -83,6 +83,8 @@ public static class DependencyInjection
         services.AddScoped<Application.Presence.PresenceEvaluator>();
         services.AddScoped<Application.Records.ManagementRecordService>();
         services.AddScoped<Application.Support.SupportService>();
+        services.AddScoped<Application.Search.SearchService>();
+        services.AddScoped<Application.Reporting.ReportService>();
         services.AddScoped<Application.Workforce.TimeOffService>();
         services.AddScoped<Application.Workforce.BreakService>();
         services.AddScoped<Application.Workforce.TechnicalReportService>();

@@ -45,6 +45,7 @@ public static class StartupSeeder
         await EnsureJobAsync(db, AnnouncementMaintenanceJob.Type, "* * * * *");
         await EnsureJobAsync(db, WorkMaintenanceJob.Type, "*/15 * * * *");
         await EnsureJobAsync(db, PresenceEvaluationJob.Type, "* * * * *");
+        await EnsureJobAsync(db, ReportRunnerJob.Type, "*/5 * * * *");
 
         // Default presence thresholds for the monitored role (docs/01); the
         // Owner tunes these later from settings.

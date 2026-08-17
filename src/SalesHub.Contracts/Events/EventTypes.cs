@@ -28,5 +28,6 @@ public static class EventTypes
     public const string PresenceFlagRaised = "presence.flagRaised.v1";
     public const string TimeOffDecided = "timeoff.decided.v1";
     public const string ApprovalsChanged = "approvals.queueChanged.v1";
+    public const string RemoteDeviceCommandIssued = "sync.remoteCommandIssued.v1";
     public const string SystemPing = "system.ping.v1";
 }
