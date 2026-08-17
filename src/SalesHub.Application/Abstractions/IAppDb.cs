@@ -33,6 +33,22 @@ public interface IAppDb
     DbSet<BreakCorrectionRequest> BreakCorrectionRequests { get; }
     DbSet<TechnicalReport> TechnicalReports { get; }
     DbSet<TechnicalGrant> TechnicalGrants { get; }
+    DbSet<ManagementNote> ManagementNotes { get; }
+    DbSet<ManagementNoteFollowup> ManagementNoteFollowups { get; }
+    DbSet<ManagementNoteAckTarget> ManagementNoteAckTargets { get; }
+    DbSet<RecordLink> RecordLinks { get; }
+    DbSet<ManagementTag> ManagementTags { get; }
+    DbSet<TaggedEntity> TaggedEntities { get; }
+    DbSet<SupportTicket> SupportTickets { get; }
+    DbSet<SupportMessage> SupportMessages { get; }
+    DbSet<SupportCollaborator> SupportCollaborators { get; }
+    DbSet<SupportAttachment> SupportAttachments { get; }
+    DbSet<SupportLink> SupportLinks { get; }
+    DbSet<SyncAction> SyncActions { get; }
+    DbSet<RemoteDeviceCommand> RemoteDeviceCommands { get; }
+    DbSet<ReportSchedule> ReportSchedules { get; }
+    DbSet<ReportRun> ReportRuns { get; }
+    DbSet<ArchiveEntry> ArchiveEntries { get; }
     DbSet<Form> Forms { get; }
     DbSet<FormVersion> FormVersions { get; }
     DbSet<FormSubmission> FormSubmissions { get; }

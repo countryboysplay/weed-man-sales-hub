@@ -81,6 +81,7 @@ public static class DependencyInjection
         services.AddScoped<Application.Notifications.NotificationService>();
         services.AddScoped<Application.Presence.PresenceService>();
         services.AddScoped<Application.Presence.PresenceEvaluator>();
+        services.AddScoped<Application.Records.ManagementRecordService>();
         services.AddScoped<Application.Workforce.TimeOffService>();
         services.AddScoped<Application.Workforce.BreakService>();
         services.AddScoped<Application.Workforce.TechnicalReportService>();
