@@ -406,7 +406,48 @@ and the encryption key is stored in two places, neither of them a server.
 
 ---
 
-## 10. Odds and ends
+## 10. Coexisting with SQL Server 2019
+
+The production box also runs SQL Server 2019. The hub stays on
+PostgreSQL 17 (the backend depends on PostgreSQL-specific features —
+jsonb, xmin concurrency, `FOR UPDATE SKIP LOCKED` — and the spec mandates
+it); the two coexist fine, **provided you fence resources**:
+
+1. **Cap SQL Server's memory — do not skip this.** By default SQL Server
+   grows to take nearly all RAM, which starves the OS file cache
+   PostgreSQL depends on. In SSMS (or `sqlcmd`) against the instance:
+
+   ```sql
+   EXEC sp_configure 'show advanced options', 1; RECONFIGURE;
+   EXEC sp_configure 'max server memory (MB)', 8192; RECONFIGURE;  -- adjust
+   ```
+
+   Sizing rule of thumb: from total RAM, reserve ~2 GB for Windows,
+   ~1–2 GB for the hub app (Kestrel + workers), ~2–4 GB for PostgreSQL
+   and its share of file cache, and give SQL Server a fixed cap out of
+   what its actual workload needs — not the leftovers of an unlimited
+   default. Example on a 32 GB box with a moderate SQL workload:
+   SQL Server 16 GB, everything else keeps the other 16.
+2. **Port check:** SQL Server (1433) and PostgreSQL (5432) don't collide.
+   If the SQL instance is exposed to the LAN, that's its own firewall
+   rule and risk decision — the hub's rules in §7 don't need to change.
+3. **Stagger the night work.** SQL Server Agent maintenance/backup jobs
+   often run at midnight–1 AM; the hub's backup runs at 12:30 AM
+   America/Chicago and reports run on their schedules. Check the Agent
+   job calendar and shift one side so the disk isn't hit by both at once.
+4. **Disk accounting:** whatever drive holds SQL Server's data/backups,
+   subtract it from what you counted as free for PostgreSQL, uploads,
+   and the 7-day local backup staging.
+5. **AV exclusions** (see below) should already cover SQL Server's data
+   directories if AV runs on the box; add the PostgreSQL and hub paths
+   alongside, not instead.
+6. If the SQL Server instance is actually **unused** — worth checking —
+   uninstalling it is the cleanest "configuration" of all.
+
+**Check:** `SELECT value_in_use FROM sys.configurations WHERE name =
+'max server memory (MB)'` returns your cap, not `2147483647`.
+
+## 11. Odds and ends
 
 - **Server clock**: enable NTP time sync (domain or `time.windows.com`).
   All storage is UTC; presence math depends on an accurate clock. The OS
@@ -424,7 +465,7 @@ and the encryption key is stored in two places, neither of them a server.
 
 ---
 
-## 11. Final verification checklist
+## 12. Final verification checklist
 
 | # | Check | Expected |
 |---|---|---|
@@ -437,6 +478,7 @@ and the encryption key is stored in two places, neither of them a server.
 | 7 | GitHub runner page | Idle, service auto-start |
 | 8 | Port scan from LAN | only 80/443 (and your RDP rule) open |
 | 9 | Backup share write-not-delete test + offline encryption key | write ok, delete refused, key stored safely |
+| 10 | SQL Server `max server memory (MB)` | your cap, not 2147483647 |
 
 When every row passes, the box is deploy-ready: the deployment wave only
 adds the GitHub Actions workflow, the first release folder, VAPID keys,
